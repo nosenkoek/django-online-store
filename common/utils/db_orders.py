@@ -27,7 +27,7 @@ DELIVERIES = {
 DELIVERY_METHODS = {method: str(uuid.uuid4()) for method in DELIVERIES.keys()}
 PAYMENT_METHODS = {method: str(uuid.uuid4()) for method in ['Счет', 'Карта']}
 
-ORDERS_COUNT = 100
+ORDERS_COUNT = 700
 
 PAGE_SIZE = 50
 
@@ -37,11 +37,11 @@ now = datetime.utcnow()
 # В конце блока автоматически закроется курсор (cursor.close())
 # и соединение (conn.close())
 with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
-    # todo: подумать может вынести заполнение таблиц в отельные функции/классы
+    # todo: подумать может вынести заполнение таблиц в отдельные функции/классы
     # Заполнение таблицы delivery_method
     query = 'INSERT INTO delivery_method (id, method_id, name, price, free_from) VALUES (%s, %s, %s, %s, %s)'
     data_delivery_methods = [
-        (method_id, fake.uuid4(), name, DELIVERIES[name], random.randint(1000, 5000))
+        (fake.uuid4(), method_id, name, DELIVERIES[name], random.randint(1000, 5000))
         for name, method_id in DELIVERY_METHODS.items()
     ]
     execute_batch(cur, query, data_delivery_methods, page_size=PAGE_SIZE)
@@ -52,18 +52,18 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
     deliveries_ids = [str(uuid.uuid4()) for _ in range(ORDERS_COUNT)]
     data_deliveries = []
 
-    for pk in deliveries_ids:
+    for uk in deliveries_ids:
         delivery = random.choice(list(DELIVERIES.keys()))
         delivery_fk = DELIVERY_METHODS[delivery]
         price = DELIVERIES[delivery]
-        data_deliveries.append((pk, fake.uuid4(), price, fake.address(), delivery_fk))
+        data_deliveries.append((fake.uuid4(), uk, price, fake.address(), delivery_fk))
 
     execute_batch(cur, query, data_deliveries, page_size=PAGE_SIZE)
 
     # Заполнение таблицы payment_method
     query = 'INSERT INTO payment_method (id, method_id, name) VALUES (%s, %s, %s)'
     data_payment_methods = [
-        (method_id, fake.uuid4(), name)
+        (fake.uuid4(), method_id, name)
         for name, method_id in PAYMENT_METHODS.items()
     ]
     execute_batch(cur, query, data_payment_methods, page_size=PAGE_SIZE)
@@ -74,45 +74,46 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
 
     payments_ids = [str(uuid.uuid4()) for _ in range(ORDERS_COUNT)]
 
-    data_payments = [
-        (pk, fake.uuid4(), random.choice([True, False]),
-         fake.sentence(nb_words=3), random.choice(list(PAYMENT_METHODS.values())))
-        for pk in payments_ids
-    ]
+    data_payments = []
+
+    for uk in payments_ids:
+        status_payment = random.choice([True, False])
+
+        error = '-' if status_payment else fake.sentence(nb_words=3)
+
+        data_payments.append((fake.uuid4(), uk, status_payment,
+                              error, random.choice(list(PAYMENT_METHODS.values()))))
+
     execute_batch(cur, query, data_payments, page_size=PAGE_SIZE)
 
     # Заполнение таблицы order
-    query = 'INSERT INTO "order" (id, order_id, created, total_price, username, delivery_fk, payment_fk) ' \
+    query = 'INSERT INTO "order" (id, order_id, created, total_price, delivery_fk, payment_fk, user_fk) ' \
             'VALUES (%s, %s, %s, %s, %s, %s, %s)'
 
     orders_ids = [str(uuid.uuid4()) for _ in range(ORDERS_COUNT)]
 
     data_orders = [
-        (pk, fake.uuid4(), fake.date_time(), random.uniform(1_000, 10_000),
-         fake.simple_profile()['username'], deliveries_ids[idx], payments_ids[idx])
-        for idx, pk in enumerate(orders_ids)
+        (fake.uuid4(), uk, fake.date_time(), random.uniform(1_000, 10_000), deliveries_ids[idx], payments_ids[idx], 1)
+        for idx, uk in enumerate(orders_ids)
     ]
     execute_batch(cur, query, data_orders, page_size=PAGE_SIZE)
 
     # Заполнение таблицы order_product
-    query_product_ids = 'SELECT id FROM product'
+    query_product_ids = 'SELECT product_id FROM product'
     cur.execute(query_product_ids)
     product_ids = list(cur)
 
-    query = 'INSERT INTO order_product (order_fk, product_fk) VALUES (%s, %s)'
-    # data_order_product = [
-    #     (order_id, random.choice(product_ids))
-    #     for order_id in orders_ids
-    #     for _ in range(random.randint(1, 5))
-    # ]
+    query = 'INSERT INTO order_product (id, count, order_fk, product_fk) VALUES (%s, %s, %s, %s)'
     data_order_product = []
+    data_for_check = []
 
     for order_id in orders_ids:
         for _ in range(random.randint(1, 5)):
             product_id = random.choice(product_ids)
 
-            if (order_id, product_id) not in data_order_product:
-                data_order_product.append((order_id, product_id))
+            if (order_id, product_id) not in data_for_check:
+                data_order_product.append((str(uuid.uuid4()), random.randint(1, 5), order_id, product_id))
+                data_for_check.append((order_id, product_id))
 
     execute_batch(cur, query, data_order_product, page_size=PAGE_SIZE)
 
