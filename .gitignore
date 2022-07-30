@@ -141,3 +141,6 @@ logger/
 #media upload
 media/
 .media
+
+#data_db
+data_db/
