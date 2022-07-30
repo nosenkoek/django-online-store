@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:14-alpine
+    restart: always
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./schema_design/pg.env
+    volumes:
+      - ./schema_design/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  store_app:
+    build: ./store_admin/
+    command: >
+      bash -c "sleep 10
+      && python manage.py migrate
+      && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db

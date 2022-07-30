@@ -13,7 +13,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = os.environ.get('DEBUG') != 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 ROOT_URLCONF = 'config.urls'
 
@@ -25,9 +25,18 @@ include(
     'components/installed_apps.py',
     'components/middleware.py',
     'components/templates.py',
-    'components/internationalization.py'
+    'components/internationalization.py',
+    'components/debug_toolbar_panels.py',
 )
 
 STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'store', 'media/')
+MEDIA_URL = '/media/'
+
