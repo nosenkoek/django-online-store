@@ -1,6 +1,5 @@
 CREATE SCHEMA IF NOT EXISTS "content";
 
-
 DROP TABLE IF EXISTS "content".order_product;
 DROP TABLE IF EXISTS "content".category_feature;
 DROP TABLE IF EXISTS "content".product_feature;
@@ -17,7 +16,6 @@ DROP TABLE IF EXISTS "content".payment_method;
 DROP TABLE IF EXISTS "content".profile;
 
 DROP TYPE IF EXISTS type_feature;
-DROP EXTENSION IF EXISTS pg_trgm;
 DROP INDEX IF EXISTS product_name_trgm_idx;
 DROP INDEX IF EXISTS product_price_idx;
 DROP INDEX IF EXISTS feature_value_idx;
@@ -31,6 +29,7 @@ CREATE TABLE "content".category (
     id uuid PRIMARY KEY,
     category_id uuid UNIQUE NOT NULL,
     name varchar(30) NOT NULL,
+    icon varchar(100),
     is_active bool NOT NULL
 );
 
@@ -203,7 +202,7 @@ ALTER TABLE profile
         REFERENCES auth_user(id) ON DELETE CASCADE;
 
 
-CREATE EXTENSION pg_trgm;
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
 CREATE INDEX product_name_trgm_idx ON product USING GIN (UPPER(name) gin_trgm_ops);
 CREATE INDEX product_price_idx ON product(price);
 CREATE INDEX feature_value_idx ON product_feature(value); -- todo: возможно придется исправить

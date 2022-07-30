@@ -8,6 +8,9 @@ from psycopg2.extras import execute_batch
 
 fake = Faker()
 
+# TODO: можно исправить с учетом триггеров в БД
+
+
 # Подготавливаем DSN (Data Source Name) для подключения к БД Postgres
 dsn = {
     'dbname': 'store_db',
@@ -21,9 +24,10 @@ dsn = {
 TYPE_FEATURES = ['select', 'checkbox', 'text']
 
 CATEGORIES_FEATURES = {
-    'Холодильники': ['Вес', 'Габариты'],
+    'Компьютеры': ['Вес', 'Габариты'],
     'Телефоны': ['Вес', 'Габариты', 'Память', 'Экран'],
-    'Ноутбуки': ['Вес', 'Габариты', 'Память', 'Экран']
+    'Стиральные машины': ['Вес', 'Габариты'],
+    'Гарнитуры': ['Вес', 'Габариты'],
 }
 
 CATEGORIES = {item: str(uuid.uuid4()) for item in CATEGORIES_FEATURES.keys()}
@@ -43,8 +47,8 @@ now = datetime.utcnow()
 with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
     # todo: подумать может вынести заполнение таблиц в отельные функции/классы
     # # Заполнение таблицы category
-    query = 'INSERT INTO category (id, category_id, name, is_active) VALUES (%s, %s, %s, %s)'
-    data_categories = [(fake.uuid4(), category_id, name, random.choice([True, False]))
+    query = 'INSERT INTO category (id, category_id, name, icon, is_active) VALUES (%s, %s, %s, %s, %s)'
+    data_categories = [(fake.uuid4(), category_id, name, None, random.choice([True, False]))
                        for name, category_id in CATEGORIES.items()]
     execute_batch(cur, query, data_categories, page_size=PAGE_SIZE)
 
