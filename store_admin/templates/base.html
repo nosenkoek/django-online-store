@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{% static 'app_product/img/favicon.ico' %}" rel="shortcut icon">
+    <link rel="stylesheet" href="{% static 'app_product/css/fonts.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'app_product/css/basic.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'app_product/css/extra.css' %}" type="text/css">
+{#    <script src="{% static 'app_products/plg/CountDown/countdown.js' %}"></script><!--[if lt IE 9]>#}
+{#    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->#}
+</head>
+<body>
+    <header class="Header">
+        {% include 'header.html' %}
+    </header>
+
+    <div class="Middle">
+      {% block content %}{% endblock %}
+    </div>
+
+    <footer class="Footer">
+        {% include 'footer.html' %}
+    </footer>
+
+
+
+    <script src="{% static 'app_product/js/scripts.js' %}"></script>
+</body>
+</html>

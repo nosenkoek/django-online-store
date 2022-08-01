@@ -14,15 +14,15 @@
           <div class="row ControlPanel-rowSplit">
             <div class="row-block hide_700"><span class="ControlPanel-title">{% trans 'Follow us' %}</span>
               <ul class="menu menu_img menu_smallImg ControlPanel-menu">
-                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'store/img/icons/socialHeader/fb.svg' %}" alt="fb.svg"/></a>
+                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'app_product/img/icons/socialHeader/fb.svg' %}" alt="fb.svg"/></a>
                 </li>
-                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'store/img/icons/socialHeader/tw.svg' %}" alt="tw.svg"/></a>
+                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'app_product/img/icons/socialHeader/tw.svg' %}" alt="tw.svg"/></a>
                 </li>
-                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'store/img/icons/socialHeader/in.svg' %}" alt="in.svg"/></a>
+                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'app_product/img/icons/socialHeader/in.svg' %}" alt="in.svg"/></a>
                 </li>
-                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'store/img/icons/socialHeader/pt.svg' %}" alt="pt.svg"/></a>
+                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'app_product/img/icons/socialHeader/pt.svg' %}" alt="pt.svg"/></a>
                 </li>
-                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'store/img/icons/socialHeader/mail.svg' %}" alt="mail.svg"/></a>
+                <li class="menu-item"><a class="menu-link" href="#"><img src="{% static 'app_product/img/icons/socialHeader/mail.svg' %}" alt="mail.svg"/></a>
                 </li>
               </ul>
             </div>
@@ -67,7 +67,7 @@
   </div>
   <div class="wrap">
     <div class="row Header-rowMain">
-      <div class="row-block Header-logo"><a class="logo" href="{% url 'main_page' %}"><img class="logo-image" src="{% static 'store/img/logo.png' %}" alt="logo.png"/></a>
+      <div class="row-block Header-logo"><a class="logo" href="{% url 'main_page' %}"><img class="logo-image" src="{% static 'app_product/img/logo.png' %}" alt="logo.png"/></a>
       </div>
       <nav class="row-block row-block_right Header-menu">
         <div class="menuModal" id="navigate">
@@ -85,7 +85,7 @@
         </div>
       </nav>
       <div class="row-block">
-        <div class="CartBlock"><a class="CartBlock-block" href="cart.html"><img class="CartBlock-img" src="{% static 'store/img/icons/cart.svg' %}" alt="cart.svg"/><span class="CartBlock-amount">0</span></a>
+        <div class="CartBlock"><a class="CartBlock-block" href="cart.html"><img class="CartBlock-img" src="{% static 'app_product/img/icons/cart.svg' %}" alt="cart.svg"/><span class="CartBlock-amount">0</span></a>
           <div class="CartBlock-block"><span class="CartBlock-price">0.00$</span>
           </div>
         </div>
@@ -101,7 +101,7 @@
       <div class="Header-categories">
         <div class="CategoriesButton">
           <div class="CategoriesButton-title">
-            <div class="CategoriesButton-icon"><img src="{% static 'store/img/icons/allDep.svg' %}" alt="allDep.svg"/>
+            <div class="CategoriesButton-icon"><img src="{% static 'app_product/img/icons/allDep.svg' %}" alt="allDep.svg"/>
             </div><span class="CategoriesButton-text">{% trans 'Categories' %}</span>
             <div class="CategoriesButton-arrow">
             </div>
@@ -122,13 +122,13 @@
           </div>
         </div>
       </div>
-      <div class="Header-searchLink"><img src="{% static 'store/img/icons/search.svg' %}" alt="search.svg"/>
+      <div class="Header-searchLink"><img src="{% static 'app_product/img/icons/search.svg' %}" alt="search.svg"/>
       </div>
       <div class="Header-search">
         <div class="search">
           <form class="form form_search" action="#" method="post">
             <input class="search-input" id="query" name="query" type="text" placeholder="{% trans 'What are you looking for ...' %}"/>
-            <button class="search-button" type="submit" name="search" id="search"><img src="{% static 'store/img/icons/search.svg' %}" alt="search.svg"/>{% trans 'Search' %}
+            <button class="search-button" type="submit" name="search" id="search"><img src="{% static 'app_product/img/icons/search.svg' %}" alt="search.svg"/>{% trans 'Search' %}
             </button>
           </form>
         </div>
@@ -136,9 +136,9 @@
     </div>
   </div>
 
-  <script src="{% static 'store/plg/jQuery/jquery-3.5.0.slim.min.js' %}"></script>
-{#    <script src="{% static 'store/plg/form/jquery.form.js' %}"></script>#}
-{#    <script src="{% static 'store/plg/form/jquery.maskedinput.min.js' %}"></script>#}
-  <script src="{% static 'store/plg/range/ion.rangeSlider.min.js' %}"></script>
-{#    <script src="{% static 'store/plg/Slider/slick.min.js' %}"></script>#}
+  <script src="{% static 'app_product/plg/jQuery/jquery-3.5.0.slim.min.js' %}"></script>
+{#    <script src="{% static 'app_products/plg/form/jquery.form.js' %}"></script>#}
+{#    <script src="{% static 'app_products/plg/form/jquery.maskedinput.min.js' %}"></script>#}
+  <script src="{% static 'app_product/plg/range/ion.rangeSlider.min.js' %}"></script>
+{#    <script src="{% static 'app_products/plg/Slider/slick.min.js' %}"></script>#}
 {% endblock %}
