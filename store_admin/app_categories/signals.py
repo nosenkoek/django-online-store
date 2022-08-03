@@ -1,16 +1,37 @@
 from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, m2m_changed
 
-from app_categories.models import CategoryFeature
+from app_categories.models import CategoryFeature, Category, Feature
 
 
-@receiver(post_save, sender='app_categories.Category')
-def add_features_subcategory(sender, instance, created, **kwargs):
-    print(created)
+@receiver(post_save, sender=Category)
+def add_features_subcategory(sender, instance, created, **kwargs) -> None:
+    # В случае создании подкатегории, к ней добавляются характеристики из родителя
+    # В случае изменения родителя у потомка, необходимо поменять характеристики
     if instance.is_child_node():
-        root_id = instance.get_root().category_id
-        print(root_id, type(root_id))
-        features = CategoryFeature.objects.filter(category_fk=str(root_id)).all()
-        print(features)
-        results = [CategoryFeature(category_fk=instance, feature_fk=feature) for feature in features]
+        root = instance.get_root()
+        features = Feature.objects.filter(categories=root).all()
+
+        if created:
+            results = [CategoryFeature(category_fk=instance, feature_fk=feature) for feature in features]
+        else:
+            feature_category = CategoryFeature.objects.filter(category_fk=instance).all()
+            feature_category.delete()
+
+            results = [CategoryFeature(category_fk=instance, feature_fk=feature)
+                       for feature in features]
+
+        CategoryFeature.objects.bulk_create(results)
+
+    # В случае изменения характеристик в родителе, изменяются характеристики у потомков
+    if not created and instance.is_root_node():
+        subcategories = instance.get_children()
+        feature_category = CategoryFeature.objects.filter(category_fk__in=subcategories).all()
+        feature_category.delete()
+
+        features = Feature.objects.filter(categories=instance).all()
+
+        results = [CategoryFeature(category_fk=subcategory, feature_fk=feature)
+                   for feature in features
+                   for subcategory in subcategories]
         CategoryFeature.objects.bulk_create(results)

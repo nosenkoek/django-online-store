@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 from django.utils.translation import gettext_lazy as _
-from django.core.signals import request_finished
+from django.db.models.signals import m2m_changed
 
 
 class AppCategoriesConfig(AppConfig):
@@ -9,5 +9,4 @@ class AppCategoriesConfig(AppConfig):
     verbose_name = _('categories')
 
     def ready(self):
-        from app_categories.signals import add_features_subcategory
-        pass
+        from app_categories import signals

@@ -5,7 +5,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app_categories',
+    'app_categories.apps.AppCategoriesConfig',
     'app_products',
     'debug_toolbar',
     'mptt',

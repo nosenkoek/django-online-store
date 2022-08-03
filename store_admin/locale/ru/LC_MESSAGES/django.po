@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-01 14:51+0300\n"
+"POT-Creation-Date: 2022-08-03 16:11+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,67 +20,71 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: .\app_categories\admin.py:26 .\app_categories\models.py:47
+#: .\app_categories\admin.py:27 .\app_categories\models.py:55
 msgid "type feature"
 msgstr "тип характеристики"
 
-#: .\app_categories\apps.py:8 .\app_categories\models.py:29
+#: .\app_categories\apps.py:9 .\app_categories\models.py:37
 msgid "categories"
 msgstr "категории"
 
-#: .\app_categories\models.py:10
+#: .\app_categories\models.py:12
 msgid "File not SVG"
 msgstr "Файл не SVG"
 
-#: .\app_categories\models.py:17 .\app_categories\models.py:45
+#: .\app_categories\models.py:19 .\app_categories\models.py:53
 #: .\app_products\models.py:16 .\app_products\models.py:32
 msgid "name"
 msgstr "название"
 
-#: .\app_categories\models.py:19
+#: .\app_categories\models.py:21
 msgid "icon"
 msgstr "иконка"
 
-#: .\app_categories\models.py:20
+#: .\app_categories\models.py:22
 msgid "is_active"
 msgstr "активен"
 
-#: .\app_categories\models.py:28 .\app_categories\models.py:67
+#: .\app_categories\models.py:26
+msgid "put in category"
+msgstr "вложить в категорию"
+
+#: .\app_categories\models.py:36 .\app_categories\models.py:76
 #: .\app_products\admin.py:44 .\app_products\filters.py:23
 #: .\app_products\models.py:42
 msgid "category"
 msgstr "категория"
 
-#: .\app_categories\models.py:39
+#: .\app_categories\models.py:47
 msgid "select"
 msgstr "множественный выбор"
 
-#: .\app_categories\models.py:40
+#: .\app_categories\models.py:48
 msgid "yes/no"
 msgstr "да/нет"
 
-#: .\app_categories\models.py:41
+#: .\app_categories\models.py:49
 msgid "text"
 msgstr "текст"
 
-#: .\app_categories\models.py:55 .\app_categories\models.py:70
+#: .\app_categories\models.py:64 .\app_categories\models.py:79
 #: .\app_products\models.py:67
 msgid "feature"
 msgstr "характеристика"
 
-#: .\app_categories\models.py:56
+#: .\app_categories\models.py:65
 msgid "features"
 msgstr "характеристики"
 
-#: .\app_categories\models.py:76
+#: .\app_categories\models.py:85
 msgid "category with features"
 msgstr "категория с характеристиками"
 
-#: .\app_categories\models.py:77
+#: .\app_categories\models.py:86
 msgid "categories with features"
 msgstr "категории с характеристиками"
 
-#: .\app_products\admin.py:45 .\app_products\filters.py:35
+#: .\app_products\admin.py:45 .\app_products\filters.py:34
 #: .\app_products\models.py:21 .\app_products\models.py:45
 msgid "manufacturer"
 msgstr "производитель"
@@ -141,7 +145,7 @@ msgstr "товар с характеристиками"
 msgid "products with features"
 msgstr "товары с характеристиками"
 
-#: .\templates\admin\input_filter.html:19
+#: .\templates\admin_custom\input_filter.html:19
 msgid "Remove"
 msgstr "Удалить"
 

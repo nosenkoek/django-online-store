@@ -34,7 +34,8 @@ class FeatureCategoryInline(TypeFeatureFieldMixin, admin.TabularInline):
     extra = 1
     readonly_fields = ('type_feature',)
 
-    def has_add_permission(self, request, obj):
+    def has_add_permission(self, request, obj) -> bool:
+        """Если еще не создан объект нельзя добавлять характеристики"""
         if not obj:
             return False
         return super().has_add_permission(request, obj)
@@ -44,6 +45,11 @@ class FeatureCategoryInline(TypeFeatureFieldMixin, admin.TabularInline):
         if obj and obj.is_child_node():
             return False
         return super().has_delete_permission(request, obj)
+
+    def has_change_permission(self, request, obj=None) -> bool:
+        if obj and obj.level:
+            return False
+        return super().has_change_permission(request, obj)
 
 
 @admin.register(Category)
@@ -60,11 +66,28 @@ class CategoryAdmin(MPTTModelAdmin):
 
     inlines = (FeatureCategoryInline, )
 
+    def get_field_queryset(self, db, db_field, request) -> QuerySet:
+        """Только 0 уровень вложенности"""
+        queryset = super().get_field_queryset(db, db_field, request).filter(level=0)
+        return queryset
+
     def save_model(self, request, obj, form, change) -> None:
         if not obj.category_id:
             obj.category_id = uuid4()
+            super().save_model(request, obj, form, change)
 
-        super().save_model(request, obj, form, change)
+    def save_formset(self, request, form, formset, change) -> None:
+        """
+        Изменение порядка сохранения.
+        Если категория не меняется и это подкатегория, то нормальный порядок
+        Если категория меняется и это родитель, то сначала изменение в характеристиках, потом в категориях
+        """
+        if form.changed_data or form.instance.is_root_node():
+            formset.save()
+            form.instance.save()
+        else:
+            form.instance.save()
+            formset.save()
 
 
 @admin.register(Feature)
