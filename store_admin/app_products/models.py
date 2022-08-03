@@ -31,7 +31,7 @@ class Product(models.Model):
     product_id = models.UUIDField(unique=True, default=uuid4, editable=False)
     name = models.CharField(max_length=50, verbose_name=_('name'))
     description = models.TextField(verbose_name=_('description'))
-    price = models.FloatField(verbose_name=_('price'), validators=[MinValueValidator(0)])
+    price = models.DecimalField(max_digits=7, decimal_places=2, verbose_name=_('price'), validators=[MinValueValidator(0)])
     image = models.CharField(max_length=100, verbose_name=_('image'))    # todo: не забыть исправить
     # image = models.ImageField(upload_to='product_images/', verbose_name=_('image'))
     added = models.DateTimeField(verbose_name=_('added'))

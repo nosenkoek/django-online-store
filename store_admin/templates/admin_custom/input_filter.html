@@ -1,0 +1,25 @@
+{% load i18n %}
+
+<h3>{{ title|title }}</h3>
+<ul>
+  <li>
+    {% with choices.0 as all_choice %}
+    <form method="GET" action="">
+
+        {% for name, value in all_choice.query_parts %}
+        <input type="hidden" name="{{ name }}" value="{{ value }}" />
+        {% endfor %}
+
+        <input
+            type="text"
+            value="{{ spec.value|default_if_none:'' }}"
+            name="{{ spec.parameter_name }}"/>
+
+        {% if not all_choice.selected %}
+           <strong><a href="{{ all_choice.query_string }}">⨉ {% trans 'Remove' %}</a></strong>
+        {% endif %}
+
+    </form>
+    {% endwith %}
+  </li>
+</ul>

@@ -1,61 +1,45 @@
 from uuid import uuid4
 
 from django.contrib import admin
+from django.db.models import QuerySet
 from django.utils.translation import gettext as _
 
-from .models import Feature, Product, Manufacturer, ProductFeature
-
-
-class TypeFeatureFieldMixin():
-    list_select_related = ('feature_fk',)
-
-    # def get_queryset(self, request):
-    #     queryset = super().get_queryset(request).select_related(*self.list_select_related)
-    #     return queryset
-
-    def type_feature(self, obj):
-        return _(obj.feature_fk.get_type_feature_display())
-
-    type_feature.short_description = _('type feature')
+from app_products.models import Product, Manufacturer, ProductFeature
+from app_categories.admin import TypeFeatureFieldMixin
+from app_products.filters import ProductCategoryFilter, ProductManufacturerFilter
 
 
 class FeatureProductInline(TypeFeatureFieldMixin, admin.TabularInline):
-    # todo: можно создать свой формсет с разными виджатами
+    """Добавление характеристик для товаров"""
     model = ProductFeature
     fields = ['feature_fk', 'value', 'type_feature']
     readonly_fields = ['feature_fk', 'type_feature']
 
-    def has_add_permission(self, request, obj):
+    def has_add_permission(self, request, obj) -> bool:
+        """Возможность добавлять характеристики к товарам"""
         return False
 
-    def has_delete_permission(self, request, obj=None):
+    def has_delete_permission(self, request, obj=None) -> bool:
+        """Возможность удалять характеристики у товаров"""
         return False
-
-
-@admin.register(Feature)
-class FeatureAdmin(admin.ModelAdmin):
-    """Панель характеристик"""
-    list_display = ('name', 'type_feature')
-
 
 
 class ListDisplayProductExtendMixin():
+    """Миксин для расширения list_display"""
     list_select_related = ('category_fk', 'manufacturer_fk')
     list_display = ('name', 'price', 'added', 'category', 'manufacturer', 'is_limited')
 
-    # def get_queryset(self, request):
-    #     queryset = (
-    #         super().get_queryset(request).prefetch_related(*self.list_prefetch_related)
-    #     )
-    #     return queryset
+    def get_queryset(self, request) -> QuerySet:
+        queryset = super().get_queryset(request).select_related(*self.list_select_related)
+        return queryset
 
-    def category(self, obj):
+    def category(self, obj) -> str:
         """Доп. поле отображения категория"""
-        return obj.category_fk
+        return obj.category_fk.name
 
-    def manufacturer(self, obj):
+    def manufacturer(self, obj) -> str:
         """Доп. поле отображения производитель"""
-        return obj.manufacturer_fk
+        return obj.manufacturer_fk.name
 
     category.short_description = _('category')
     manufacturer.short_description = _('manufacturer')
@@ -66,22 +50,20 @@ class ProductAdmin(ListDisplayProductExtendMixin, admin.ModelAdmin):
     """Панель продуктов"""
     inlines = (FeatureProductInline,)
     ordering = ('-added', )
-    # list_filter = ('name', 'is_limited', 'category_fk')
-    # search_fields = ('name', 'category_fk', 'manufacturer_fk')
-    list_filter = ('name', 'is_limited', 'category_fk__name', 'manufacturer_fk__name')
-    search_fields = ('name', 'category_fk__name', 'manufacturer_fk__name')
+    search_fields = ('name', )
+    list_filter = (ProductCategoryFilter, ProductManufacturerFilter, 'is_limited')
 
+    # todo: исправить после добавления сигналов
     def save_model(self, request, obj, form, change):
-        """
-        Если не сохранена модель, то она сохраняется.
-        Если есть, то сохраняется после inline элементов.
-        """
-        # сделано для невозможности сохранения лишних характеристик в продуктах
         if not obj.product_id:
             obj.product_id = uuid4()
             super().save_model(request, obj, form, change)
 
     def save_formset(self, request, form, formset, change):
+        """
+        Если не сохранена модель, то она сохраняется.
+        Если есть, то сохраняется после inline элементов.
+        """
         formset.save()
         form.instance.save()
 
@@ -91,4 +73,4 @@ class ProductAdmin(ListDisplayProductExtendMixin, admin.ModelAdmin):
 
 @admin.register(Manufacturer)
 class ManufacturerAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ('name',)

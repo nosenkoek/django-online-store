@@ -6,3 +6,4 @@ django-split-settings==1.1.0
 Faker==13.14.0
 django-debug-toolbar==3.2.4
 Pillow==8.4.0
+django-mptt
