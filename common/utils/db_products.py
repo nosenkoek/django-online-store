@@ -47,25 +47,25 @@ now = datetime.utcnow()
 with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
     # todo: подумать может вынести заполнение таблиц в отельные функции/классы
     # # Заполнение таблицы category
-    query = 'INSERT INTO category (id, category_id, name, icon, is_active) VALUES (%s, %s, %s, %s, %s)'
-    data_categories = [(fake.uuid4(), category_id, name, None, random.choice([True, False]))
-                       for name, category_id in CATEGORIES.items()]
-    execute_batch(cur, query, data_categories, page_size=PAGE_SIZE)
-
-    # # Заполнение таблицы feature
-    query = 'INSERT INTO feature (id, feature_id, name, type_feature) VALUES (%s, %s, %s, %s)'
-    data_features = [(fake.uuid4(), feature_id, name, random.choice(TYPE_FEATURES))
-                     for name, feature_id, in FEATURES.items()]
-    execute_batch(cur, query, data_features, page_size=PAGE_SIZE)
-
-    # # Заполнение таблицы category_feature
-    query = 'INSERT INTO category_feature (id, category_fk, feature_fk) VALUES (%s, %s, %s)'
-
-    data_category_feature = [(str(uuid.uuid4()), CATEGORIES[category], FEATURES[feature])
-                             for category, feature_list in CATEGORIES_FEATURES.items()
-                             for feature in feature_list]
-
-    execute_batch(cur, query, data_category_feature, page_size=PAGE_SIZE)
+    # query = 'INSERT INTO category (id, category_id, name, icon, is_active) VALUES (%s, %s, %s, %s, %s)'
+    # data_categories = [(fake.uuid4(), category_id, name, None, random.choice([True, False]))
+    #                    for name, category_id in CATEGORIES.items()]
+    # execute_batch(cur, query, data_categories, page_size=PAGE_SIZE)
+    #
+    # # # Заполнение таблицы feature
+    # query = 'INSERT INTO feature (id, feature_id, name, type_feature) VALUES (%s, %s, %s, %s)'
+    # data_features = [(fake.uuid4(), feature_id, name, random.choice(TYPE_FEATURES))
+    #                  for name, feature_id, in FEATURES.items()]
+    # execute_batch(cur, query, data_features, page_size=PAGE_SIZE)
+    #
+    # # # Заполнение таблицы category_feature
+    # query = 'INSERT INTO category_feature (id, category_fk, feature_fk) VALUES (%s, %s, %s)'
+    #
+    # data_category_feature = [(str(uuid.uuid4()), CATEGORIES[category], FEATURES[feature])
+    #                          for category, feature_list in CATEGORIES_FEATURES.items()
+    #                          for feature in feature_list]
+    #
+    # execute_batch(cur, query, data_category_feature, page_size=PAGE_SIZE)
 
     # Заполнение таблицы Manufacturer
     manufacturers_ids = [str(uuid.uuid4()) for _ in range(MANUFACTURERS_COUNT)]

@@ -30,7 +30,12 @@ CREATE TABLE "content".category (
     category_id uuid UNIQUE NOT NULL,
     name varchar(30) NOT NULL,
     icon varchar(100),
-    is_active bool NOT NULL
+    is_active bool NOT NULL,
+    parent_id uuid,
+    rght int,
+    lft int,
+    tree_id int,
+    level int
 );
 
 CREATE TABLE "content".feature(
@@ -57,7 +62,7 @@ CREATE TABLE "content".product(
     product_id uuid UNIQUE NOT NULL,
     name varchar(50) NOT NULL,
     description text NOT NULL,
-    price real NOT NULL,
+    price decimal NOT NULL,
     image varchar(100) NOT NULL,
     added timestamp NOT NULL,
     is_limited bool NOT NULL,
@@ -92,14 +97,14 @@ CREATE TABLE "content".delivery_method (
 	id uuid PRIMARY KEY,
 	method_id uuid UNIQUE NOT NULL,
 	name varchar(30) NOT NULL,
-	price real NOT NULL,
+	price decimal NOT NULL,
 	free_from real
 );
 
 CREATE TABLE "content".delivery(
     id uuid PRIMARY KEY,
     delivery_id uuid UNIQUE NOT NULL,
-    price real NOT NULL,  -- todo: продумать автозаполнение или проверку
+    price decimal NOT NULL,  -- todo: продумать автозаполнение или проверку
     address text NOT NULL, -- возможно использовать json
     delivery_method_fk uuid NOT NULL
 );
@@ -116,7 +121,7 @@ CREATE TABLE "content".order(
     id uuid PRIMARY KEY,
     order_id uuid UNIQUE NOT NULL,
     created timestamp NOT NULL,
-    total_price real NOT NULL,
+    total_price decimal NOT NULL,
     delivery_fk uuid UNIQUE NOT NULL ,
     payment_fk uuid UNIQUE NOT NULL,
     user_fk int NOT NULL
@@ -137,6 +142,11 @@ CREATE TABLE "content".profile (
 	avatar varchar(100),
 	user_fk int UNIQUE NOT NULL
 );
+
+
+ALTER TABLE category
+    ADD CONSTRAINT parent_fk FOREIGN KEY (parent_id)
+        REFERENCES category(category_id);
 
 ALTER TABLE category_feature
     ADD CONSTRAINT category_fk FOREIGN KEY (category_fk)
