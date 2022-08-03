@@ -1,4 +1,6 @@
 from uuid import uuid4
+from mptt.models import MPTTModel, TreeForeignKey
+from mptt import register
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -10,7 +12,7 @@ def svg_validator(file):
         raise ValidationError(_('File not SVG'))
 
 
-class Category(models.Model):
+class Category(MPTTModel):
     """ Набор категорий """
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     category_id = models.UUIDField(unique=True, default=uuid4, editable=False)
@@ -18,6 +20,10 @@ class Category(models.Model):
     icon = models.FileField(upload_to='icons_categories/', validators=[svg_validator],
                             null=True, blank=True, verbose_name=_('icon'))
     is_active = models.BooleanField(verbose_name=_('is_active'))
+
+    parent = TreeForeignKey('self', on_delete=models.CASCADE,
+                            to_field='category_id', null=True, blank=True,
+                            related_name='parent_fk')
 
     features = models.ManyToManyField('Feature',
                                       through='CategoryFeature')
@@ -64,10 +70,10 @@ class CategoryFeature(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     category_fk = models.ForeignKey(Category, on_delete=models.CASCADE,
                                     to_field='category_id', db_column='category_fk',
-                                    verbose_name=_('category'))
+                                    related_name='category_fk', verbose_name=_('category'))
     feature_fk = models.ForeignKey(Feature, on_delete=models.CASCADE,
                                    to_field='feature_id', db_column='feature_fk',
-                                   verbose_name=_('feature'))
+                                   related_name='feature_fk', verbose_name=_('feature'))
 
     class Meta:
         managed = False

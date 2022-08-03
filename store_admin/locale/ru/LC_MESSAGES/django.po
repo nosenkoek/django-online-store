@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-01 10:21+0300\n"
+"POT-Creation-Date: 2022-08-01 14:51+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,8 +20,7 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: .\app_categories\admin.py:19 .\app_categories\models.py:47
-#: .\app_products\admin.py:19
+#: .\app_categories\admin.py:26 .\app_categories\models.py:47
 msgid "type feature"
 msgstr "тип характеристики"
 
@@ -47,7 +46,8 @@ msgid "is_active"
 msgstr "активен"
 
 #: .\app_categories\models.py:28 .\app_categories\models.py:67
-#: .\app_products\admin.py:60 .\app_products\models.py:42
+#: .\app_products\admin.py:44 .\app_products\filters.py:23
+#: .\app_products\models.py:42
 msgid "category"
 msgstr "категория"
 
@@ -80,8 +80,8 @@ msgstr "категория с характеристиками"
 msgid "categories with features"
 msgstr "категории с характеристиками"
 
-#: .\app_products\admin.py:61 .\app_products\models.py:21
-#: .\app_products\models.py:45
+#: .\app_products\admin.py:45 .\app_products\filters.py:35
+#: .\app_products\models.py:21 .\app_products\models.py:45
 msgid "manufacturer"
 msgstr "производитель"
 
@@ -141,6 +141,10 @@ msgstr "товар с характеристиками"
 msgid "products with features"
 msgstr "товары с характеристиками"
 
+#: .\templates\admin\input_filter.html:19
+msgid "Remove"
+msgstr "Удалить"
+
 #: .\templates\header.html:15
 msgid "Follow us"
 msgstr "Подписаться"
@@ -172,6 +176,3 @@ msgstr "Что ищете ..."
 #: .\templates\header.html:131
 msgid "Search"
 msgstr "Поиск"
-
-#~ msgid "Profile"
-#~ msgstr "Профиль"

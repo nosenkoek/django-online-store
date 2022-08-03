@@ -8,4 +8,5 @@ INSTALLED_APPS = [
     'app_categories',
     'app_products',
     'debug_toolbar',
+    'mptt',
 ]
