@@ -90,20 +90,11 @@ class CategoryAdmin(MPTTModelAdmin, ActionsMixin):
     def save_model(self, request, obj, form, change) -> None:
         if not obj.category_id:
             obj.category_id = uuid4()
-            super().save_model(request, obj, form, change)
 
-    def save_formset(self, request, form, formset, change) -> None:
-        """
-        Изменение порядка сохранения.
-        Если категория не меняется и это подкатегория, то нормальный порядок
-        Если категория меняется и это родитель, то сначала изменение в характеристиках, потом в категориях
-        """
-        if form.changed_data or form.instance.is_root_node():
-            formset.save()
-            form.instance.save()
+        if 'parent' in form.changed_data:
+            obj.save(update_fields=form.changed_data)
         else:
-            form.instance.save()
-            formset.save()
+            super().save_model(request, obj, form, change)
 
 
 @admin.register(Feature)

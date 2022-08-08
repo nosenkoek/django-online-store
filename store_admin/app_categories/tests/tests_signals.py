@@ -85,14 +85,13 @@ class TestSignalAddFeatureSubcategory(TestCase):
     def test_update_feature_category(self) -> None:
         """Проверка изменения характеристики в подкатегории при изменении характеристик у родителя """
         feature = Feature.objects.create(**FEATURE)
-        self.category.features.add(feature)
-        self.category.save()
+        CategoryFeature.objects.create(category_fk=self.category, feature_fk=feature)
 
         self.assertQuerysetEqual(Feature.objects.filter(categories=self.subcategory).order_by('id'),
                                  Feature.objects.filter(categories=self.category).order_by('id'))
 
-        self.category.features.remove(feature)
-        self.category.save()
+        category_feature = CategoryFeature.objects.get(category_fk=self.category, feature_fk=feature)
+        category_feature.delete()
 
         self.assertQuerysetEqual(Feature.objects.filter(categories=self.subcategory).order_by('id'),
                                  Feature.objects.filter(categories=self.category).order_by('id'))
@@ -105,7 +104,7 @@ class TestSignalAddFeatureSubcategory(TestCase):
         category_new.save()
 
         self.subcategory.parent = category_new
-        self.subcategory.save()
+        self.subcategory.save(update_fields=['parent'])
 
         self.assertQuerysetEqual(Feature.objects.filter(categories=self.subcategory).order_by('id'),
                                  Feature.objects.filter(categories=category_new).order_by('id'))
