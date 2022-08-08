@@ -116,6 +116,23 @@
                     {% endif %}
                   </div>
                   <span class="CategoriesButton-text">{{ category.name }}</span>
+
+                  {% if category.get_children %}
+                    <a class="CategoriesButton-arrow" href="#"></a>
+                  {% endif %}
+
+                   <div class="CategoriesButton-submenu">
+                    {% for subcategory in category.get_children %}
+                        <a class="CategoriesButton-link" href="#">
+                          <div class="CategoriesButton-icon">
+                            {% if category.icon %}
+                              <img src="{{ subcategory.icon.url}}" alt="{{ subcategory.name | truncatechars:3 }}"/>
+                            {% endif %}
+                          </div>
+                          <span class="CategoriesButton-text">{{ subcategory.name }}</span>
+                        </a>
+                    {% endfor %}
+                   </div>
                 </a>
               </div>
             {% endfor %}

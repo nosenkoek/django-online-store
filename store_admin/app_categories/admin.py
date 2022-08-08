@@ -52,8 +52,19 @@ class FeatureCategoryInline(TypeFeatureFieldMixin, admin.TabularInline):
         return super().has_change_permission(request, obj)
 
 
+class ActionsMixin():
+    """Добавление груповых действий"""
+    @admin.action(description=_('Mark is active'))
+    def mark_is_active(self, request, queryset):
+        queryset.update(is_active=True)
+
+    @admin.action(description=_('Mark is not active'))
+    def mark_isnt_active(self, request, queryset):
+        queryset.update(is_active=False)
+
+
 @admin.register(Category)
-class CategoryAdmin(MPTTModelAdmin):
+class CategoryAdmin(MPTTModelAdmin, ActionsMixin):
     """Панель категорий"""
     list_display = ('name', 'is_active')
 
@@ -63,6 +74,11 @@ class CategoryAdmin(MPTTModelAdmin):
 
     list_filter = ('is_active',)
     search_fields = ('name',)
+
+    actions = [
+        'mark_is_active',
+        'mark_isnt_active'
+    ]
 
     inlines = (FeatureCategoryInline, )
 

@@ -19,7 +19,7 @@ class Category(MPTTModel):
     name = models.CharField(max_length=30, verbose_name=_('name'))
     icon = models.FileField(upload_to='icons_categories/', validators=[svg_validator],
                             null=True, blank=True, verbose_name=_('icon'))
-    is_active = models.BooleanField(verbose_name=_('is_active'))
+    is_active = models.BooleanField(verbose_name=_('is active'))
 
     parent = TreeForeignKey('self', on_delete=models.CASCADE,
                             to_field='category_id', null=True, blank=True,

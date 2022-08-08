@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-03 16:11+0300\n"
+"POT-Creation-Date: 2022-08-04 15:25+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,8 +21,17 @@ msgstr ""
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: .\app_categories\admin.py:27 .\app_categories\models.py:55
+#: .\app_categories\tests\tests_models.py:25
 msgid "type feature"
 msgstr "тип характеристики"
+
+#: .\app_categories\admin.py:57
+msgid "Mark is active"
+msgstr "Сделать активным"
+
+#: .\app_categories\admin.py:61
+msgid "Mark is not active"
+msgstr "Сделать не активным"
 
 #: .\app_categories\apps.py:9 .\app_categories\models.py:37
 msgid "categories"
@@ -33,7 +42,8 @@ msgid "File not SVG"
 msgstr "Файл не SVG"
 
 #: .\app_categories\models.py:19 .\app_categories\models.py:53
-#: .\app_products\models.py:16 .\app_products\models.py:32
+#: .\app_categories\tests\tests_models.py:20 .\app_products\models.py:16
+#: .\app_products\models.py:32
 msgid "name"
 msgstr "название"
 
@@ -173,10 +183,10 @@ msgstr "Аккаунт"
 msgid "Categories"
 msgstr "Категории"
 
-#: .\templates\header.html:130
+#: .\templates\header.html:147
 msgid "What are you looking for ..."
 msgstr "Что ищете ..."
 
-#: .\templates\header.html:131
+#: .\templates\header.html:148
 msgid "Search"
 msgstr "Поиск"

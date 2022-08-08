@@ -24,7 +24,7 @@ def add_features_subcategory(sender, instance, created, **kwargs) -> None:
         CategoryFeature.objects.bulk_create(results)
 
     # В случае изменения характеристик в родителе, изменяются характеристики у потомков
-    if not created and instance.is_root_node():
+    if instance.is_root_node() and not created:
         subcategories = instance.get_children()
         feature_category = CategoryFeature.objects.filter(category_fk__in=subcategories).all()
         feature_category.delete()

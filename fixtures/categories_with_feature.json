@@ -1,0 +1,519 @@
+[
+{
+    "model": "app_categories.category",
+    "pk": "015d2061-33cb-4e4d-8c4c-0de29905c984",
+    "fields": {
+        "category_id": "bcfab9e6-1b5e-4e68-afa9-34823bde5c39",
+        "name": "Аксессуары",
+        "icon": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 6,
+        "tree_id": 2,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "51945d34-a059-4123-a4c5-b8676b66815c",
+    "fields": {
+        "category_id": "b976aa84-480a-402d-a050-2f2aa7eb25b1",
+        "name": "Компьютеры",
+        "icon": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 6,
+        "tree_id": 1,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "8b1afc81-4a60-4aa2-bfaf-e8092f0cbb02",
+    "fields": {
+        "category_id": "340f870f-9f71-4391-bc27-9ee6bd02163d",
+        "name": "Бытовая техника",
+        "icon": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 6,
+        "tree_id": 4,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "523ff7ad-82ea-45d6-9ba2-070b3ae74c4d",
+    "fields": {
+        "category_id": "81a64dc5-9211-4d47-a9ce-b303582467ee",
+        "name": "Кофемашина",
+        "icon": "",
+        "is_active": true,
+        "parent": "340f870f-9f71-4391-bc27-9ee6bd02163d",
+        "lft": 4,
+        "rght": 5,
+        "tree_id": 4,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "7dc80adc-9c3b-4108-9897-97df1862ae44",
+    "fields": {
+        "category_id": "fb0aae84-867a-492c-8b04-5ba8b1db0e5e",
+        "name": "Моноблок",
+        "icon": "",
+        "is_active": true,
+        "parent": "b976aa84-480a-402d-a050-2f2aa7eb25b1",
+        "lft": 4,
+        "rght": 5,
+        "tree_id": 1,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "5cc829fb-0174-4587-86d8-90c6384d6503",
+    "fields": {
+        "category_id": "5eeca678-49a5-4362-b698-93edd7f7e1fe",
+        "name": "Гарнитуры",
+        "icon": "",
+        "is_active": true,
+        "parent": "bcfab9e6-1b5e-4e68-afa9-34823bde5c39",
+        "lft": 2,
+        "rght": 3,
+        "tree_id": 2,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "8dd47ee2-9cff-4695-98bf-30a76b0599b3",
+    "fields": {
+        "category_id": "0aa54836-4a94-4a68-a40e-5637709064aa",
+        "name": "Холодильник",
+        "icon": "",
+        "is_active": true,
+        "parent": "340f870f-9f71-4391-bc27-9ee6bd02163d",
+        "lft": 2,
+        "rght": 3,
+        "tree_id": 4,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "b37bfcc8-1eca-4f54-9a2b-c4077fd09f77",
+    "fields": {
+        "category_id": "eda2e294-a0e0-4c07-a4bb-84722e7e30f8",
+        "name": "Ноутбуки",
+        "icon": "",
+        "is_active": true,
+        "parent": "b976aa84-480a-402d-a050-2f2aa7eb25b1",
+        "lft": 2,
+        "rght": 3,
+        "tree_id": 1,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "c990d22c-4f6a-40e1-86a1-5478063de642",
+    "fields": {
+        "category_id": "032237b7-0ef2-439e-98fd-c4c2f22e45df",
+        "name": "Мыши и клавиатуры",
+        "icon": "",
+        "is_active": true,
+        "parent": "bcfab9e6-1b5e-4e68-afa9-34823bde5c39",
+        "lft": 4,
+        "rght": 5,
+        "tree_id": 2,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "ff7e26e8-7d2e-4011-b76a-cfba2a35d1b0",
+    "fields": {
+        "category_id": "7bbf8aeb-3d9b-4168-85df-fceed404df6b",
+        "name": "Телефоны",
+        "icon": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 2,
+        "tree_id": 3,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.feature",
+    "pk": "25c783a9-3ec7-4304-9bbc-c89c8af0984e",
+    "fields": {
+        "feature_id": "833d99d5-d4b1-4197-85b6-2362dfcc8403",
+        "name": "Экран",
+        "type_feature": "select"
+    }
+},
+{
+    "model": "app_categories.feature",
+    "pk": "6e89ea7c-fd0d-4c1f-b448-0fdcb4508532",
+    "fields": {
+        "feature_id": "d9171f07-148c-4a49-b10f-72ed5de1cb79",
+        "name": "Цвет",
+        "type_feature": "select"
+    }
+},
+{
+    "model": "app_categories.feature",
+    "pk": "783aa547-b7ca-4445-a9d4-674572e26d47",
+    "fields": {
+        "feature_id": "18cc2965-c720-4004-9927-6d060f095d57",
+        "name": "Габариты",
+        "type_feature": "text"
+    }
+},
+{
+    "model": "app_categories.feature",
+    "pk": "9a57d96a-18f6-4744-a00b-027c9c498e27",
+    "fields": {
+        "feature_id": "3df829f6-8b29-4c83-93d2-e2b5e93c1d19",
+        "name": "Память",
+        "type_feature": "select"
+    }
+},
+{
+    "model": "app_categories.feature",
+    "pk": "ab51414e-8dcd-4f93-8e1a-a5562a0c89bd",
+    "fields": {
+        "feature_id": "b91c77b4-106a-411e-bc39-8b279c4d8fc9",
+        "name": "Оперативная память",
+        "type_feature": "select"
+    }
+},
+{
+    "model": "app_categories.feature",
+    "pk": "b79fd010-73a0-4796-8846-f47bf0032854",
+    "fields": {
+        "feature_id": "dda9e9a4-e262-40b1-b1f9-51a3e967c772",
+        "name": "Bluetooth",
+        "type_feature": "checkbox"
+    }
+},
+{
+    "model": "app_categories.feature",
+    "pk": "d7aed599-4632-4259-bfdb-f9e9fb4e9653",
+    "fields": {
+        "feature_id": "a721c742-44cf-444f-886a-93769378ca25",
+        "name": "Вес",
+        "type_feature": "text"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "0b850468-6ca3-4a92-bf23-acfcee6bd45c",
+    "fields": {
+        "category_fk": "340f870f-9f71-4391-bc27-9ee6bd02163d",
+        "feature_fk": "18cc2965-c720-4004-9927-6d060f095d57"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "0d506480-6110-4454-b3bf-602c3b706791",
+    "fields": {
+        "category_fk": "0aa54836-4a94-4a68-a40e-5637709064aa",
+        "feature_fk": "d9171f07-148c-4a49-b10f-72ed5de1cb79"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "19ae8a62-f15c-4610-b135-fd74f05e36ef",
+    "fields": {
+        "category_fk": "b976aa84-480a-402d-a050-2f2aa7eb25b1",
+        "feature_fk": "a721c742-44cf-444f-886a-93769378ca25"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "21fd634e-8879-4e36-bf7b-8fd45d5016a3",
+    "fields": {
+        "category_fk": "7bbf8aeb-3d9b-4168-85df-fceed404df6b",
+        "feature_fk": "dda9e9a4-e262-40b1-b1f9-51a3e967c772"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "231c3dbc-9b73-4856-acd3-076338ac1b35",
+    "fields": {
+        "category_fk": "7bbf8aeb-3d9b-4168-85df-fceed404df6b",
+        "feature_fk": "d9171f07-148c-4a49-b10f-72ed5de1cb79"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "28e89850-155c-435c-867b-464509b3458b",
+    "fields": {
+        "category_fk": "b976aa84-480a-402d-a050-2f2aa7eb25b1",
+        "feature_fk": "3df829f6-8b29-4c83-93d2-e2b5e93c1d19"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "2ed685e0-b84a-4b2e-b057-9b09c872bddd",
+    "fields": {
+        "category_fk": "0aa54836-4a94-4a68-a40e-5637709064aa",
+        "feature_fk": "a721c742-44cf-444f-886a-93769378ca25"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "36198a13-386f-4106-a4e4-58040d776b27",
+    "fields": {
+        "category_fk": "81a64dc5-9211-4d47-a9ce-b303582467ee",
+        "feature_fk": "18cc2965-c720-4004-9927-6d060f095d57"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "37b1ee85-e527-448c-9438-0c8e6f211d94",
+    "fields": {
+        "category_fk": "eda2e294-a0e0-4c07-a4bb-84722e7e30f8",
+        "feature_fk": "dda9e9a4-e262-40b1-b1f9-51a3e967c772"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "3cd1dd1a-cb5c-48ed-a588-c75c0aac623d",
+    "fields": {
+        "category_fk": "7bbf8aeb-3d9b-4168-85df-fceed404df6b",
+        "feature_fk": "18cc2965-c720-4004-9927-6d060f095d57"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "41d758c7-b39b-456d-b800-efeafacea451",
+    "fields": {
+        "category_fk": "eda2e294-a0e0-4c07-a4bb-84722e7e30f8",
+        "feature_fk": "b91c77b4-106a-411e-bc39-8b279c4d8fc9"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "4776769a-31c5-425a-962d-65031923ddeb",
+    "fields": {
+        "category_fk": "340f870f-9f71-4391-bc27-9ee6bd02163d",
+        "feature_fk": "a721c742-44cf-444f-886a-93769378ca25"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "55fe4d30-9f62-4fb8-9b76-5473ee172d92",
+    "fields": {
+        "category_fk": "b976aa84-480a-402d-a050-2f2aa7eb25b1",
+        "feature_fk": "dda9e9a4-e262-40b1-b1f9-51a3e967c772"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "5c8a6c32-103b-4df1-ac7d-5cae4b76df80",
+    "fields": {
+        "category_fk": "7bbf8aeb-3d9b-4168-85df-fceed404df6b",
+        "feature_fk": "a721c742-44cf-444f-886a-93769378ca25"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "6148e28c-1a03-4f78-9061-4bc40f13e7c4",
+    "fields": {
+        "category_fk": "fb0aae84-867a-492c-8b04-5ba8b1db0e5e",
+        "feature_fk": "a721c742-44cf-444f-886a-93769378ca25"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "63176130-ec4d-4994-8b6e-5aa76bc00818",
+    "fields": {
+        "category_fk": "fb0aae84-867a-492c-8b04-5ba8b1db0e5e",
+        "feature_fk": "18cc2965-c720-4004-9927-6d060f095d57"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "64af9556-6766-4dbb-b705-92771a4f3a3e",
+    "fields": {
+        "category_fk": "032237b7-0ef2-439e-98fd-c4c2f22e45df",
+        "feature_fk": "a721c742-44cf-444f-886a-93769378ca25"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "7044bbe8-9fb8-4a80-be05-aca3a62235f6",
+    "fields": {
+        "category_fk": "81a64dc5-9211-4d47-a9ce-b303582467ee",
+        "feature_fk": "a721c742-44cf-444f-886a-93769378ca25"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "79c252cd-1ab5-4101-b0c2-bdf6145039bf",
+    "fields": {
+        "category_fk": "7bbf8aeb-3d9b-4168-85df-fceed404df6b",
+        "feature_fk": "b91c77b4-106a-411e-bc39-8b279c4d8fc9"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "7dada6e9-aa0a-4a60-8a0f-9fa48bb53d44",
+    "fields": {
+        "category_fk": "eda2e294-a0e0-4c07-a4bb-84722e7e30f8",
+        "feature_fk": "3df829f6-8b29-4c83-93d2-e2b5e93c1d19"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "83751a14-561d-421b-bac6-b459cb1038cd",
+    "fields": {
+        "category_fk": "eda2e294-a0e0-4c07-a4bb-84722e7e30f8",
+        "feature_fk": "18cc2965-c720-4004-9927-6d060f095d57"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "85f3b2da-fd69-4e44-b29a-d3d0d7108d57",
+    "fields": {
+        "category_fk": "032237b7-0ef2-439e-98fd-c4c2f22e45df",
+        "feature_fk": "dda9e9a4-e262-40b1-b1f9-51a3e967c772"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "8b475dd7-2bbb-499c-890c-e0fb345e48d3",
+    "fields": {
+        "category_fk": "fb0aae84-867a-492c-8b04-5ba8b1db0e5e",
+        "feature_fk": "b91c77b4-106a-411e-bc39-8b279c4d8fc9"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "8f5ebdb9-2b19-469d-bd1b-995de4d596a1",
+    "fields": {
+        "category_fk": "eda2e294-a0e0-4c07-a4bb-84722e7e30f8",
+        "feature_fk": "a721c742-44cf-444f-886a-93769378ca25"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "922a09e3-f649-4705-9dd0-1cd000914746",
+    "fields": {
+        "category_fk": "81a64dc5-9211-4d47-a9ce-b303582467ee",
+        "feature_fk": "d9171f07-148c-4a49-b10f-72ed5de1cb79"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "9241315c-cb6b-4868-9b66-e54c94acc44f",
+    "fields": {
+        "category_fk": "eda2e294-a0e0-4c07-a4bb-84722e7e30f8",
+        "feature_fk": "833d99d5-d4b1-4197-85b6-2362dfcc8403"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "9a3ad24a-f38e-4d5c-95c2-d491aa3b0d85",
+    "fields": {
+        "category_fk": "5eeca678-49a5-4362-b698-93edd7f7e1fe",
+        "feature_fk": "a721c742-44cf-444f-886a-93769378ca25"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "9dac6b81-0772-4437-994b-6a87bd3b0835",
+    "fields": {
+        "category_fk": "fb0aae84-867a-492c-8b04-5ba8b1db0e5e",
+        "feature_fk": "3df829f6-8b29-4c83-93d2-e2b5e93c1d19"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "a2668142-41b0-4ab8-91a4-d45510bfffab",
+    "fields": {
+        "category_fk": "b976aa84-480a-402d-a050-2f2aa7eb25b1",
+        "feature_fk": "18cc2965-c720-4004-9927-6d060f095d57"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "ab8076a4-57f7-48f4-a978-ad32576f227b",
+    "fields": {
+        "category_fk": "340f870f-9f71-4391-bc27-9ee6bd02163d",
+        "feature_fk": "d9171f07-148c-4a49-b10f-72ed5de1cb79"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "b4d9b9a2-4cd9-421a-915a-8235174bf113",
+    "fields": {
+        "category_fk": "0aa54836-4a94-4a68-a40e-5637709064aa",
+        "feature_fk": "18cc2965-c720-4004-9927-6d060f095d57"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "cac6b30b-97bd-4eb6-9396-ea72bcc257f8",
+    "fields": {
+        "category_fk": "bcfab9e6-1b5e-4e68-afa9-34823bde5c39",
+        "feature_fk": "a721c742-44cf-444f-886a-93769378ca25"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "e3bb8c8b-297a-49a3-aebb-6630f7d5c66a",
+    "fields": {
+        "category_fk": "fb0aae84-867a-492c-8b04-5ba8b1db0e5e",
+        "feature_fk": "833d99d5-d4b1-4197-85b6-2362dfcc8403"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "f20d6a48-bb2a-49d1-96a9-19f1bc2a63f5",
+    "fields": {
+        "category_fk": "b976aa84-480a-402d-a050-2f2aa7eb25b1",
+        "feature_fk": "b91c77b4-106a-411e-bc39-8b279c4d8fc9"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "f3e56cbd-dd6c-4cf6-9d30-c14474eb382e",
+    "fields": {
+        "category_fk": "5eeca678-49a5-4362-b698-93edd7f7e1fe",
+        "feature_fk": "dda9e9a4-e262-40b1-b1f9-51a3e967c772"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "f7dfb181-3fd8-4632-93e6-f6486ca3b27d",
+    "fields": {
+        "category_fk": "bcfab9e6-1b5e-4e68-afa9-34823bde5c39",
+        "feature_fk": "dda9e9a4-e262-40b1-b1f9-51a3e967c772"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "fb7fd4da-69d4-4d29-803a-7eb87dc47ebe",
+    "fields": {
+        "category_fk": "7bbf8aeb-3d9b-4168-85df-fceed404df6b",
+        "feature_fk": "3df829f6-8b29-4c83-93d2-e2b5e93c1d19"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "fe43d4b0-3f7a-4e26-8151-06b2fe65ee4b",
+    "fields": {
+        "category_fk": "fb0aae84-867a-492c-8b04-5ba8b1db0e5e",
+        "feature_fk": "dda9e9a4-e262-40b1-b1f9-51a3e967c772"
+    }
+}
+]
