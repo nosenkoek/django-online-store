@@ -53,22 +53,14 @@ class ProductAdmin(ListDisplayProductExtendMixin, admin.ModelAdmin):
     search_fields = ('name', )
     list_filter = (ProductCategoryFilter, ProductManufacturerFilter, 'is_limited')
 
-    # todo: исправить после добавления сигналов
-    def save_model(self, request, obj, form, change):
+    def save_model(self, request, obj, form, change) -> None:
         if not obj.product_id:
             obj.product_id = uuid4()
+
+        if 'category_fk' in form.changed_data:
+            obj.save(update_fields=form.changed_data)
+        else:
             super().save_model(request, obj, form, change)
-
-    def save_formset(self, request, form, formset, change):
-        """
-        Если не сохранена модель, то она сохраняется.
-        Если есть, то сохраняется после inline элементов.
-        """
-        formset.save()
-        form.instance.save()
-
-    def save_related(self, request, form, formsets, change):
-        super().save_related(request, form, formsets, change)
 
 
 @admin.register(Manufacturer)

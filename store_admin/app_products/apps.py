@@ -8,4 +8,4 @@ class AppProductsConfig(AppConfig):
     verbose_name = _('products')
 
     def ready(self):
-        pass
+        from app_products import signals

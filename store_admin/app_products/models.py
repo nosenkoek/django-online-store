@@ -34,7 +34,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=7, decimal_places=2, verbose_name=_('price'), validators=[MinValueValidator(0)])
     image = models.CharField(max_length=100, verbose_name=_('image'))    # todo: не забыть исправить
     # image = models.ImageField(upload_to='product_images/', verbose_name=_('image'))
-    added = models.DateTimeField(verbose_name=_('added'))
+    added = models.DateTimeField(auto_now_add=True, verbose_name=_('added'))
     is_limited = models.BooleanField(verbose_name=_('is_limited'))
 
     category_fk = models.ForeignKey(Category, on_delete=models.CASCADE,
