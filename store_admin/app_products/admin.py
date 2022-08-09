@@ -7,6 +7,7 @@ from django.utils.translation import gettext as _
 from app_products.models import Product, Manufacturer, ProductFeature
 from app_categories.admin import TypeFeatureFieldMixin
 from app_products.filters import ProductCategoryFilter, ProductManufacturerFilter
+from app_products.forms import FeatureFormset
 
 
 class FeatureProductInline(TypeFeatureFieldMixin, admin.TabularInline):
@@ -14,6 +15,7 @@ class FeatureProductInline(TypeFeatureFieldMixin, admin.TabularInline):
     model = ProductFeature
     fields = ['feature_fk', 'value', 'type_feature']
     readonly_fields = ['feature_fk', 'type_feature']
+    formset = FeatureFormset
 
     def has_add_permission(self, request, obj) -> bool:
         """Возможность добавлять характеристики к товарам"""

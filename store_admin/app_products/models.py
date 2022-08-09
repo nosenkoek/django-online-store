@@ -2,9 +2,7 @@ from uuid import uuid4
 
 from django.db import models
 from django.core.validators import MinValueValidator
-from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
-from django.core.exceptions import ValidationError
 
 from app_categories.models import Category, Feature
 
@@ -31,11 +29,12 @@ class Product(models.Model):
     product_id = models.UUIDField(unique=True, default=uuid4, editable=False)
     name = models.CharField(max_length=50, verbose_name=_('name'))
     description = models.TextField(verbose_name=_('description'))
-    price = models.DecimalField(max_digits=7, decimal_places=2, verbose_name=_('price'), validators=[MinValueValidator(0)])
+    price = models.DecimalField(max_digits=7, decimal_places=2,
+                                verbose_name=_('price'), validators=[MinValueValidator(0)])
     image = models.CharField(max_length=100, verbose_name=_('image'))    # todo: не забыть исправить
     # image = models.ImageField(upload_to='product_images/', verbose_name=_('image'))
     added = models.DateTimeField(auto_now_add=True, verbose_name=_('added'))
-    is_limited = models.BooleanField(verbose_name=_('is_limited'))
+    is_limited = models.BooleanField(verbose_name=_('is limited'))
 
     category_fk = models.ForeignKey(Category, on_delete=models.CASCADE,
                                     to_field='category_id', db_column='category_fk',
@@ -67,12 +66,6 @@ class ProductFeature(models.Model):
                                    verbose_name=_('feature'))
 
     value = models.CharField(max_length=20, verbose_name=_('value'))
-
-    def clean(self):
-        # todo: додумать как сделать верное заполнение и отображение поля
-        if (self.feature_fk.type_feature == 'checkbox'
-                and self.value not in (_('no'), _('yes'))):
-            raise ValidationError(_('Value must be yes/no'))
 
     class Meta:
         managed = False
