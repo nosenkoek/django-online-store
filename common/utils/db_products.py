@@ -8,9 +8,6 @@ from psycopg2.extras import execute_batch
 
 fake = Faker()
 
-# TODO: можно исправить с учетом триггеров в БД
-
-
 # Подготавливаем DSN (Data Source Name) для подключения к БД Postgres
 dsn = {
     'dbname': 'store_db',
@@ -21,19 +18,6 @@ dsn = {
     'options': '-c search_path=content',
 }
 
-TYPE_FEATURES = ['select', 'checkbox', 'text']
-
-CATEGORIES_FEATURES = {
-    'Компьютеры': ['Вес', 'Габариты'],
-    'Телефоны': ['Вес', 'Габариты', 'Память', 'Экран'],
-    'Стиральные машины': ['Вес', 'Габариты'],
-    'Гарнитуры': ['Вес', 'Габариты'],
-}
-
-CATEGORIES = {item: str(uuid.uuid4()) for item in CATEGORIES_FEATURES.keys()}
-FEATURES = {item: str(uuid.uuid4()) for item in ['Вес', 'Габариты', 'Память', 'Экран']}
-
-FEEDBACKS_COUNT = 20
 MANUFACTURERS_COUNT = 5
 PRODUCTS_COUNT = 2_000
 PRODUCTS_LIMITED_COUNT = 16
@@ -45,27 +29,19 @@ now = datetime.utcnow()
 # В конце блока автоматически закроется курсор (cursor.close())
 # и соединение (conn.close())
 with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
-    # todo: подумать может вынести заполнение таблиц в отельные функции/классы
-    # # Заполнение таблицы category
-    # query = 'INSERT INTO category (id, category_id, name, icon, is_active) VALUES (%s, %s, %s, %s, %s)'
-    # data_categories = [(fake.uuid4(), category_id, name, None, random.choice([True, False]))
-    #                    for name, category_id in CATEGORIES.items()]
-    # execute_batch(cur, query, data_categories, page_size=PAGE_SIZE)
-    #
-    # # # Заполнение таблицы feature
-    # query = 'INSERT INTO feature (id, feature_id, name, type_feature) VALUES (%s, %s, %s, %s)'
-    # data_features = [(fake.uuid4(), feature_id, name, random.choice(TYPE_FEATURES))
-    #                  for name, feature_id, in FEATURES.items()]
-    # execute_batch(cur, query, data_features, page_size=PAGE_SIZE)
-    #
-    # # # Заполнение таблицы category_feature
-    # query = 'INSERT INTO category_feature (id, category_fk, feature_fk) VALUES (%s, %s, %s)'
-    #
-    # data_category_feature = [(str(uuid.uuid4()), CATEGORIES[category], FEATURES[feature])
-    #                          for category, feature_list in CATEGORIES_FEATURES.items()
-    #                          for feature in feature_list]
-    #
-    # execute_batch(cur, query, data_category_feature, page_size=PAGE_SIZE)
+    query = 'SELECT category_id FROM category;'
+    cur.execute(query)
+    category_ids = [category_id[0] for category_id in cur]
+    category_feature = {}
+
+    for category_id in category_ids:
+        query = 'SELECT feature_fk FROM category_feature WHERE category_fk = %s;'
+        cur.execute(query, (category_id,))
+        category_feature.update({category_id: [feature_id[0] for feature_id in cur]})
+
+    query = "SELECT feature_id FROM feature WHERE type_feature::text = 'checkbox';"
+    cur.execute(query)
+    feature_id_ckeckbox = [feature_id[0] for feature_id in cur]
 
     # Заполнение таблицы Manufacturer
     manufacturers_ids = [str(uuid.uuid4()) for _ in range(MANUFACTURERS_COUNT)]
@@ -75,17 +51,24 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
     execute_batch(cur, query, data_manufacturers, page_size=PAGE_SIZE)
 
     # Заполнение таблицы Product
-    product_ids = [str(uuid.uuid4()) for _ in range(PRODUCTS_COUNT)]
     query = 'INSERT INTO product (id, product_id, name, description, price, ' \
             'image, added, is_limited,' \
             'category_fk, manufacturer_fk) ' \
             'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
-    data_products = [
-        (fake.uuid4(), uk, fake.company(), fake.sentence(nb_words=10), random.uniform(1, 1_000),
-         fake.word(), fake.date_time(), False,
-         random.choice(list(CATEGORIES.values())), random.choice(manufacturers_ids))
-        for uk in product_ids
-    ]
+    product_ids = [str(uuid.uuid4()) for _ in range(PRODUCTS_COUNT)]
+    product_category = {}
+    data_products = []
+
+    for product_id in product_ids:
+        category_current = random.choice(category_ids)
+        product_category.update({product_id: category_current})
+
+        data_products.append(
+            (fake.uuid4(), product_id, fake.company(), fake.sentence(nb_words=10),
+             round(random.uniform(1, 1_000), 2), fake.word(), fake.date_time(),
+             False, category_current, random.choice(manufacturers_ids))
+        )
+
     execute_batch(cur, query, data_products, page_size=PAGE_SIZE)
 
     query_update_is_limited = "UPDATE product SET is_limited = %s WHERE product_id = %s"
@@ -98,24 +81,12 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
     data_product_feature = []
 
     for product_id in product_ids:
-        query = 'SELECT cf.feature_fk ' \
-                'FROM category_feature cf ' \
-                'JOIN product p ON cf.category_fk = p.category_fk AND p.product_id=  %s;'
-        cur.execute(query, (product_id,))
-
-        for feature in cur:
-            data_product_feature.append((str(uuid.uuid4()), product_id, feature, fake.word()))
+        category_id = product_category.get(product_id)
+        feature_list = category_feature.get(category_id)
+        for feature_id in feature_list:
+            if feature_id in feature_id_ckeckbox:
+                data_product_feature.append((str(uuid.uuid4()), product_id, feature_id, random.choice(['yes', 'no'])))
+            else:
+                data_product_feature.append((str(uuid.uuid4()), product_id, feature_id, fake.word()))
 
     execute_batch(cur, query_product_feature, data_product_feature, page_size=PAGE_SIZE)
-
-    # Заполнение таблицы Feedback
-    query = 'INSERT INTO feedback (id, feedback_id, text, product_fk, user_fk) VALUES (%s, %s, %s, %s, %s)'
-
-    data_feedbacks = [
-        (str(uuid.uuid4()), fake.uuid4(), fake.sentence(nb_words=33), product_id, 1)
-        for product_id in product_ids
-        for _ in range(random.randint(0, FEEDBACKS_COUNT))
-    ]
-    execute_batch(cur, query, data_feedbacks, page_size=PAGE_SIZE)
-
-    conn.commit()

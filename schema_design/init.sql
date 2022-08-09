@@ -23,7 +23,7 @@ DROP INDEX IF EXISTS product_limited_idx;
 
 
 -- PRODUCTS
-CREATE TYPE type_feature AS ENUM ('select', 'checkbox', 'text');
+CREATE TYPE type_feature_enum AS ENUM ('select', 'checkbox', 'text');
 
 CREATE TABLE "content".category (
     id uuid PRIMARY KEY,
@@ -42,7 +42,7 @@ CREATE TABLE "content".feature(
     id uuid PRIMARY KEY,
     feature_id uuid UNIQUE NOT NULL,
     name varchar(30) NOT NULL,
-    type_feature type_feature NOT NULL
+    type_feature type_feature_enum NOT NULL
 );
 
 CREATE TABLE "content".category_feature(
