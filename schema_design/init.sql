@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS "content".delivery_method;
 DROP TABLE IF EXISTS "content".payment_method;
 DROP TABLE IF EXISTS "content".profile;
 
-DROP TYPE IF EXISTS type_feature;
+DROP TYPE IF EXISTS type_feature_enum;
 DROP INDEX IF EXISTS product_name_trgm_idx;
 DROP INDEX IF EXISTS product_price_idx;
 DROP INDEX IF EXISTS feature_value_idx;
@@ -30,6 +30,7 @@ CREATE TABLE "content".category (
     category_id uuid UNIQUE NOT NULL,
     name varchar(30) NOT NULL,
     icon varchar(100),
+    image varchar(100),
     is_active bool NOT NULL,
     parent_id uuid,
     rght int,

@@ -19,9 +19,27 @@ dsn = {
 }
 
 MANUFACTURERS_COUNT = 5
-PRODUCTS_COUNT = 2_000
-PRODUCTS_LIMITED_COUNT = 16
+PRODUCTS_IN_CATEGORY_COUNT = 125
+PRODUCTS_LIMITED_COUNT = 10
 PAGE_SIZE = 50
+
+IMAGE_LINKS = [
+    'product_images/mac.png',
+    'product_images/videoca.png',
+    'product_images/tablet.png',
+    'product_images/wash.png',
+    'product_images/smartphone.png',
+    'product_images/watch.png',
+    'product_images/audio.png',
+    'product_images/notebook.png',
+    'product_images/tv.png',
+    'product_images/ddr4.png',
+    'product_images/comp.png',
+    'product_images/blender.png',
+    'product_images/headset.png',
+    'product_images/photo.png',
+    'product_images/microwave.png',
+]
 
 now = datetime.utcnow()
 
@@ -29,7 +47,7 @@ now = datetime.utcnow()
 # В конце блока автоматически закроется курсор (cursor.close())
 # и соединение (conn.close())
 with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
-    query = 'SELECT category_id FROM category;'
+    query = 'SELECT category_id FROM category WHERE level=1 ORDER BY category_id;'
     cur.execute(query)
     category_ids = [category_id[0] for category_id in cur]
     category_feature = {}
@@ -55,32 +73,32 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
             'image, added, is_limited,' \
             'category_fk, manufacturer_fk) ' \
             'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
-    product_ids = [str(uuid.uuid4()) for _ in range(PRODUCTS_COUNT)]
+
     product_category = {}
     data_products = []
 
-    for product_id in product_ids:
-        category_current = random.choice(category_ids)
-        product_category.update({product_id: category_current})
+    for num, category_id in enumerate(category_ids):
+        product_ids = [str(uuid.uuid4()) for _ in range(PRODUCTS_IN_CATEGORY_COUNT)]
 
-        data_products.append(
-            (fake.uuid4(), product_id, fake.company(), fake.sentence(nb_words=10),
-             round(random.uniform(1, 1_000), 2), fake.word(), fake.date_time(),
-             False, category_current, random.choice(manufacturers_ids))
-        )
+        for product_num, product_id in enumerate(product_ids):
+            product_category.update({product_id: category_id})
+
+            is_limited = True if product_num <= PRODUCTS_LIMITED_COUNT else False
+
+            data_products.append(
+                (fake.uuid4(), product_id, fake.company(), fake.sentence(nb_words=10),
+                 round(random.uniform(100, 10_000), 2), IMAGE_LINKS[num], fake.date_time(),
+                 is_limited, category_id, random.choice(manufacturers_ids))
+            )
 
     execute_batch(cur, query, data_products, page_size=PAGE_SIZE)
-
-    query_update_is_limited = "UPDATE product SET is_limited = %s WHERE product_id = %s"
-    data_update_is_limited = [(True, random.choice(product_ids)) for _ in range(PRODUCTS_LIMITED_COUNT)]
-    execute_batch(cur, query_update_is_limited, data_update_is_limited, page_size=PAGE_SIZE)
 
     # Заполнение таблицы product_feature
     query_product_feature = 'INSERT INTO product_feature (id, product_fk, feature_fk, value) VALUES (%s, %s, %s, %s)'
 
     data_product_feature = []
 
-    for product_id in product_ids:
+    for product_id in product_category.keys():
         category_id = product_category.get(product_id)
         feature_list = category_feature.get(category_id)
         for feature_id in feature_list:

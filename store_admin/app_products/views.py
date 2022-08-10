@@ -1,11 +1,24 @@
 from django.shortcuts import render
 from django.views import View
+from django.db.models import Min
 
 from app_categories.models import Category
+from app_products.models import Product
 
 
 class MainPageView(View):
     def get(self, request):
         categories = Category.objects.filter(is_active=True, level=0).all()
-        return render(request, 'app_product/main_page.html', {'categories': categories})
+        random_categories = Category.objects.filter(is_active=True, level=1) \
+                                    .annotate(min_price=Min('product__price')) \
+                                    .order_by('?')\
+                                    .only('name', 'icon')[:3]
+        products = Product.objects.order_by('?').select_related('category_fk', 'category_fk__parent')[:8]
 
+        context_data = {
+            'categories': categories,
+            'random_categories': random_categories,
+            'products': products
+        }
+
+        return render(request, 'app_product/main_page.html', context=context_data)

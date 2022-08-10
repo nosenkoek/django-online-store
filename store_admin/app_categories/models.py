@@ -17,8 +17,10 @@ class Category(MPTTModel):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     category_id = models.UUIDField(unique=True, default=uuid4, editable=False)
     name = models.CharField(max_length=30, verbose_name=_('name'))
-    icon = models.FileField(upload_to='icons_categories/', validators=[svg_validator],
+    icon = models.FileField(upload_to='categories_icons/', validators=[svg_validator],
                             null=True, blank=True, verbose_name=_('icon'))
+    image = models.FileField(upload_to='categories_images/', validators=[svg_validator],
+                             null=True, blank=True, verbose_name=_('icon'))
     is_active = models.BooleanField(verbose_name=_('is active'))
 
     parent = TreeForeignKey('self', on_delete=models.CASCADE,

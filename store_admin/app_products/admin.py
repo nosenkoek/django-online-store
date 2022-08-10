@@ -35,16 +35,15 @@ class ListDisplayProductExtendMixin():
         queryset = super().get_queryset(request).select_related(*self.list_select_related)
         return queryset
 
+    @admin.display(description=_('category'))
     def category(self, obj) -> str:
         """Доп. поле отображения категория"""
         return obj.category_fk.name
 
+    @admin.display(description=_('manufacturer'))
     def manufacturer(self, obj) -> str:
         """Доп. поле отображения производитель"""
         return obj.manufacturer_fk.name
-
-    category.short_description = _('category')
-    manufacturer.short_description = _('manufacturer')
 
 
 @admin.register(Product)
@@ -54,6 +53,14 @@ class ProductAdmin(ListDisplayProductExtendMixin, admin.ModelAdmin):
     ordering = ('-added', )
     search_fields = ('name', )
     list_filter = (ProductCategoryFilter, ProductManufacturerFilter, 'is_limited')
+
+    def get_field_queryset(self, db, db_field, request) -> QuerySet:
+        """Добавлять товары можно только в подкатегории"""
+        queryset = super().get_field_queryset(db, db_field, request)
+
+        if db_field == Product._meta.get_field('category_fk'):
+            queryset = queryset.filter(level=1).order_by('parent')
+        return queryset
 
     def save_model(self, request, obj, form, change) -> None:
         if not obj.product_id:

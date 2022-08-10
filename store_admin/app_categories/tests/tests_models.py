@@ -29,15 +29,11 @@ class BaseModelTest(TestCase):
         with connection.cursor() as cursor:
             cursor.execute(open('..\\schema_design\\init.sql', 'r').read())
 
-        feature = Feature.objects.create(**FEATURE)
-        feature.save()
-        category = Category.objects.create(**CATEGORY)
-        category.save()
+        cls.feature = Feature.objects.create(**FEATURE)
+        cls.category = Category.objects.create(**CATEGORY)
 
 
 class FeatureTest(BaseModelTest):
-    feature = Feature.objects.first()
-
     def test_name_label(self) -> None:
         """Проверка подписи поля названия характеристики"""
         field_label = self.feature._meta.get_field('name').verbose_name
@@ -50,8 +46,6 @@ class FeatureTest(BaseModelTest):
 
 
 class CategoryTest(BaseModelTest):
-    category = Category.objects.first()
-
     def test_name_label(self) -> None:
         """Проверка подписи поля названия категории"""
         field_label = self.category._meta.get_field('name').verbose_name

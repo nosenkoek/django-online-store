@@ -22,13 +22,22 @@ MANUFACTURER = {
     'name': 'manufacturer'
 }
 
-CATEGORY = {
+CATEGORY_PARENT = {
     'id': str(uuid4()),
     'category_id': str(uuid4()),
     'name': 'category_name',
     'icon': None,
     'is_active': True,
     'parent_id': None,
+}
+
+CATEGORY = {
+    'id': str(uuid4()),
+    'category_id': str(uuid4()),
+    'name': 'category_name',
+    'icon': None,
+    'is_active': True,
+    'parent_id': CATEGORY_PARENT.get('category_id'),
 }
 
 
@@ -38,14 +47,13 @@ class BaseModelTest(TestCase):
         with connection.cursor() as cursor:
             cursor.execute(open('..\\schema_design\\init.sql', 'r').read())
 
+        Category.objects.create(**CATEGORY_PARENT)
         category = Category.objects.create(**CATEGORY)
         manufacturer = Manufacturer.objects.create(**MANUFACTURER)
-        Product.objects.create(**PRODUCT, category_fk=category, manufacturer_fk=manufacturer)
+        cls.product = Product.objects.create(**PRODUCT, category_fk=category, manufacturer_fk=manufacturer)
 
 
 class TestProduct(BaseModelTest):
-    product = Product.objects.first()
-
     def test_name_label(self) -> None:
         """Проверка подписи поля названия товара"""
         field_label = self.product._meta.get_field('name').verbose_name

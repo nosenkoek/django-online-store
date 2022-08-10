@@ -8,5 +8,5 @@ class AppCategoriesConfig(AppConfig):
     name = 'app_categories'
     verbose_name = _('categories')
 
-    def ready(self):
-        from app_categories import signals
+    # def ready(self):
+    #     from app_categories import signals

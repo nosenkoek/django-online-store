@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-09 12:17+0300\n"
+"POT-Creation-Date: 2022-08-09 16:10+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,8 +43,8 @@ msgstr "Файл не SVG"
 
 #: .\app_categories\models.py:19 .\app_categories\models.py:53
 #: .\app_categories\tests\tests_models.py:44
-#: .\app_categories\tests\tests_models.py:58 .\app_products\models.py:16
-#: .\app_products\models.py:32 .\app_products\tests\tests_models.py:52
+#: .\app_categories\tests\tests_models.py:58 .\app_products\models.py:14
+#: .\app_products\models.py:30 .\app_products\tests\tests_models.py:52
 msgid "name"
 msgstr "название"
 
@@ -62,7 +62,7 @@ msgstr "вложить в категорию"
 
 #: .\app_categories\models.py:36 .\app_categories\models.py:76
 #: .\app_products\admin.py:46 .\app_products\filters.py:30
-#: .\app_products\models.py:42 .\app_products\tests\tests_models.py:72
+#: .\app_products\models.py:41 .\app_products\tests\tests_models.py:72
 msgid "category"
 msgstr "категория"
 
@@ -79,7 +79,7 @@ msgid "text"
 msgstr "текст"
 
 #: .\app_categories\models.py:64 .\app_categories\models.py:79
-#: .\app_products\models.py:67
+#: .\app_products\models.py:66
 msgid "feature"
 msgstr "характеристика"
 
@@ -96,60 +96,60 @@ msgid "categories with features"
 msgstr "категории с характеристиками"
 
 #: .\app_products\admin.py:47 .\app_products\filters.py:43
-#: .\app_products\models.py:21 .\app_products\models.py:45
+#: .\app_products\models.py:19 .\app_products\models.py:44
 #: .\app_products\tests\tests_models.py:77
 msgid "manufacturer"
 msgstr "производитель"
 
-#: .\app_products\apps.py:8 .\app_products\models.py:53
+#: .\app_products\apps.py:8 .\app_products\models.py:52
 msgid "products"
 msgstr "товары"
 
-#: .\app_products\forms.py:15
+#: .\app_products\forms.py:17
 msgid "no"
 msgstr "нет"
 
-#: .\app_products\forms.py:15
+#: .\app_products\forms.py:17
 msgid "yes"
 msgstr "да"
 
-#: .\app_products\models.py:22
+#: .\app_products\models.py:20
 msgid "manufacturers"
 msgstr "производители"
 
-#: .\app_products\models.py:33 .\app_products\tests\tests_models.py:57
+#: .\app_products\models.py:31 .\app_products\tests\tests_models.py:57
 msgid "description"
 msgstr "описание"
 
-#: .\app_products\models.py:34 .\app_products\tests\tests_models.py:62
+#: .\app_products\models.py:33 .\app_products\tests\tests_models.py:62
 msgid "price"
 msgstr "цена"
 
-#: .\app_products\models.py:35
+#: .\app_products\models.py:34
 msgid "image"
 msgstr "изображение"
 
-#: .\app_products\models.py:37
+#: .\app_products\models.py:36
 msgid "added"
 msgstr "добавлен"
 
-#: .\app_products\models.py:38 .\app_products\tests\tests_models.py:67
+#: .\app_products\models.py:37 .\app_products\tests\tests_models.py:67
 msgid "is limited"
 msgstr "ограниченный тираж"
 
-#: .\app_products\models.py:52 .\app_products\models.py:64
+#: .\app_products\models.py:51 .\app_products\models.py:63
 msgid "product"
 msgstr "товар"
 
-#: .\app_products\models.py:69
+#: .\app_products\models.py:68
 msgid "value"
 msgstr "значение"
 
-#: .\app_products\models.py:81
+#: .\app_products\models.py:74
 msgid "product with features"
 msgstr "товар с характеристиками"
 
-#: .\app_products\models.py:82
+#: .\app_products\models.py:75
 msgid "products with features"
 msgstr "товары с характеристиками"
 
@@ -157,35 +157,87 @@ msgstr "товары с характеристиками"
 msgid "Remove"
 msgstr "Удалить"
 
-#: .\templates\header.html:15
-msgid "Follow us"
-msgstr "Подписаться"
+#: .\templates\app_product\main_page.html:21
+msgid "from"
+msgstr "от"
 
-#: .\templates\header.html:51
-msgid "Login / Register"
-msgstr "Вход / Регистрация"
+#: .\templates\footer.html:45
+msgid "Useful Links"
+msgstr "Полезные ссылки"
 
-#: .\templates\header.html:75
-msgid "Home"
-msgstr "Главная"
+#: .\templates\footer.html:48
+msgid "My cart"
+msgstr "Корзина"
 
-#: .\templates\header.html:78
-msgid "Popular"
-msgstr "Популярное"
+#: .\templates\footer.html:50
+msgid "Delivery"
+msgstr "Доставка"
 
-#: .\templates\header.html:81
+#: .\templates\footer.html:52
+msgid "Order info"
+msgstr "Информация о заказах"
+
+#: .\templates\footer.html:57
+msgid "My Account"
+msgstr "Аккаунт"
+
+#: .\templates\footer.html:60 .\templates\header.html:76
 msgid "Account"
 msgstr "Аккаунт"
 
-#: .\templates\header.html:105
+#: .\templates\footer.html:62
+msgid "Profile"
+msgstr "Профиль"
+
+#: .\templates\footer.html:64
+msgid "History order"
+msgstr "История заказов"
+
+#: .\templates\footer.html:69
+msgid "Contacts"
+msgstr "Контакты"
+
+#: .\templates\footer.html:72
+msgid "Phone"
+msgstr "Телефон"
+
+#: .\templates\footer.html:75
+msgid "Address"
+msgstr "Адрес"
+
+#: .\templates\footer.html:88
+msgid "Accepted Payments"
+msgstr "Принимаем оплату"
+
+#: .\templates\header.html:10
+msgid "Follow us"
+msgstr "Подписаться"
+
+#: .\templates\header.html:46
+msgid "Login / Register"
+msgstr "Вход / Регистрация"
+
+#: .\templates\header.html:70
+msgid "Home"
+msgstr "Главная"
+
+#: .\templates\header.html:73
+msgid "Popular"
+msgstr "Популярное"
+
+#: .\templates\header.html:84
+msgid "$"
+msgstr "₽"
+
+#: .\templates\header.html:100
 msgid "Categories"
 msgstr "Категории"
 
-#: .\templates\header.html:147
+#: .\templates\header.html:142
 msgid "What are you looking for ..."
 msgstr "Что ищете ..."
 
-#: .\templates\header.html:148
+#: .\templates\header.html:143
 msgid "Search"
 msgstr "Поиск"
 

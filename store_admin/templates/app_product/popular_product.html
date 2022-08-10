@@ -1,0 +1,44 @@
+{% load static %}
+{% load i18n %}
+
+<div class="wrap">
+  <div class="Section-content">
+    <header class="Section-header">
+      <h2 class="Section-title">
+        {% trans 'Popular Products' %}
+      </h2>
+    </header>
+
+    <div class="Cards">
+      {% for product in products %}
+        <div class="Card">
+          <a class="Card-picture" href="#">
+            <img src="{{ product.image.url }}" alt="{{ product.name | truncatechars:10 }}"/>
+          </a>
+
+          <div class="Card-content">
+            <strong class="Card-title">
+              <a href="#">{{ product.name }}</a>
+            </strong>
+            <div class="Card-description">
+              <div class="Card-cost"><span class="Card-price">{% trans '$' %}{{ product.price }}</span>
+              </div>
+              <div class="Card-category">
+                {% if not product.category_fk.level %}
+                  {{ product.category_fk.name }}
+                {% else %}
+                  {{ product.category_fk.parent.name }} / {{ product.category_fk.name }}
+                {% endif %}
+
+              </div>
+              <div class="Card-hover">
+                <a class="Card-btn" href="#"><img src="{% static 'app_product/img/icons/card/cart.svg' %}" alt="cart.svg"/></a>
+                <a class="Card-btn" href="#"><img src="{% static 'app_product/img/icons/card/change.svg' %}" alt="change.svg"/></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

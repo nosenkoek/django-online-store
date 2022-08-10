@@ -7,6 +7,15 @@ from django.db import connection
 from app_categories.models import Category, Feature, CategoryFeature
 from app_products.models import Product, Manufacturer, ProductFeature
 
+CATEGORY_PARENT = {
+    'id': str(uuid4()),
+    'category_id': str(uuid4()),
+    'name': 'category_1',
+    'icon': None,
+    'is_active': True,
+    'parent_id': None,
+}
+
 CATEGORIES = [
     {
         'id': str(uuid4()),
@@ -14,7 +23,7 @@ CATEGORIES = [
         'name': 'category_1',
         'icon': None,
         'is_active': True,
-        'parent_id': None,
+        'parent_id': CATEGORY_PARENT.get('category_id'),
     },
     {
         'id': str(uuid4()),
@@ -22,7 +31,7 @@ CATEGORIES = [
         'name': 'category_2',
         'icon': None,
         'is_active': True,
-        'parent_id': None,
+        'parent_id': CATEGORY_PARENT.get('category_id'),
     }
 ]
 
@@ -82,6 +91,7 @@ class TestSignalAddFeatureProduct(TestCase):
         with connection.cursor() as cursor:
             cursor.execute(open('..\\schema_design\\init.sql', 'r').read())
 
+        Category.objects.create(**CATEGORY_PARENT)
         category_1 = Category.objects.create(**CATEGORIES[0])
         category_2 = Category.objects.create(**CATEGORIES[1])
 
