@@ -67,6 +67,8 @@ class CategoryAdmin(MPTTModelAdmin, ActionsMixin):
         'mark_isnt_active'
     ]
 
+    prepopulated_fields = {'slug': ('name',)}
+
     inlines = (FeatureCategoryInline, )
     #todo: здесь убрать изображение у категории-родителя
 

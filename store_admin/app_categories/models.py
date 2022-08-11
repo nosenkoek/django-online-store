@@ -1,4 +1,6 @@
 from uuid import uuid4
+
+from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 from mptt import register
 
@@ -17,6 +19,7 @@ class Category(MPTTModel):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     category_id = models.UUIDField(unique=True, default=uuid4, editable=False)
     name = models.CharField(max_length=30, verbose_name=_('name'))
+    slug = models.SlugField(max_length=50, unique=True, verbose_name=_('slug'))
     icon = models.FileField(upload_to='categories_icons/', validators=[svg_validator],
                             null=True, blank=True, verbose_name=_('icon'))
     image = models.ImageField(upload_to='categories_images/',

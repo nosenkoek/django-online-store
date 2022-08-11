@@ -5,6 +5,7 @@
     "fields": {
         "category_id": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
         "name": "Смартфоны и гаджеты",
+        "slug": "smartphone-gadgets",
         "icon": "categories_icons/8.svg",
         "is_active": true,
         "parent": null,
@@ -20,6 +21,7 @@
     "fields": {
         "category_id": "26458ab1-81da-4e2e-b9f7-05709502bd7c",
         "name": "Телевизоры, аудио-видео,фото",
+        "slug": "tvset-audio-video-photo",
         "icon": "",
         "is_active": true,
         "parent": null,
@@ -35,6 +37,7 @@
     "fields": {
         "category_id": "cb437a18-3bcf-4468-a76e-72cb106c124e",
         "name": "Ноутбуки и компьютеры",
+        "slug": "notebook-pc",
         "icon": "categories_icons/1.svg",
         "is_active": true,
         "parent": null,
@@ -50,6 +53,7 @@
     "fields": {
         "category_id": "caf8e4b8-3909-495d-a085-6f0b0f030e32",
         "name": "Бытовая техника",
+        "slug": "household-appliances",
         "icon": "categories_icons/3.svg",
         "is_active": true,
         "parent": null,
@@ -65,6 +69,7 @@
     "fields": {
         "category_id": "a02414b4-fc4b-46e2-88b3-d45089f099b3",
         "name": "Комплектующие ПК",
+        "slug": "pc-components",
         "icon": "",
         "is_active": true,
         "parent": null,
@@ -80,6 +85,7 @@
     "fields": {
         "category_id": "3ee73d93-307a-47a6-b32a-aa622aba0b24",
         "name": "Аксессуары",
+        "slug": "accessories",
         "icon": "categories_icons/2.svg",
         "is_active": true,
         "parent": null,
@@ -95,6 +101,7 @@
     "fields": {
         "category_id": "1531ac7f-0bf6-4c0a-aef1-9b223ea20396",
         "name": "Видеокарты",
+        "slug": "videocards",
         "icon": "",
         "is_active": true,
         "parent": "a02414b4-fc4b-46e2-88b3-d45089f099b3",
@@ -111,6 +118,7 @@
     "fields": {
         "category_id": "338d09c9-172a-4b1c-aaa4-b0983462dad1",
         "name": "Планшеты",
+        "slug": "tablet",
         "icon": "",
         "is_active": true,
         "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
@@ -127,6 +135,7 @@
     "fields": {
         "category_id": "67f044cd-c2a9-4106-8e1d-b364e88dd084",
         "name": "Смарт-часы и фитнес-браслеты",
+        "slug": "smart-watches",
         "icon": "",
         "is_active": true,
         "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
@@ -143,6 +152,7 @@
     "fields": {
         "category_id": "ac798b78-36fe-4b0c-8fff-50349ddf75c5",
         "name": "Кухонные комбайны",
+        "slug": "blenders",
         "icon": "categories_icons/12.svg",
         "is_active": true,
         "parent": "caf8e4b8-3909-495d-a085-6f0b0f030e32",
@@ -159,6 +169,7 @@
     "fields": {
         "category_id": "14e0cf53-ce1a-41b1-858e-a13e521e2db9",
         "name": "Моноблоки",
+        "slug": "monoblocks",
         "icon": "",
         "is_active": true,
         "parent": "cb437a18-3bcf-4468-a76e-72cb106c124e",
@@ -175,6 +186,7 @@
     "fields": {
         "category_id": "85e113a4-f740-421d-918f-e19b58d6259b",
         "name": "Ноутбуки",
+        "slug": "notebooks",
         "icon": "",
         "is_active": true,
         "parent": "cb437a18-3bcf-4468-a76e-72cb106c124e",
@@ -191,6 +203,7 @@
     "fields": {
         "category_id": "98fa6aa5-ce35-4b8d-935a-230b51379fda",
         "name": "Компьютеры",
+        "slug": "pc",
         "icon": "",
         "is_active": true,
         "parent": "cb437a18-3bcf-4468-a76e-72cb106c124e",
@@ -207,6 +220,7 @@
     "fields": {
         "category_id": "7abd01a8-6cc6-421a-8c96-614b36b45ab1",
         "name": "Колонки и аудиосистемы",
+        "slug": "speakers",
         "icon": "categories_icons/5.svg",
         "is_active": true,
         "parent": "26458ab1-81da-4e2e-b9f7-05709502bd7c",
@@ -223,6 +237,7 @@
     "fields": {
         "category_id": "8e8537be-7932-4db6-8a36-9bd7600658cc",
         "name": "Телевизоры",
+        "slug": "tv-sets",
         "icon": "",
         "is_active": true,
         "parent": "26458ab1-81da-4e2e-b9f7-05709502bd7c",
@@ -239,6 +254,7 @@
     "fields": {
         "category_id": "e31b29da-5d21-4941-b435-090facf38cf2",
         "name": "Микроволновка",
+        "slug": "microwaves",
         "icon": "categories_icons/9.svg",
         "is_active": true,
         "parent": "caf8e4b8-3909-495d-a085-6f0b0f030e32",
@@ -255,6 +271,7 @@
     "fields": {
         "category_id": "94f89486-f1ac-4ca1-8d14-e769e27f4e19",
         "name": "Оперативная память",
+        "slug": "rams",
         "icon": "",
         "is_active": true,
         "parent": "a02414b4-fc4b-46e2-88b3-d45089f099b3",
@@ -271,6 +288,7 @@
     "fields": {
         "category_id": "5ab76fba-cb55-4e58-b446-f10544a6a226",
         "name": "Стиральные машины",
+        "slug": "washers",
         "icon": "",
         "is_active": true,
         "parent": "caf8e4b8-3909-495d-a085-6f0b0f030e32",
@@ -287,6 +305,7 @@
     "fields": {
         "category_id": "658619cf-15d0-461a-9928-eb84b621ad22",
         "name": "Смартфоны",
+        "slug": "smartphones",
         "icon": "",
         "is_active": true,
         "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
@@ -303,6 +322,7 @@
     "fields": {
         "category_id": "c46e1441-d98a-411b-ba5f-e95cb688ba77",
         "name": "Фотоаппараты",
+        "slug": "photo",
         "icon": "categories_icons/6.svg",
         "is_active": true,
         "parent": "26458ab1-81da-4e2e-b9f7-05709502bd7c",
@@ -319,6 +339,7 @@
     "fields": {
         "category_id": "ae77c325-0409-4541-be84-d8a752e7f3d9",
         "name": "Гарнитуры",
+        "slug": "headsets",
         "icon": "",
         "is_active": true,
         "parent": "3ee73d93-307a-47a6-b32a-aa622aba0b24",

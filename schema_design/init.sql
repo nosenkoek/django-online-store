@@ -28,6 +28,7 @@ CREATE TYPE type_feature_enum AS ENUM ('select', 'checkbox', 'text');
 CREATE TABLE "content".category (
     id uuid PRIMARY KEY,
     category_id uuid UNIQUE NOT NULL,
+    slug varchar(50) UNIQUE NOT NULL,
     name varchar(30) NOT NULL,
     icon varchar(100),
     image varchar(100),

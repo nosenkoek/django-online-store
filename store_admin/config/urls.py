@@ -22,6 +22,7 @@ from django.conf import settings
 urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
     path('__debug__/', include('debug_toolbar.urls')),
-    path('', include('app_products.urls'))
+    path('', include('app_products.urls')),
+    path('', include('app_categories.urls')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # TODO: узнать как правильно прописать медиа

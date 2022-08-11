@@ -31,3 +31,5 @@ class MainPageView(View):
         }
 
         return render(request, 'app_product/main_page.html', context=context_data)
+
+

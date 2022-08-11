@@ -1,0 +1,36 @@
+{% extends '../base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+  Главная страница
+{% endblock %}
+
+{% block content %}
+  <div class="wrap">
+    <div class="BannersHome">
+      {% for subcategory in subcategories %}
+          <a class="BannersHomeBlock" href="#">
+            <div class="BannersHomeBlock-row">
+              <div class="BannersHomeBlock-block">
+                <strong class="BannersHomeBlock-title">{{ subcategory.name }}
+                </strong>
+                <div class="BannersHomeBlock-content">{% trans 'from' %}
+                  <span class="BannersHomeBlock-price">{% trans '$' %}{{ subcategory.min_price }}</span>
+                </div>
+              </div>
+              <div class="BannersHomeBlock-block">
+                <div class="BannersHomeBlock-img">
+                  {% if subcategory.image %}
+                    <img src="{{ subcategory.image.url }}" alt="{{ subcategory.name | truncatechars:3 }}"/>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </a>
+      {% endfor %}
+    </div>
+  </div>
+
+{% endblock %}
