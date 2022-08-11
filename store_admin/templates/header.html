@@ -119,14 +119,16 @@
 
                     <div class="CategoriesButton-submenu">
                       {% for subcategory in subcategories %}
-                        <a class="CategoriesButton-link" href="#">
-                          <div class="CategoriesButton-icon">
-                            {% if subcategory.icon %}
-                              <img src="{{ subcategory.icon.url}}" alt="{{ subcategory.name | truncatechars:3 }}"/>
-                            {% endif %}
-                          </div>
-                          <span class="CategoriesButton-text">{{ subcategory.name }}</span>
-                        </a>
+                        {% if subcategory.is_active %}
+                          <a class="CategoriesButton-link" href="#">
+                            <div class="CategoriesButton-icon">
+                              {% if subcategory.icon %}
+                                <img src="{{ subcategory.icon.url}}" alt="{{ subcategory.name | truncatechars:3 }}"/>
+                              {% endif %}
+                            </div>
+                            <span class="CategoriesButton-text">{{ subcategory.name }}</span>
+                          </a>
+                        {% endif %}
                       {% endfor %}
                     </div>
                   {% endwith %}

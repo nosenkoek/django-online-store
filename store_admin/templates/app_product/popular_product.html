@@ -10,7 +10,7 @@
     </header>
 
     <div class="Cards">
-      {% for product in products %}
+      {% for product in popular_products %}
         <div class="Card">
           <a class="Card-picture" href="#">
             <img src="{{ product.image.url }}" alt="{{ product.name | truncatechars:10 }}"/>
