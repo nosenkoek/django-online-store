@@ -24,12 +24,7 @@
               <div class="Card-cost"><span class="Card-price">{% trans '$' %}{{ product.price }}</span>
               </div>
               <div class="Card-category">
-                {% if not product.category_fk.level %}
-                  {{ product.category_fk.name }}
-                {% else %}
-                  {{ product.category_fk.parent.name }} / {{ product.category_fk.name }}
-                {% endif %}
-
+                {{ product.category_fk.parent.name }} / {{ product.category_fk.name }}
               </div>
               <div class="Card-hover">
                 <a class="Card-btn" href="#"><img src="{% static 'app_product/img/icons/card/cart.svg' %}" alt="cart.svg"/></a>

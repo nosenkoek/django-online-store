@@ -5,7 +5,7 @@
     "fields": {
         "category_id": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
         "name": "Смартфоны и гаджеты",
-        "icon": "icons_categories/8.svg",
+        "icon": "categories_icons/8.svg",
         "is_active": true,
         "parent": null,
         "lft": 1,
@@ -35,7 +35,7 @@
     "fields": {
         "category_id": "cb437a18-3bcf-4468-a76e-72cb106c124e",
         "name": "Ноутбуки и компьютеры",
-        "icon": "icons_categories/1.svg",
+        "icon": "categories_icons/1.svg",
         "is_active": true,
         "parent": null,
         "lft": 1,
@@ -50,7 +50,7 @@
     "fields": {
         "category_id": "caf8e4b8-3909-495d-a085-6f0b0f030e32",
         "name": "Бытовая техника",
-        "icon": "icons_categories/3.svg",
+        "icon": "categories_icons/3.svg",
         "is_active": true,
         "parent": null,
         "lft": 1,
@@ -80,7 +80,7 @@
     "fields": {
         "category_id": "3ee73d93-307a-47a6-b32a-aa622aba0b24",
         "name": "Аксессуары",
-        "icon": "icons_categories/2.svg",
+        "icon": "categories_icons/2.svg",
         "is_active": true,
         "parent": null,
         "lft": 1,
@@ -143,7 +143,7 @@
     "fields": {
         "category_id": "ac798b78-36fe-4b0c-8fff-50349ddf75c5",
         "name": "Кухонные комбайны",
-        "icon": "icons_categories/12.svg",
+        "icon": "categories_icons/12.svg",
         "is_active": true,
         "parent": "caf8e4b8-3909-495d-a085-6f0b0f030e32",
         "image": "categories_images/blender.png",
@@ -207,7 +207,7 @@
     "fields": {
         "category_id": "7abd01a8-6cc6-421a-8c96-614b36b45ab1",
         "name": "Колонки и аудиосистемы",
-        "icon": "icons_categories/5.svg",
+        "icon": "categories_icons/5.svg",
         "is_active": true,
         "parent": "26458ab1-81da-4e2e-b9f7-05709502bd7c",
         "image": "categories_images/audio.png",
@@ -239,7 +239,7 @@
     "fields": {
         "category_id": "e31b29da-5d21-4941-b435-090facf38cf2",
         "name": "Микроволновка",
-        "icon": "icons_categories/9.svg",
+        "icon": "categories_icons/9.svg",
         "is_active": true,
         "parent": "caf8e4b8-3909-495d-a085-6f0b0f030e32",
         "image": "categories_images/microwave.png",
@@ -303,7 +303,7 @@
     "fields": {
         "category_id": "c46e1441-d98a-411b-ba5f-e95cb688ba77",
         "name": "Фотоаппараты",
-        "icon": "icons_categories/6.svg",
+        "icon": "categories_icons/6.svg",
         "is_active": true,
         "parent": "26458ab1-81da-4e2e-b9f7-05709502bd7c",
         "image": "categories_images/photo.png",

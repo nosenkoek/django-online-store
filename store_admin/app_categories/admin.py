@@ -68,6 +68,7 @@ class CategoryAdmin(MPTTModelAdmin, ActionsMixin):
     ]
 
     inlines = (FeatureCategoryInline, )
+    #todo: здесь убрать изображение у категории-родителя
 
     def get_field_queryset(self, db, db_field, request) -> QuerySet:
         """Только 0 уровень вложенности"""
