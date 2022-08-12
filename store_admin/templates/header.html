@@ -112,7 +112,7 @@
                   </div>
                   <span class="CategoriesButton-text">{{ category.name }}</span>
 
-                  {% with category.get_children as subcategories %}
+                  {% with category.children.all as subcategories %}
                     {% if subcategories %}
                       <a class="CategoriesButton-arrow" href="#"></a>
                     {% endif %}

@@ -28,7 +28,7 @@ class Category(MPTTModel):
 
     parent = TreeForeignKey('self', on_delete=models.CASCADE,
                             to_field='category_id', null=True, blank=True,
-                            related_name='parent_fk', verbose_name=_('put in category'))
+                            related_name='children', verbose_name=_('put in category'))
 
     features = models.ManyToManyField('Feature',
                                       through='CategoryFeature',
