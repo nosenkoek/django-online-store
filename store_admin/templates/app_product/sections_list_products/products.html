@@ -1,0 +1,36 @@
+{% load i18n %}
+{% load static %}
+
+
+<div class="Section-content">
+  <div class="Sort">
+    <div class="Sort-title">Сортировать по:
+    </div>
+    <div class="Sort-variants"><a class="Sort-sortBy Sort-sortBy_dec" href="#">Популярности</a><a class="Sort-sortBy" href="#">Цене</a><a class="Sort-sortBy" href="#">Отзывам</a><a class="Sort-sortBy Sort-sortBy_inc" href="#">Новизне</a>
+    </div>
+  </div>
+
+  <div class="Cards">
+    {% for product in products %}
+      <div class="Card">
+        <a class="Card-picture" href="#"><img src="{{ product.image.url }}" alt="card.jpg"/></a>
+        <div class="Card-content">
+          <strong class="Card-title"><a href="#">{{ product.name }}</a>
+          </strong>
+          <div class="Card-description">
+            <div class="Card-cost"><span class="Card-price">{% trans '$' %}{{ product.price }}</span>
+            </div>
+            <div class="Card-category"> {{ subcategory.parent.name }}/ {{ subcategory.name }}
+            </div>
+            <div class="Card-hover">
+              <a class="Card-btn" href="#"><img src="{% static 'app_categories/img/icons/../../../static/app_products/img/icons/card/cart.svg' %}" alt="cart.svg"/></a>
+              <a class="Card-btn" href="#"><img src="{% static 'app_categories/img/icons/../../../static/app_products/img/icons/card/change.svg' %}" alt="change.svg"/></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% include 'app_product/sections_list_products/paginator.html' %}
+</div>

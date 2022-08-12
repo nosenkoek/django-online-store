@@ -8,6 +8,7 @@ from app_products.models import Product
 
 
 class NaviCategoriesMixin():
+    # todo: апдейтить контекст дату надо!!
     def get_queryset_categories(self) -> QuerySet:
         categories = Category.objects.filter(is_active=True, level=0)\
                                     .prefetch_related('children')
@@ -18,9 +19,9 @@ class MainPageView(View, NaviCategoriesMixin):
     def get(self, request):
         categories = self.get_queryset_categories()
         random_categories = Category.objects.filter(is_active=True, level=1) \
+                                    .select_related('parent') \
                                     .annotate(min_price=Min('product__price')) \
-                                    .order_by('?') \
-                                    .only('name', 'icon')[:3]
+                                    .order_by('?')[:3]
         popular_products = Product.objects.order_by('?')\
                                     .select_related('category_fk', 'category_fk__parent')\
                                     .filter(category_fk__is_active=True)[:8]

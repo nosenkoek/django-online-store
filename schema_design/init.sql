@@ -63,6 +63,7 @@ CREATE TABLE "content".product(
     id uuid PRIMARY KEY,
     product_id uuid UNIQUE NOT NULL,
     name varchar(50) NOT NULL,
+    slug varchar(50) UNIQUE NOT NULL,
     description text NOT NULL,
     price decimal NOT NULL,
     image varchar(100) NOT NULL,

@@ -28,6 +28,7 @@ class Product(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     product_id = models.UUIDField(unique=True, default=uuid4, editable=False)
     name = models.CharField(max_length=50, verbose_name=_('name'))
+    slug = models.SlugField(max_length=50, unique=True, verbose_name=_('slug'))
     description = models.TextField(verbose_name=_('description'))
     price = models.DecimalField(max_digits=7, decimal_places=2,
                                 verbose_name=_('price'), validators=[MinValueValidator(0)])

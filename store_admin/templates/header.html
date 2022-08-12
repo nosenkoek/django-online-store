@@ -104,7 +104,7 @@
           <div class="CategoriesButton-content">
             {% for category in categories %}
               <div class="CategoriesButton-link">
-                <a href="{% url 'subcategories' category.slug %}">
+                <a href="{% url 'list_subcategories' category.slug %}">
                   <div class="CategoriesButton-icon">
                     {% if category.icon %}
                       <img src="{{ category.icon.url }}" alt="{{ category.name | truncatechars:3 }}"/>
@@ -120,7 +120,7 @@
                     <div class="CategoriesButton-submenu">
                       {% for subcategory in subcategories %}
                         {% if subcategory.is_active %}
-                          <a class="CategoriesButton-link" href="#">
+                          <a class="CategoriesButton-link" href="{% url 'list_products' category.slug subcategory.slug %}">
                             <div class="CategoriesButton-icon">
                               {% if subcategory.icon %}
                                 <img src="{{ subcategory.icon.url}}" alt="{{ subcategory.name | truncatechars:3 }}"/>

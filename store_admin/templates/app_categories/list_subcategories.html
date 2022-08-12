@@ -30,7 +30,7 @@
         <div class="Cards">
           {% for subcategory in subcategories %}
             <div class="Card">
-              <a class="Card-picture" href="#">
+              <a class="Card-picture" href="{% url 'list_products' category.slug subcategory.slug %}">
                 <img src="{{ subcategory.image.url }}" alt="{{ subcategory.name | truncatechars:3 }}"/>
               </a>
 

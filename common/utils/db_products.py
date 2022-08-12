@@ -69,13 +69,14 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
     execute_batch(cur, query, data_manufacturers, page_size=PAGE_SIZE)
 
     # Заполнение таблицы Product
-    query = 'INSERT INTO product (id, product_id, name, description, price, ' \
-            'image, added, is_limited,' \
+    query = 'INSERT INTO product (id, product_id, name, slug, description,' \
+            'price, image, added, is_limited,' \
             'category_fk, manufacturer_fk) ' \
-            'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+            'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
 
     product_category = {}
     data_products = []
+    counter = 0
 
     for num, category_id in enumerate(category_ids):
         product_ids = [str(uuid.uuid4()) for _ in range(PRODUCTS_IN_CATEGORY_COUNT)]
@@ -85,8 +86,10 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
 
             is_limited = True if product_num <= PRODUCTS_LIMITED_COUNT else False
 
+            counter += 1
+
             data_products.append(
-                (fake.uuid4(), product_id, fake.company(), fake.sentence(nb_words=10),
+                (fake.uuid4(), product_id, fake.company(), f'product-{counter}', fake.sentence(nb_words=10),
                  round(random.uniform(100, 10_000), 2), IMAGE_LINKS[num], fake.date_time(),
                  is_limited, category_id, random.choice(manufacturers_ids))
             )
