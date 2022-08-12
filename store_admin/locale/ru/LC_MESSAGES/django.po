@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-11 15:56+0300\n"
+"POT-Creation-Date: 2022-08-12 10:41+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -161,55 +161,61 @@ msgstr "товары с характеристиками"
 msgid "Remove"
 msgstr "Удалить"
 
-#: .\templates\app_product\limit_edition.html:11
-msgid "Shipping & Returns"
-msgstr "Доставка & Возврат"
+#: .\templates\app_categories\list_subcategories.html:19
+msgid "home"
+msgstr "главная"
 
-#: .\templates\app_product\limit_edition.html:13
-msgid "World wide shipping"
-msgstr "Доставка по всему миру"
+#: .\templates\app_categories\list_subcategories.html:42
+#: .\templates\app_product\section.html:13
+msgid "from"
+msgstr "от"
 
-#: .\templates\app_product\limit_edition.html:23
-msgid "Money Back"
-msgstr "Возврат денег"
-
-#: .\templates\app_product\limit_edition.html:25
-msgid "Guaranteed payments"
-msgstr "Гарантия платежей"
-
-#: .\templates\app_product\limit_edition.html:35
-msgid "Support Policy"
-msgstr "Поддержка"
-
-#: .\templates\app_product\limit_edition.html:37
-msgid "Fast support team"
-msgstr "Быстрая поддержка"
-
-#: .\templates\app_product\limit_edition.html:47
-msgid "Quality Guarantee"
-msgstr "Гарантия качества"
-
-#: .\templates\app_product\limit_edition.html:49
-msgid "Best guaranteed items"
-msgstr "Лучшие товары"
-
-#: .\templates\app_product\limit_edition.html:59
-msgid "Limited edition"
-msgstr "Ограниченные товары"
-
-#: .\templates\app_product\limit_edition.html:82
-#: .\templates\app_product\popular_product.html:24
-#: .\templates\app_product\section.html:13 .\templates\header.html:84
+#: .\templates\app_categories\list_subcategories.html:42
+#: .\templates\app_product\limit_edition.html:83
+#: .\templates\app_product\popular_product.html:25
+#: .\templates\app_product\section.html:14 .\templates\header.html:84
 msgid "$"
 msgstr "₽"
 
-#: .\templates\app_product\popular_product.html:8
+#: .\templates\app_product\limit_edition.html:12
+msgid "Shipping & Returns"
+msgstr "Доставка & Возврат"
+
+#: .\templates\app_product\limit_edition.html:14
+msgid "World wide shipping"
+msgstr "Доставка по всему миру"
+
+#: .\templates\app_product\limit_edition.html:24
+msgid "Money Back"
+msgstr "Возврат денег"
+
+#: .\templates\app_product\limit_edition.html:26
+msgid "Guaranteed payments"
+msgstr "Гарантия платежей"
+
+#: .\templates\app_product\limit_edition.html:36
+msgid "Support Policy"
+msgstr "Поддержка"
+
+#: .\templates\app_product\limit_edition.html:38
+msgid "Fast support team"
+msgstr "Быстрая поддержка"
+
+#: .\templates\app_product\limit_edition.html:48
+msgid "Quality Guarantee"
+msgstr "Гарантия качества"
+
+#: .\templates\app_product\limit_edition.html:50
+msgid "Best guaranteed items"
+msgstr "Лучшие товары"
+
+#: .\templates\app_product\limit_edition.html:60
+msgid "Limited edition"
+msgstr "Ограниченные товары"
+
+#: .\templates\app_product\popular_product.html:9
 msgid "Popular Products"
 msgstr "Популярные товары"
-
-#: .\templates\app_product\section.html:12
-msgid "from"
-msgstr "от"
 
 #: .\templates\footer.html:45
 msgid "Useful Links"

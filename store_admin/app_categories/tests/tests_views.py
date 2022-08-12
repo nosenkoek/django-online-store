@@ -35,7 +35,7 @@ class PullDatabaseMixin():
     @classmethod
     def insert_category(cls):
         categories = [
-            Category(id=str(uuid4()), category_id=str(uuid4()), name=f'name_{num}', is_active=True)
+            Category(id=str(uuid4()), category_id=str(uuid4()), name=f'name_{num}', slug=f'name-{num}', is_active=True)
             for num in range(NUMBERS_CATEGORY)
         ]
 
@@ -45,7 +45,7 @@ class PullDatabaseMixin():
         Category.objects.rebuild()
 
         cls.subcategories = [
-            Category(id=str(uuid4()), category_id=str(uuid4()), name=f'subname_{num}',
+            Category(id=str(uuid4()), category_id=str(uuid4()), name=f'subname_{num}', slug=f'subname-{num}',
                      is_active=True, parent=categories[0])
             for num in range(NUMBERS_CATEGORY)
         ]
@@ -102,7 +102,7 @@ class MainPageTest(TestCase, PullDatabaseMixin):
         """Проверка используемого шаблона"""
         response = self.client.get(reverse('main_page'), follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'app_product/main_page.html')
+        self.assertTemplateUsed(response, 'app_categories/main_page.html')
 
     def test_categories_number(self):
         """Проверка количества отображаемых категорий в навигации"""

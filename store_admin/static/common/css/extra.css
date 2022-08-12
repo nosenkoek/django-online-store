@@ -4082,7 +4082,7 @@ a.Cart-title {
   align-items: center;
   margin-bottom: 54px;
   margin-top: 23px;
-  background: url("/static/app_product/img/bg/lineHeaderSection.png") 0 center repeat-x;
+  background: url("/static/app_categories/img/bg/lineHeaderSection.png") 0 center repeat-x;
 }
 .Section-header .Section-title {
   margin-right: auto;
@@ -4700,7 +4700,7 @@ a.Cart-title {
   padding: 0;
   border: none;
   outline: none;
-  background: url("/static/app_product/img/icons/arrowRightSlider.svg") 0 0 no-repeat;
+  background: url("/static/app_categories/img/icons/arrowRightSlider.svg") 0 0 no-repeat;
 }
 .slick-prev:hover,
 .slick-next:hover,

@@ -25,7 +25,8 @@ MANUFACTURER = {
 CATEGORY_PARENT = {
     'id': str(uuid4()),
     'category_id': str(uuid4()),
-    'name': 'category_name',
+    'name': 'category_1',
+    'slug': 'category-1',
     'icon': None,
     'is_active': True,
     'parent_id': None,
@@ -34,7 +35,8 @@ CATEGORY_PARENT = {
 CATEGORY = {
     'id': str(uuid4()),
     'category_id': str(uuid4()),
-    'name': 'category_name',
+    'name': 'category_2',
+    'slug': 'category-2',
     'icon': None,
     'is_active': True,
     'parent_id': CATEGORY_PARENT.get('category_id'),

@@ -4,33 +4,52 @@
 {% load i18n %}
 
 {% block title %}
-  Главная страница
+  {{ category.name }}
 {% endblock %}
 
 {% block content %}
-  <div class="wrap">
-    <div class="BannersHome">
-      {% for subcategory in subcategories %}
-          <a class="BannersHomeBlock" href="#">
-            <div class="BannersHomeBlock-row">
-              <div class="BannersHomeBlock-block">
-                <strong class="BannersHomeBlock-title">{{ subcategory.name }}
+
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title"> {{ category.name }}
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item"><a href="{% url 'main_page' %}">{% trans 'home' %}</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current"><span>{{ category.name }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="Section">
+      <div class="wrap">
+        <div class="Cards">
+          {% for subcategory in subcategories %}
+            <div class="Card">
+              <a class="Card-picture" href="#">
+                <img src="{{ subcategory.image.url }}" alt="{{ subcategory.name | truncatechars:3 }}"/>
+              </a>
+
+              <div class="Card-content">
+                <strong class="Card-title">
+                  <a href="#">{{ subcategory.name }}</a>
                 </strong>
-                <div class="BannersHomeBlock-content">{% trans 'from' %}
-                  <span class="BannersHomeBlock-price">{% trans '$' %}{{ subcategory.min_price }}</span>
-                </div>
-              </div>
-              <div class="BannersHomeBlock-block">
-                <div class="BannersHomeBlock-img">
-                  {% if subcategory.image %}
-                    <img src="{{ subcategory.image.url }}" alt="{{ subcategory.name | truncatechars:3 }}"/>
-                  {% endif %}
+                <div class="Card-description">
+                  <div class="Card-cost">{% trans 'from' %} <span class="Card-price">{% trans '$' %}{{ subcategory.min_price }}</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </a>
-      {% endfor %}
+          {% endfor %}
+        </div>
+      </div>
     </div>
   </div>
+
+
 
 {% endblock %}
