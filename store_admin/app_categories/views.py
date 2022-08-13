@@ -1,58 +1,110 @@
+from abc import ABC
+
 from django.db.models import Min, QuerySet
-from django.shortcuts import render
-from django.views.generic import ListView
-from django.views import View
+from django.views.generic import ListView, TemplateView
 
 from app_categories.models import Category
 from app_products.models import Product
 
 
-class NaviCategoriesMixin():
-    # todo: апдейтить контекст дату надо!!
-    def get_queryset_categories(self) -> QuerySet:
-        categories = Category.objects.filter(is_active=True, level=0)\
-                                    .prefetch_related('children')
-        return categories
+class BaseFactory(ABC, ListView):
+    """Базовый класс секций на главной страницы"""
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
+        """Переопределение метода для получения в потомка context_data"""
+        object_list = self.get_queryset()
+        return super(BaseFactory, self) \
+            .get_context_data(object_list=object_list, **kwargs)
 
 
-class MainPageView(View, NaviCategoriesMixin):
-    def get(self, request):
-        categories = self.get_queryset_categories()
-        random_categories = Category.objects.filter(is_active=True, level=1) \
-                                    .select_related('parent') \
-                                    .annotate(min_price=Min('product__price')) \
-                                    .order_by('?')[:3]
-        popular_products = Product.objects.order_by('?')\
-                                    .select_related('category_fk', 'category_fk__parent')\
-                                    .filter(category_fk__is_active=True)[:8]
-        limit_edition = Product.objects.filter(is_limited=True) \
-                                .order_by('?') \
-                                .select_related('category_fk', 'category_fk__parent')\
-                                .filter(category_fk__is_active=True)[:16]
-
-        context_data = {
-            'categories': categories,
-            'random_categories': random_categories,
-            'popular_products': popular_products,
-            'limit_edition': limit_edition
-        }
-
-        return render(request, 'app_categories/main_page.html', context=context_data)
+class NaviCategoriesList(BaseFactory):
+    """Класс навигации в хедере"""
+    model = Category
+    queryset = Category.objects.filter(is_active=True, level=0) \
+        .prefetch_related('children')
+    context_object_name = 'navi_categories'
 
 
-class SubcategoriesList(View, NaviCategoriesMixin):
-    def get(self, request, *args, **kwargs):
-        category_slug = kwargs.get('category_slug')
-        categories = categories = self.get_queryset_categories()
-        subcategories = Category.objects.filter(parent__slug=category_slug)\
-                                        .select_related('parent')\
-                                        .annotate(min_price=Min('product__price'))
-        category = Category.objects.get(slug=category_slug)
+class RandomCategoriesList(BaseFactory):
+    """Описание секции случайных категорий"""
+    model = Category
+    queryset = Category.objects.filter(is_active=True, level=1) \
+        .select_related('parent') \
+        .annotate(min_price=Min('product__price')) \
+        .order_by('?')[:3]
+    context_object_name = 'random_categories'
 
-        context_data = {
-            'title': 'title',
-            'categories': categories,
-            'subcategories': subcategories,
-            'category': category
-        }
-        return render(request, 'app_categories/list_subcategories.html', context_data)
+
+class PopularProductsList(BaseFactory):
+    """Описание секции популярных товаров"""
+    model = Product
+    queryset = Product.objects.order_by('?') \
+        .select_related('category_fk', 'category_fk__parent') \
+        .filter(category_fk__is_active=True)[:8]
+    context_object_name = 'popular_products'
+
+
+class LimitEditionList(BaseFactory):
+    """Описание секции лимитированных товаров"""
+    model = Product
+    queryset = Product.objects.filter(is_limited=True) \
+        .order_by('?') \
+        .select_related('category_fk', 'category_fk__parent') \
+        .filter(category_fk__is_active=True)[:16]
+    context_object_name = 'limit_edition'
+
+
+class SectionsFactory():
+    """Фабрика view для секций """
+    SECTIONS = {
+        'random_categories': RandomCategoriesList(),
+        'popular_products': PopularProductsList(),
+        'limit_edition': LimitEditionList()
+    }
+
+    def get_section_view(self, context_name: str) -> BaseFactory:
+        """
+        Возвращает объект view секции
+        :param context_name: название секции
+        :return: объект view секции
+        """
+        return self.SECTIONS.get(context_name)
+
+
+class MainPageView(TemplateView):
+    """View для главной страницы"""
+    template_name = 'app_categories/main_page.html'
+
+    def get_context_data(self, **kwargs):
+        context_data = super(MainPageView, self).get_context_data(**kwargs)
+        context_data.update(NaviCategoriesList().get_context_data())
+        sections = SectionsFactory()
+
+        for _, item in sections.SECTIONS.items():
+            context_data.update(item.get_context_data())
+        return context_data
+
+
+class SubcategoriesListView(ListView):
+    """View для списка подкатегорий"""
+    model = Category
+    template_name = 'app_categories/list_subcategories.html'
+    context_object_name = 'subcategories'
+
+    def get_queryset(self) -> QuerySet:
+        category_slug = self.kwargs.get('category_slug')
+
+        queryset = Category.objects.filter(parent__slug=category_slug) \
+            .select_related('parent') \
+            .annotate(min_price=Min('product__price'))
+
+        return queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
+        context_data = super(SubcategoriesListView, self).get_context_data()
+        context_data.update(NaviCategoriesList().get_context_data())
+        context_data.update({
+            'category': Category.objects.get(
+                slug=self.kwargs.get('category_slug')
+            )
+        })
+        return context_data

@@ -1,10 +1,14 @@
 from django.urls import path
 
-from app_categories.views import MainPageView, SubcategoriesList
+from app_categories.views import MainPageView, SubcategoriesListView
 
 
 urlpatterns = [
-    path('', MainPageView.as_view(), name='main_page'),
-    path('<slug:category_slug>/', SubcategoriesList.as_view(), name='list_subcategories')
-]
+    path('',
+         MainPageView.as_view(),
+         name='main_page'),
 
+    path('<slug:category_slug>/',
+         SubcategoriesListView.as_view(),
+         name='list_subcategories')
+]

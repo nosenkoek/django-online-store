@@ -6,7 +6,8 @@ from django.utils.translation import gettext as _
 
 from app_products.models import Product, Manufacturer, ProductFeature
 from app_categories.admin import TypeFeatureFieldMixin
-from app_products.filters import ProductCategoryFilter, ProductManufacturerFilter
+from app_products.filters import ProductCategoryFilter, \
+    ProductManufacturerFilter
 from app_products.forms import FeatureFormset
 
 
@@ -29,10 +30,12 @@ class FeatureProductInline(TypeFeatureFieldMixin, admin.TabularInline):
 class ListDisplayProductExtendMixin():
     """Миксин для расширения list_display"""
     list_select_related = ('category_fk', 'manufacturer_fk')
-    list_display = ('name', 'price', 'added', 'category', 'manufacturer', 'is_limited')
+    list_display = ('name', 'price', 'added', 'category',
+                    'manufacturer', 'is_limited')
 
     def get_queryset(self, request) -> QuerySet:
-        queryset = super().get_queryset(request).select_related(*self.list_select_related)
+        queryset = super().get_queryset(request)\
+            .select_related(*self.list_select_related)
         return queryset
 
     @admin.display(description=_('category'))
@@ -52,7 +55,9 @@ class ProductAdmin(ListDisplayProductExtendMixin, admin.ModelAdmin):
     inlines = (FeatureProductInline,)
     ordering = ('-added', )
     search_fields = ('name', )
-    list_filter = (ProductCategoryFilter, ProductManufacturerFilter, 'is_limited')
+    list_filter = (ProductCategoryFilter,
+                   ProductManufacturerFilter,
+                   'is_limited')
 
     def get_field_queryset(self, db, db_field, request) -> QuerySet:
         """Добавлять товары можно только в подкатегории"""

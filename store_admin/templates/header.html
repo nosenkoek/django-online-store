@@ -102,7 +102,7 @@
             </div>
           </div>
           <div class="CategoriesButton-content">
-            {% for category in categories %}
+            {% for category in navi_categories %}
               <div class="CategoriesButton-link">
                 <a href="{% url 'list_subcategories' category.slug %}">
                   <div class="CategoriesButton-icon">

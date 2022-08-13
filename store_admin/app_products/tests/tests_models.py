@@ -52,7 +52,9 @@ class BaseModelTest(TestCase):
         Category.objects.create(**CATEGORY_PARENT)
         category = Category.objects.create(**CATEGORY)
         manufacturer = Manufacturer.objects.create(**MANUFACTURER)
-        cls.product = Product.objects.create(**PRODUCT, category_fk=category, manufacturer_fk=manufacturer)
+        cls.product = Product.objects.create(**PRODUCT,
+                                             category_fk=category,
+                                             manufacturer_fk=manufacturer)
 
 
 class TestProduct(BaseModelTest):
@@ -83,5 +85,7 @@ class TestProduct(BaseModelTest):
 
     def test_manufacturer_label(self) -> None:
         """Проверка подписи поля категории товара"""
-        field_label = self.product._meta.get_field('manufacturer_fk').verbose_name
+        field_label = self.product._meta\
+            .get_field('manufacturer_fk')\
+            .verbose_name
         self.assertEquals(field_label,  _('manufacturer'))

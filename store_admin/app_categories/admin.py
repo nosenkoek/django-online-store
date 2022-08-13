@@ -1,5 +1,4 @@
-from uuid import uuid4
-from mptt.admin import DraggableMPTTAdmin, MPTTModelAdmin
+from mptt.admin import MPTTModelAdmin
 
 from django.contrib import admin
 from django.db.models import QuerySet
@@ -13,7 +12,8 @@ class TypeFeatureFieldMixin():
     list_select_related = ('feature_fk', )
 
     def get_queryset(self, request) -> QuerySet:
-        queryset = super().get_queryset(request).select_related(*self.list_select_related)
+        queryset = super().get_queryset(request)\
+            .select_related(*self.list_select_related)
         return queryset
 
     @admin.display(description=_('type feature'))
@@ -70,11 +70,12 @@ class CategoryAdmin(MPTTModelAdmin, ActionsMixin):
     prepopulated_fields = {'slug': ('name',)}
 
     inlines = (FeatureCategoryInline, )
-    #todo: здесь убрать изображение у категории-родителя
+    # todo: здесь убрать изображение у категории-родителя
 
     def get_field_queryset(self, db, db_field, request) -> QuerySet:
         """Только 0 уровень вложенности"""
-        queryset = super().get_field_queryset(db, db_field, request).filter(level=0)
+        queryset = super().get_field_queryset(db, db_field, request)\
+            .filter(level=0)
         return queryset
 
 

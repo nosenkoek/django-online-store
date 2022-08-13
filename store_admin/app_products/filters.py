@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from django.db.models import QuerySet
 
 
-class InputFilter(SimpleListFilter, ABC):
+class InputFilter(ABC, SimpleListFilter):
     """Абстрактный класс для фильтра вида text input"""
 
     template = 'admin_custom/input_filter.html'

@@ -35,7 +35,8 @@ class PullDatabaseMixin():
     @classmethod
     def insert_category(cls):
         categories = [
-            Category(id=str(uuid4()), category_id=str(uuid4()), name=f'name_{num}', slug=f'name-{num}', is_active=True)
+            Category(id=str(uuid4()), category_id=str(uuid4()),
+                     name=f'name_{num}', slug=f'name-{num}', is_active=True)
             for num in range(NUMBERS_CATEGORY)
         ]
 
@@ -45,7 +46,8 @@ class PullDatabaseMixin():
         Category.objects.rebuild()
 
         cls.subcategories = [
-            Category(id=str(uuid4()), category_id=str(uuid4()), name=f'subname_{num}', slug=f'subname-{num}',
+            Category(id=str(uuid4()), category_id=str(uuid4()),
+                     name=f'subname_{num}', slug=f'subname-{num}',
                      is_active=True, parent=categories[0])
             for num in range(NUMBERS_CATEGORY)
         ]
@@ -60,9 +62,12 @@ class PullDatabaseMixin():
     @classmethod
     def insert_products(cls):
         products = [
-            Product(id=str(uuid4()), product_id=str(uuid4()), name=f'name_{num}', is_limited=True,
-                    description='text', price=1_000, image=cls.gif_1,
-                    category_fk=cls.subcategories[0], manufacturer_fk=cls.manufacturer)
+            Product(id=str(uuid4()), product_id=str(uuid4()),
+                    name=f'name_{num}', is_limited=True,
+                    slug=f'product-{num}', description='text',
+                    price=1_000, image=cls.gif_1,
+                    category_fk=cls.subcategories[0],
+                    manufacturer_fk=cls.manufacturer)
             for num in range(NUMBERS_PRODUCT_TO_DB)
         ]
         Product.objects.bulk_create(products)
@@ -107,20 +112,23 @@ class MainPageTest(TestCase, PullDatabaseMixin):
     def test_categories_number(self):
         """Проверка количества отображаемых категорий в навигации"""
         response = self.client.get('/', follow=True)
-        self.assertEqual(NUMBERS_CATEGORY - 1, len(response.context.get('categories')))
+        self.assertEqual(NUMBERS_CATEGORY - 1,
+                         len(response.context.get('categories')))
 
     def test_random_categories_number(self):
         """Проверка количества отображаемых категорий"""
         response = self.client.get('/', follow=True)
-        self.assertEqual(NUMBERS_RANDOM_CATEGORY, len(response.context.get('random_categories')))
+        self.assertEqual(NUMBERS_RANDOM_CATEGORY,
+                         len(response.context.get('random_categories')))
 
     def test_popular_products_number(self):
         """Проверка количества отображаемых популярных товаров"""
         response = self.client.get('/', follow=True)
-        self.assertEqual(NUMBERS_POPULAR_PRODUCTS, len(response.context.get('popular_products')))
+        self.assertEqual(NUMBERS_POPULAR_PRODUCTS,
+                         len(response.context.get('popular_products')))
 
     def test_limit_products_number(self):
         """Проверка количества отображаемых лимитированных товаров"""
         response = self.client.get('/', follow=True)
-        self.assertEqual(NUMBERS_LIMIT_PRODUCTS, len(response.context.get('limit_edition')))
-
+        self.assertEqual(NUMBERS_LIMIT_PRODUCTS,
+                         len(response.context.get('limit_edition')))

@@ -1,8 +1,6 @@
 from uuid import uuid4
 
-from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
-from mptt import register
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -20,7 +18,8 @@ class Category(MPTTModel):
     category_id = models.UUIDField(unique=True, default=uuid4, editable=False)
     name = models.CharField(max_length=30, verbose_name=_('name'))
     slug = models.SlugField(max_length=50, unique=True, verbose_name=_('slug'))
-    icon = models.FileField(upload_to='categories_icons/', validators=[svg_validator],
+    icon = models.FileField(upload_to='categories_icons/',
+                            validators=[svg_validator],
                             null=True, blank=True, verbose_name=_('icon'))
     image = models.ImageField(upload_to='categories_images/',
                               null=True, blank=True, verbose_name=_('image'))
@@ -28,11 +27,13 @@ class Category(MPTTModel):
 
     parent = TreeForeignKey('self', on_delete=models.CASCADE,
                             to_field='category_id', null=True, blank=True,
-                            related_name='children', verbose_name=_('put in category'))
+                            related_name='children',
+                            verbose_name=_('put in category'))
 
     features = models.ManyToManyField('Feature',
                                       through='CategoryFeature',
-                                      through_fields=('category_fk', 'feature_fk'),
+                                      through_fields=('category_fk',
+                                                      'feature_fk'),
                                       related_name='features')
 
     class Meta:
@@ -57,7 +58,8 @@ class Feature(models.Model):
     feature_id = models.UUIDField(unique=True, default=uuid4, editable=False)
     name = models.CharField(max_length=30, verbose_name=_('name'))
     type_feature = models.CharField(max_length=30, choices=TypeFeature.choices,
-                                    default=TypeFeature.TEXT, verbose_name=_('type feature'))
+                                    default=TypeFeature.TEXT,
+                                    verbose_name=_('type feature'))
 
     categories = models.ManyToManyField('Category',
                                         through='CategoryFeature',
@@ -76,12 +78,18 @@ class Feature(models.Model):
 class CategoryFeature(models.Model):
     """Связь между категориями и характеристиками"""
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    category_fk = models.ForeignKey(Category, on_delete=models.CASCADE,
-                                    to_field='category_id', db_column='category_fk',
-                                    related_name='category_fk', verbose_name=_('category'))
-    feature_fk = models.ForeignKey(Feature, on_delete=models.CASCADE,
-                                   to_field='feature_id', db_column='feature_fk',
-                                   related_name='feature_fk', verbose_name=_('feature'))
+    category_fk = models.ForeignKey(Category,
+                                    on_delete=models.CASCADE,
+                                    to_field='category_id',
+                                    db_column='category_fk',
+                                    related_name='category_fk',
+                                    verbose_name=_('category'))
+    feature_fk = models.ForeignKey(Feature,
+                                   on_delete=models.CASCADE,
+                                   to_field='feature_id',
+                                   db_column='feature_fk',
+                                   related_name='feature_fk',
+                                   verbose_name=_('feature'))
 
     class Meta:
         managed = False
