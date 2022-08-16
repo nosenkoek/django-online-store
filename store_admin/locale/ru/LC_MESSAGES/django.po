@@ -49,7 +49,7 @@ msgid "name"
 msgstr "название"
 
 #: .\app_categories\models.py:22
-msgid "slug"
+msgid "field"
 msgstr "отображение в URL"
 
 #: .\app_categories\models.py:24 .\app_categories\tests\tests_models.py:57

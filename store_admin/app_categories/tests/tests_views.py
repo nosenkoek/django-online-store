@@ -113,7 +113,7 @@ class MainPageTest(TestCase, PullDatabaseMixin):
         """Проверка количества отображаемых категорий в навигации"""
         response = self.client.get('/', follow=True)
         self.assertEqual(NUMBERS_CATEGORY - 1,
-                         len(response.context.get('categories')))
+                         len(response.context.get('navi_categories')))
 
     def test_random_categories_number(self):
         """Проверка количества отображаемых категорий"""

@@ -4082,7 +4082,7 @@ a.Cart-title {
   align-items: center;
   margin-bottom: 54px;
   margin-top: 23px;
-  background: url("/static/app_categories/img/bg/lineHeaderSection.png") 0 center repeat-x;
+  background: url("/static/common/img/bg/lineHeaderSection.png") 0 center repeat-x;
 }
 .Section-header .Section-title {
   margin-right: auto;
@@ -4829,7 +4829,7 @@ a.Cart-title {
   top: 0;
   width: 30px;
   height: 30px;
-  background: url("../../common/img/icons/upArrow.svg") center center no-repeat;
+  background: url("../../app_products/img/icons/upArrow.svg") center center no-repeat;
   background-size: contain;
 }
 .Sort-sortBy_inc:after {

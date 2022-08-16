@@ -7,21 +7,24 @@ from app_categories.models import Category
 from app_products.models import Product
 
 
-class BaseFactory(ABC, ListView):
-    """Базовый класс секций на главной страницы"""
-    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
-        """Переопределение метода для получения в потомка context_data"""
-        object_list = self.get_queryset()
-        return super(BaseFactory, self) \
-            .get_context_data(object_list=object_list, **kwargs)
-
-
-class NaviCategoriesList(BaseFactory):
+class NaviCategoriesList(ListView):
     """Класс навигации в хедере"""
     model = Category
     queryset = Category.objects.filter(is_active=True, level=0) \
         .prefetch_related('children')
     context_object_name = 'navi_categories'
+
+    def get_context(self):
+        return {self.context_object_name: self.get_queryset()}
+
+
+class BaseFactory(ABC, ListView):
+    """Базовый класс секций на главной страницы"""
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
+        """Переопределение метода для получения в потомках context_data"""
+        object_list = self.get_queryset()
+        return super(BaseFactory, self) \
+            .get_context_data(object_list=object_list, **kwargs)
 
 
 class RandomCategoriesList(BaseFactory):
@@ -73,10 +76,10 @@ class SectionsFactory():
 class MainPageView(TemplateView):
     """View для главной страницы"""
     template_name = 'app_categories/main_page.html'
+    extra_context = NaviCategoriesList().get_context()
 
     def get_context_data(self, **kwargs):
         context_data = super(MainPageView, self).get_context_data(**kwargs)
-        context_data.update(NaviCategoriesList().get_context_data())
         sections = SectionsFactory()
 
         for _, item in sections.SECTIONS.items():
@@ -89,6 +92,7 @@ class SubcategoriesListView(ListView):
     model = Category
     template_name = 'app_categories/list_subcategories.html'
     context_object_name = 'subcategories'
+    extra_context = NaviCategoriesList().get_context()
 
     def get_queryset(self) -> QuerySet:
         category_slug = self.kwargs.get('category_slug')
@@ -101,7 +105,6 @@ class SubcategoriesListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context_data = super(SubcategoriesListView, self).get_context_data()
-        context_data.update(NaviCategoriesList().get_context_data())
         context_data.update({
             'category': Category.objects.get(
                 slug=self.kwargs.get('category_slug')
