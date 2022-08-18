@@ -6,8 +6,8 @@ from django.utils.translation import gettext as _
 
 from app_products.models import Product, Manufacturer, ProductFeature
 from app_categories.admin import TypeFeatureFieldMixin
-from app_products.filters import ProductCategoryFilter, \
-    ProductManufacturerFilter
+from app_products.filters import ProductCategoryFilterAdmin, \
+    ProductManufacturerFilterAdmin
 from app_products.forms import FeatureFormset
 
 
@@ -55,8 +55,8 @@ class ProductAdmin(ListDisplayProductExtendMixin, admin.ModelAdmin):
     inlines = (FeatureProductInline,)
     ordering = ('-added', )
     search_fields = ('name', )
-    list_filter = (ProductCategoryFilter,
-                   ProductManufacturerFilter,
+    list_filter = (ProductCategoryFilterAdmin,
+                   ProductManufacturerFilterAdmin,
                    'is_limited')
 
     def get_field_queryset(self, db, db_field, request) -> QuerySet:

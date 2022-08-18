@@ -9,8 +9,8 @@
     <div class="Sort-variants">
       {% for sorted_item in sorted_list %}
         {% if sorted_item.field == request.GET.sort %}
-          <a class="Sort-sortBy Sort-sortBy_dec" href="{{ sorted_item.get_reverse_link }}">{{ sorted_item.title }}</a>
-        {% elif sorted_item.get_reverse_field == request.GET.sort %}
+          <a class="Sort-sortBy Sort-sortBy_dec" href="{{ sorted_item.reverse_link }}">{{ sorted_item.title }}</a>
+        {% elif sorted_item.reverse_field == request.GET.sort %}
           <a class="Sort-sortBy Sort-sortBy_inc" href="{{ sorted_item.link }}">{{ sorted_item.title }}</a>
         {% else %}
           <a class="Sort-sortBy" href="{{ sorted_item.link }}">{{ sorted_item.title }}</a>
@@ -42,6 +42,7 @@
   </div>
 
   {% include 'app_product/sections_list_products/paginator.html' %}
+
 
 {#  <script src="{% static 'common/plg/jQuery/jquery-3.5.0.slim.min.js' %}"></script>#}
 {#  <script src="{% static 'common/plg/form/jquery.form.js' %}"></script>#}

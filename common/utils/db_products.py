@@ -41,6 +41,15 @@ IMAGE_LINKS = [
     'product_images/microwave.png',
 ]
 
+FEATURES_VALUE = {
+    'Оперативная память': ['2Гб', '4Гб', '8Гб', '16Гб'],
+    'Память': ['64Гб', '128Гб', '256Гб', '512Гб'],
+    'Цвет': ['белый', 'серебро', 'красный', 'черный', 'золото'],
+    'Частота': ['2133МГц', '2666МГц', '3200МГц'],
+    'Поколение': ['DDR4', 'DDR3'],
+    'Экран': ['9"', '11"', '13"', '15"', '17"'],
+}
+
 now = datetime.utcnow()
 
 # Установим соединение с БД используя контекстный менеджер with.
@@ -66,6 +75,12 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
     cur.execute(query)
     feature_id_ckeckbox = [feature_id[0] for feature_id in cur]
 
+    query = "SELECT feature_id, name FROM feature " \
+            "WHERE type_feature::text = 'select';"
+    cur.execute(query)
+
+    feature_id_name_select = {feature[0]: feature[1] for feature in cur}
+
     # Заполнение таблицы Manufacturer
     manufacturers_ids = [str(uuid.uuid4()) for _ in range(MANUFACTURERS_COUNT)]
     query = 'INSERT INTO manufacturer (id, manufacturer_id, name) ' \
@@ -76,9 +91,9 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
 
     # Заполнение таблицы Product
     query = 'INSERT INTO product (id, product_id, name, slug, description,' \
-            'price, image, added, is_limited,' \
+            'price, image, added, count, is_limited,' \
             'category_fk, manufacturer_fk) ' \
-            'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+            'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
 
     product_category = {}
     data_products = []
@@ -100,7 +115,7 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
                 (fake.uuid4(), product_id, fake.company(),
                  f'product-{counter}', fake.sentence(nb_words=10),
                  round(random.uniform(100, 10_000), 2),
-                 IMAGE_LINKS[num], fake.date_time(),
+                 IMAGE_LINKS[num], fake.date_time(), random.randint(0, 50),
                  is_limited, category_id, random.choice(manufacturers_ids))
             )
 
@@ -121,6 +136,13 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
                 data_product_feature.append(
                     (str(uuid.uuid4()), product_id, feature_id,
                      random.choice(['yes', 'no'])))
+            elif feature_id in feature_id_name_select.keys():
+                data_product_feature.append(
+                    (str(uuid.uuid4()), product_id, feature_id,
+                     random.choice(
+                         FEATURES_VALUE.get(
+                             feature_id_name_select[feature_id])
+                     )))
             else:
                 data_product_feature.append(
                     (str(uuid.uuid4()), product_id, feature_id, fake.word()))

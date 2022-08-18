@@ -68,6 +68,7 @@ CREATE TABLE "content".product(
     price decimal NOT NULL,
     image varchar(100) NOT NULL,
     added timestamp NOT NULL,
+    count int NOT NULL,
     is_limited bool NOT NULL,
     category_fk uuid NOT NULL,
     manufacturer_fk uuid NOT NULL

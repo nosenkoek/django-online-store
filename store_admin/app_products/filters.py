@@ -1,18 +1,21 @@
 from abc import ABC
 from typing import Tuple
+import django_filters
 
 from django.contrib.admin import SimpleListFilter
 from django.utils.translation import gettext_lazy as _
 from django.db.models import QuerySet
 
+from app_products.models import Product
 
-class InputFilter(ABC, SimpleListFilter):
+
+class InputFilterAdmin(ABC, SimpleListFilter):
     """Абстрактный класс для фильтра вида text input"""
 
     template = 'admin_custom/input_filter.html'
 
     def lookups(self, request, model_admin) -> Tuple[Tuple]:
-        return (('', ''), )
+        return (('', ''),)
 
     def choices(self, changelist):
         all_choice = next(super().choices(changelist))
@@ -24,7 +27,7 @@ class InputFilter(ABC, SimpleListFilter):
         yield all_choice
 
 
-class ProductCategoryFilter(InputFilter):
+class ProductCategoryFilterAdmin(InputFilterAdmin):
     """Фильтр для товаров по категории"""
 
     title = _('category')
@@ -37,7 +40,7 @@ class ProductCategoryFilter(InputFilter):
             return queryset
 
 
-class ProductManufacturerFilter(InputFilter):
+class ProductManufacturerFilterAdmin(InputFilterAdmin):
     """Фильтр для товаров по производителю"""
 
     title = _('manufacturer')
@@ -48,3 +51,30 @@ class ProductManufacturerFilter(InputFilter):
             manufacturer_name = self.value()
             queryset = queryset.filter(manufacturer_fk__name=manufacturer_name)
             return queryset
+
+
+class ProductFilter(django_filters.FilterSet):
+    price = django_filters.CharFilter(field_name='price',
+                                      method='filter_price')
+    name = django_filters.CharFilter(field_name='name',
+                                     lookup_expr='icontains')
+    available = django_filters.CharFilter(field_name='count',
+                                             method='filter_available')
+
+    class Meta:
+        model = Product
+        fields = ['price', 'name']
+
+    def filter_price(self, queryset, name, value):
+        value = [float(price) for price in value.split(';')]
+        name = f'{name}__range'
+        queryset = queryset.filter(**{name: value})
+        return queryset
+
+    def filter_available(self, queryset, name, value):
+        print(name, value)
+        if value == 'on':
+            name = f'{name}__gt'
+            queryset = queryset.filter(**{name: 0})
+        return queryset
+

@@ -40,6 +40,8 @@ class Product(models.Model):
     added = models.DateTimeField(auto_now_add=True,
                                  verbose_name=_('added'))
     is_limited = models.BooleanField(verbose_name=_('is limited'))
+    count = models.PositiveIntegerField(default=1,
+                                        verbose_name=_('count_in_storage'))
 
     category_fk = models.ForeignKey(Category,
                                     on_delete=models.CASCADE,
