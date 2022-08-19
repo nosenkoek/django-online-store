@@ -356,6 +356,7 @@
     "fields": {
         "feature_id": "833d99d5-d4b1-4197-85b6-2362dfcc8403",
         "name": "Экран",
+        "slug": "display",
         "type_feature": "select"
     }
 },
@@ -365,6 +366,7 @@
     "fields": {
         "feature_id": "bd60d307-972b-4c07-90b0-f4228a28bc14",
         "name": "Поколение",
+        "slug": "generation",
         "type_feature": "select"
     }
 },
@@ -374,6 +376,7 @@
     "fields": {
         "feature_id": "e0face11-5a48-429b-b176-b1f57677deec",
         "name": "Частота",
+        "slug": "frequency",
         "type_feature": "select"
     }
 },
@@ -383,6 +386,7 @@
     "fields": {
         "feature_id": "d9171f07-148c-4a49-b10f-72ed5de1cb79",
         "name": "Цвет",
+        "slug": "color",
         "type_feature": "select"
     }
 },
@@ -392,6 +396,7 @@
     "fields": {
         "feature_id": "18cc2965-c720-4004-9927-6d060f095d57",
         "name": "Габариты",
+        "slug": "size",
         "type_feature": "text"
     }
 },
@@ -401,6 +406,7 @@
     "fields": {
         "feature_id": "3df829f6-8b29-4c83-93d2-e2b5e93c1d19",
         "name": "Память",
+        "slug": "memory",
         "type_feature": "select"
     }
 },
@@ -410,6 +416,7 @@
     "fields": {
         "feature_id": "b91c77b4-106a-411e-bc39-8b279c4d8fc9",
         "name": "Оперативная память",
+        "slug": "ram",
         "type_feature": "select"
     }
 },
@@ -419,6 +426,7 @@
     "fields": {
         "feature_id": "dda9e9a4-e262-40b1-b1f9-51a3e967c772",
         "name": "Bluetooth",
+        "slug": "bluetooth",
         "type_feature": "checkbox"
     }
 },
@@ -428,6 +436,7 @@
     "fields": {
         "feature_id": "a721c742-44cf-444f-886a-93769378ca25",
         "name": "Вес",
+        "slug": "weight",
         "type_feature": "text"
     }
 },

@@ -41,13 +41,13 @@
           <div class="form-group">
             <label class="toggle">
               {% if feature.type_feature == 'checkbox' %}
-                <input type="checkbox" id="{{ feature.feature_id }}" name="{{ feature.feature_id }}"/>
+                <input type="checkbox" id="{{ feature.slug }}" name="{{ feature.slug }}"/>
                 <span class="toggle-box"></span>
                 <span class="toggle-text">{{ feature.name }}</span>
 
               {% elif feature.type_feature == 'select' %}
                 {% for field in form %}
-                  {% if field.name == feature.feature_id|stringformat:'s' %}
+                  {% if field.name == feature.slug %}
                     {{ field.errors }}
                     <label for="{{ field.id_for_label }}">{{ feature.name }}</label>
                     {{ field }}
@@ -55,7 +55,7 @@
                 {% endfor %}
 
               {% else %}
-                <input class="form-input form-input_full" id={{ feature.feature_id }} name={{ feature.feature_id }} type="text" placeholder="{{ feature.name }}"/>
+                <input class="form-input form-input_full" id={{ feature.slug }} name={{ feature.slug }} type="text" placeholder="{{ feature.name }}"/>
               {% endif %}
             </label>
           </div>

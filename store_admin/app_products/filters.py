@@ -209,7 +209,7 @@ class ProductFilter(ProductFilterCommon):
             filter_class = filter_factory.get_filter_class(feature)
             if filter_class:
                 self.filters.update({
-                    str(feature.feature_id):
+                    str(feature.slug):
                         filter_class(feature).filter_obj
                 })
 
