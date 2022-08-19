@@ -36,30 +36,30 @@
             <span class="toggle-text">{% trans 'Available' %}</span>
           </label>
         </div>
-{##}
-{#        {% for feature in features %}#}
-{#          <div class="form-group">#}
-{#            <label class="toggle">#}
-{#              {% if feature.type_feature == 'checkbox' %}#}
-{#                <input type="checkbox" id="{{ feature.feature_id }}" name="{{ feature.feature_id }}"/>#}
-{#                <span class="toggle-box"></span>#}
-{#                <span class="toggle-text">{{ feature.name }}</span>#}
-{##}
-{#              {% elif feature.type_feature == 'select' %}#}
-{#                {% for field in form %}#}
-{#                  {% if field.label == feature.name %}#}
-{#                    {{ field.errors }}#}
-{#                    <label for="{{ field.id_for_label }}">{{ feature.name }}</label>#}
-{#                    {{ field }}#}
-{#                  {% endif %}#}
-{#                {% endfor %}#}
-{##}
-{#              {% else %}#}
-{#                <input class="form-input form-input_full" id={{ feature.feature_id }} name={{ feature.feature_id }} type="text" placeholder="{{ feature.name }}"/>#}
-{#              {% endif %}#}
-{#            </label>#}
-{#          </div>#}
-{#        {% endfor %}#}
+
+        {% for feature in features %}
+          <div class="form-group">
+            <label class="toggle">
+              {% if feature.type_feature == 'checkbox' %}
+                <input type="checkbox" id="{{ feature.feature_id }}" name="{{ feature.feature_id }}"/>
+                <span class="toggle-box"></span>
+                <span class="toggle-text">{{ feature.name }}</span>
+
+              {% elif feature.type_feature == 'select' %}
+                {% for field in form %}
+                  {% if field.name == feature.feature_id|stringformat:'s' %}
+                    {{ field.errors }}
+                    <label for="{{ field.id_for_label }}">{{ feature.name }}</label>
+                    {{ field }}
+                  {% endif %}
+                {% endfor %}
+
+              {% else %}
+                <input class="form-input form-input_full" id={{ feature.feature_id }} name={{ feature.feature_id }} type="text" placeholder="{{ feature.name }}"/>
+              {% endif %}
+            </label>
+          </div>
+        {% endfor %}
 
         <div class="form-group">
           <div class="buttons">
@@ -67,67 +67,6 @@
           </div>
         </div>
       </form>
-
-{#todo: удалить, если не использовать#}
-{#    <form class="form" action="#" method="post">#}
-{#      {% csrf_token %}#}
-{#      <div class="form-group">#}
-{#        <div class="range Section-columnRange">#}
-{#          <input class="range-line" id="price" name="price" type="text" data-type="double"#}
-{#                 data-min="0" data-max={{ subcategory.max_price|stringformat:"f" }}#}
-{#                         data-from="0" data-to={{ subcategory.max_price|stringformat:"f" }}/>#}
-{#          <div class="range-price">{% trans 'Price' %}:#}
-{#            <div class="rangePrice">#}
-{#            </div>#}
-{#            &nbsp{% trans '$' %}#}
-{#          </div>#}
-{#        </div>#}
-{#      </div>#}
-{##}
-{#      <div class="form-group">#}
-{#        <input class="form-input form-input_full" id="name" name="name" type="text" placeholder="{% trans 'Name' %}"/>#}
-{#      </div>#}
-{#      <div class="form-group">#}
-{#        <!-- - var options = setOptions(items, ['value', 'selected', 'disabled']);-->#}
-{#      </div>#}
-{#      <div class="form-group">#}
-{#        <label class="toggle">#}
-{#          <input id="available" name="available" type="checkbox"/>#}
-{#          <span class="toggle-box"></span>#}
-{#          <span class="toggle-text">{% trans 'Available' %}</span>#}
-{#        </label>#}
-{#      </div>#}
-{##}
-{#      {% for feature in features %}#}
-{#        <div class="form-group">#}
-{#          <label class="toggle">#}
-{#            {% if feature.type_feature == 'checkbox' %}#}
-{#              <input type="checkbox" id="{{ feature.feature_id }}" name="{{ feature.feature_id }}"/>#}
-{#              <span class="toggle-box"></span>#}
-{#              <span class="toggle-text">{{ feature.name }}</span>#}
-{##}
-{#            {% elif feature.type_feature == 'select' %}#}
-{#              {% for field in form %}#}
-{#                {% if field.label == feature.name %}#}
-{#                  {{ field.errors }}#}
-{#                  <label for="{{ field.id_for_label }}">{{ feature.name }}</label>#}
-{#                  {{ field }}#}
-{#                {% endif %}#}
-{#              {% endfor %}#}
-{##}
-{#            {% else %}#}
-{#              <input class="form-input form-input_full" id={{ feature.feature_id }} name={{ feature.feature_id }} type="text" placeholder="{{ feature.name }}"/>#}
-{#            {% endif %}#}
-{#          </label>#}
-{#        </div>#}
-{#      {% endfor %}#}
-{##}
-{#      <div class="form-group">#}
-{#        <div class="buttons">#}
-{#          <button type="submit" class="btn btn_square btn_dark btn_narrow">{% trans 'Filter' %}</button>#}
-{#        </div>#}
-{#      </div>#}
-{#    </form>#}
     </div>
   </div>
 </div>

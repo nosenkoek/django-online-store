@@ -1,14 +1,9 @@
-from typing import List
-
 from django.db.models import Max, Prefetch
-from django.shortcuts import redirect
 from django.views.generic import ListView
-from django.views.generic.edit import FormMixin
 
 from app_categories.views import NaviCategoriesList
 from app_categories.models import Category, Feature
 from app_products.filters import ProductFilter
-from app_products.forms import FilterProductForm
 from app_products.models import Product, ProductFeature
 from app_products.services import SortedItem
 
@@ -25,17 +20,6 @@ class AddSortedItemToContextMixin():
         self.extra_context.update({'sorted_list': self.SORTED_LIST})
 
 
-class FilterFormMixin(FormMixin):
-    #todo: удалить, если не нужно будет
-    """Миксин для создания формы фильтра"""
-    form_class = FilterProductForm
-
-    def get_form_kwargs(self):
-        kwargs = super(FilterFormMixin, self).get_form_kwargs()
-        kwargs.update({'features': self.features})
-        return kwargs
-
-
 class ProductList(ListView, AddSortedItemToContextMixin):
     model = Product
     template_name = 'app_product/list_products.html'
@@ -45,6 +29,7 @@ class ProductList(ListView, AddSortedItemToContextMixin):
     subcategory, features = None, None
 
     # todo: подумать, этот метод добавляет +4 запроса к БД
+    #  + проработать добавление контекста
     # @property
     # def subcategory(self) -> Category:
     #     subcategory_slug = self.kwargs.get('subcategory_slug')
@@ -58,7 +43,8 @@ class ProductList(ListView, AddSortedItemToContextMixin):
     # @property
     # def features(self):
     #     subcategory_slug = self.kwargs.get('subcategory_slug')
-    #     features = Feature.objects.filter(categories__slug=subcategory_slug) \
+    #     features = Feature.objects.filter
+    #     (categories__slug=subcategory_slug) \
     #         .prefetch_related(
     #         Prefetch('productfeature_set',
     #                  queryset=ProductFeature.objects
@@ -98,6 +84,9 @@ class ProductList(ListView, AddSortedItemToContextMixin):
             ordering = self.request.GET.get('sort')
             queryset = queryset.order_by(ordering)
 
-        return ProductFilter(self.request.GET, queryset=queryset).qs
+        product_filter = ProductFilter(self.request.GET,
+                                       queryset=queryset,
+                                       features=self.features)
+        self.extra_context.update({'form': product_filter.form})
 
-
+        return product_filter.qs
