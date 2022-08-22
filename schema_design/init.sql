@@ -44,7 +44,7 @@ CREATE TABLE "content".feature(
     id uuid PRIMARY KEY,
     feature_id uuid UNIQUE NOT NULL,
     name varchar(30) NOT NULL,
-    slug varchar(30) NOT NULL,
+    slug varchar(30) UNIQUE NOT NULL,
     type_feature type_feature_enum NOT NULL
 );
 

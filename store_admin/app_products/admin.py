@@ -30,7 +30,7 @@ class FeatureProductInline(TypeFeatureFieldMixin, admin.TabularInline):
 class ListDisplayProductExtendMixin():
     """Миксин для расширения list_display"""
     list_select_related = ('category_fk', 'manufacturer_fk')
-    list_display = ('name', 'price', 'added', 'category',
+    list_display = ('name', 'price', 'added', 'count', 'category',
                     'manufacturer', 'is_limited')
 
     def get_queryset(self, request) -> QuerySet:

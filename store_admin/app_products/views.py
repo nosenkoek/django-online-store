@@ -1,5 +1,3 @@
-import re
-
 from django.db.models import Max, Prefetch
 from django.views.generic import ListView
 
@@ -24,7 +22,7 @@ class AddSortedItemToContextMixin():
 
 class ProductList(ListView, AddSortedItemToContextMixin):
     model = Product
-    template_name = 'app_product/list_products.html'
+    template_name = 'app_products/list_products.html'
     context_object_name = 'products'
     paginate_by = 8
     extra_context = NaviCategoriesList().get_context()
@@ -90,21 +88,7 @@ class ProductList(ListView, AddSortedItemToContextMixin):
                                        queryset=queryset,
                                        features=self.features)
         self.extra_context.update({
-            'form': product_filter.form,
-            'query_string': self.get_query_string()
+            'form': product_filter.form
         })
 
         return product_filter.qs
-
-    def get_query_string(self):
-        query_string = self.request.META.get("QUERY_STRING", "")
-        query_filters_string = re.findall(r"([^&]*=[^&]{1,})", query_string)
-
-        validated_query_string = "&".join([
-            query_filter for query_filter in query_filters_string
-            if "page=" not in query_filter
-        ])
-
-        result = "&" + validated_query_string.lower() if (
-                    validated_query_string) else ""
-        return result

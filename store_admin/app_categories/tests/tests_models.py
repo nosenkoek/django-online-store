@@ -10,6 +10,7 @@ FEATURE = {
     'id': str(uuid4()),
     'feature_id': str(uuid4()),
     'name': 'feature_name',
+    'slug': 'slug',
     'type_feature': 'text'
 }
 
@@ -38,6 +39,11 @@ class FeatureTest(BaseModelTest):
         """Проверка подписи поля названия характеристики"""
         field_label = self.feature._meta.get_field('name').verbose_name
         self.assertEquals(field_label, _('name'))
+
+    def test_slug_label(self) -> None:
+        """Проверка подписи поля slug характеристики"""
+        field_label = self.feature._meta.get_field('slug').verbose_name
+        self.assertEquals(field_label, _('slug'))
 
     def test_type_feature_label(self) -> None:
         """Проверка подписи поля типа характеристики"""

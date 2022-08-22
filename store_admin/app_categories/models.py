@@ -57,7 +57,7 @@ class Feature(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     feature_id = models.UUIDField(unique=True, default=uuid4, editable=False)
     name = models.CharField(max_length=30, verbose_name=_('name'))
-    slug = models.CharField(max_length=30, verbose_name=_('slug'))
+    slug = models.SlugField(max_length=30, unique=True, verbose_name=_('slug'))
     type_feature = models.CharField(max_length=30, choices=TypeFeature.choices,
                                     default=TypeFeature.TEXT,
                                     verbose_name=_('type feature'))

@@ -12,5 +12,3 @@ class SortedItem():
 
     def __post_init__(self):
         self.reverse_field = f'-{self.field}'
-        self.link = f'?sort={self.field}'
-        self.reverse_link = f'?sort=-{self.field}'

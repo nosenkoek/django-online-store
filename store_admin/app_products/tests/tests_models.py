@@ -1,5 +1,3 @@
-from uuid import uuid4
-
 from django.test import TestCase
 from django.utils.translation import gettext as _
 from django.db import connection
@@ -7,40 +5,8 @@ from django.db import connection
 from app_products.models import Product, Manufacturer
 from app_categories.models import Category
 
-PRODUCT = {
-    'id': str(uuid4()),
-    'product_id': str(uuid4()),
-    'name': 'product_1',
-    'description': 'text',
-    'price': 10_000,
-    'is_limited': True,
-}
-
-MANUFACTURER = {
-    'id': str(uuid4()),
-    'manufacturer_id': str(uuid4()),
-    'name': 'manufacturer'
-}
-
-CATEGORY_PARENT = {
-    'id': str(uuid4()),
-    'category_id': str(uuid4()),
-    'name': 'category_1',
-    'slug': 'category-1',
-    'icon': None,
-    'is_active': True,
-    'parent_id': None,
-}
-
-CATEGORY = {
-    'id': str(uuid4()),
-    'category_id': str(uuid4()),
-    'name': 'category_2',
-    'slug': 'category-2',
-    'icon': None,
-    'is_active': True,
-    'parent_id': CATEGORY_PARENT.get('category_id'),
-}
+from app_products.tests.settings import CATEGORY_PARENT, CATEGORY, \
+    MANUFACTURER, PRODUCT
 
 
 class BaseModelTest(TestCase):
@@ -77,6 +43,11 @@ class TestProduct(BaseModelTest):
         """Проверка подписи поля лимитирован ли товар"""
         field_label = self.product._meta.get_field('is_limited').verbose_name
         self.assertEquals(field_label,  _('is limited'))
+
+    def test_count_label(self) -> None:
+        """Проверка подписи поля количества товара"""
+        field_label = self.product._meta.get_field('count').verbose_name
+        self.assertEquals(field_label,  _('count_in_storage'))
 
     def test_category_label(self) -> None:
         """Проверка подписи поля категории товара"""
