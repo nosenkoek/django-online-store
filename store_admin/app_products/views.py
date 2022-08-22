@@ -1,11 +1,14 @@
-from django.db.models import Max, Prefetch
+import re
+from typing import Tuple
+
+from django.db.models import Max, Prefetch, QuerySet
 from django.views.generic import ListView
 
 from app_categories.views import NaviCategoriesList
 from app_categories.models import Category, Feature
 from app_products.filters import ProductFilter
 from app_products.models import Product, ProductFeature
-from app_products.services import SortedItem
+from app_products.services import SortedItem, InitialDictFromURLMixin
 
 
 class AddSortedItemToContextMixin():
@@ -20,63 +23,36 @@ class AddSortedItemToContextMixin():
         self.extra_context.update({'sorted_list': self.SORTED_LIST})
 
 
-class ProductList(ListView, AddSortedItemToContextMixin):
+class ProductList(ListView, AddSortedItemToContextMixin, InitialDictFromURLMixin):
     model = Product
     template_name = 'app_products/list_products.html'
     context_object_name = 'products'
     paginate_by = 8
     extra_context = NaviCategoriesList().get_context()
-    subcategory, features = None, None
 
-    # todo: подумать, этот метод добавляет +4 запроса к БД
-    #  + проработать добавление контекста
-    # @property
-    # def subcategory(self) -> Category:
-    #     subcategory_slug = self.kwargs.get('subcategory_slug')
-    #     subcategory = Category.objects.filter(slug=subcategory_slug) \
-    #         .select_related('parent') \
-    #         .prefetch_related('features') \
-    #         .annotate(max_price=Max('product__price')) \
-    #         .first()
-    #     return subcategory
-    #
-    # @property
-    # def features(self):
-    #     subcategory_slug = self.kwargs.get('subcategory_slug')
-    #     features = Feature.objects.filter
-    #     (categories__slug=subcategory_slug) \
-    #         .prefetch_related(
-    #         Prefetch('productfeature_set',
-    #                  queryset=ProductFeature.objects
-    #                  .filter(feature_fk__type_feature='select')
-    #                  .distinct('value')))
-    #     return features
-
-    def add_filter(self) -> None:
-        """Добавляет queryset для создания блока фильтра"""
+    def get_subcategory_and_features(self) -> Tuple[Category, QuerySet]:
+        """Возвращает объект категории и его характеристики"""
         subcategory_slug = self.kwargs.get('subcategory_slug')
-        self.subcategory = Category.objects.filter(slug=subcategory_slug) \
+        subcategory = Category.objects.filter(slug=subcategory_slug) \
             .select_related('parent') \
             .prefetch_related('features') \
             .annotate(max_price=Max('product__price')) \
             .first()
 
-        self.features = Feature.objects \
-            .filter(categories=self.subcategory) \
+        features = Feature.objects \
+            .filter(categories=subcategory) \
             .prefetch_related(Prefetch('productfeature_set',
                                        queryset=ProductFeature.objects
                                        .filter(
                                            feature_fk__type_feature='select')
                                        .distinct('value')))
-
-        self.extra_context.update({'subcategory': self.subcategory,
-                                   'features': self.features})
+        return subcategory, features
 
     def get_queryset(self) -> None:
         self.add_sorted_item_to_context()
-        self.add_filter()
+        subcategory, features = self.get_subcategory_and_features()
 
-        queryset = Product.objects.filter(category_fk=self.subcategory)
+        queryset = Product.objects.filter(category_fk=subcategory)
 
         if not self.request.GET.get('sort'):
             queryset = queryset.order_by('?')
@@ -86,9 +62,16 @@ class ProductList(ListView, AddSortedItemToContextMixin):
 
         product_filter = ProductFilter(self.request.GET,
                                        queryset=queryset,
-                                       features=self.features)
+                                       features=features)
         self.extra_context.update({
-            'form': product_filter.form
-        })
-
+            'subcategory': subcategory,
+            'features': features,
+            'form': product_filter.form,
+            })
         return product_filter.qs
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super(ProductList, self).get_context_data(**kwargs)
+        initial_dict = self.get_initial_dict()
+        context.update({'initial_dict': initial_dict})
+        return context

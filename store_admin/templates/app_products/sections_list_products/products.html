@@ -24,17 +24,8 @@
             {{ sorted_item.title }}</a>
         {% endif %}
       {% endfor %}
-{#      {% for sorted_item in sorted_list %}#}
-{#        {% if sorted_item.field == request.GET.sort %}#}
-{#          <a class="Sort-sortBy Sort-sortBy_dec" #}
-{#             href="?{{ sorted_item.reverse_link }}{{ query_string }}">{{ sorted_item.title }}</a>#}
-{#        {% elif sorted_item.reverse_field == request.GET.sort %}#}
-{#          <a class="Sort-sortBy Sort-sortBy_inc" href="?{{ sorted_item.link }}{{ query_string }}">{{ sorted_item.title }}</a>#}
-{#        {% else %}#}
-{#          <a class="Sort-sortBy" href="?{{ sorted_item.link }}{{ query_string }}">{{ sorted_item.title }}</a>#}
-{#        {% endif %}#}
-{#      {% endfor %}#}
     </div>
+  </div>
   <div class="Cards">
     {% for product in products %}
       <div class="Card">

@@ -13,8 +13,8 @@
         <div class="form-group">
           <div class="range Section-columnRange">
             <input class="range-line" id="price" name="price" type="text" data-type="double"
-                   data-min="0" data-max={{ subcategory.max_price|stringformat:"f" }}
-                           data-from="0" data-to={{ subcategory.max_price|stringformat:"f" }}/>
+                   data-min="0" data-max="{{ subcategory.max_price|stringformat:"f" }}"
+                           data-from="{{ initial_dict.price_from }}" data-to="{{ initial_dict.price_to }}"/>
             <div class="range-price">{% trans 'Price' %}:
               <div class="rangePrice">
               </div>
@@ -22,16 +22,18 @@
             </div>
           </div>
         </div>
-
         <div class="form-group">
-          <input class="form-input form-input_full" id="name" name="name" type="text" placeholder="{% trans 'Name' %}"/>
+          <input class="form-input form-input_full" id="name" name="name" type="text"
+                 placeholder="{% trans 'Name' %}"
+                 {% if 'name' in initial_dict %} value="{{  initial_dict.name }}" {% endif %}/>
         </div>
         <div class="form-group">
           <!-- - var options = setOptions(items, ['value', 'selected', 'disabled']);-->
         </div>
         <div class="form-group">
           <label class="toggle">
-            <input id="available" name="available" type="checkbox"/>
+            <input id="available" name="available" type="checkbox"
+                    {% if 'available' in initial_dict %} checked {% endif %}/>
             <span class="toggle-box"></span>
             <span class="toggle-text">{% trans 'Available' %}</span>
           </label>
@@ -41,7 +43,8 @@
           <div class="form-group">
             <label class="toggle">
               {% if feature.type_feature == 'checkbox' %}
-                <input type="checkbox" id="{{ feature.slug }}" name="{{ feature.slug }}"/>
+                <input type="checkbox" id="{{ feature.slug }}" name="{{ feature.slug }}"
+                        {% if feature.slug in initial_dict %} checked {% endif %}/>
                 <span class="toggle-box"></span>
                 <span class="toggle-text">{{ feature.name }}</span>
 
@@ -55,7 +58,14 @@
                 {% endfor %}
 
               {% else %}
-                <input class="form-input form-input_full" id={{ feature.slug }} name={{ feature.slug }} type="text" placeholder="{{ feature.name }}"/>
+                <input class="form-input form-input_full" id="{{ feature.slug }}" name="{{ feature.slug }}"
+                       type="text" placeholder="{{ feature.name }}"
+                       {% for key, item in initial_dict.items %}
+                        {% if feature.slug == key %}
+                          value="{{ item }}"
+                        {% endif %}
+                        {% endfor %}
+                />
               {% endif %}
             </label>
           </div>
@@ -64,9 +74,11 @@
         <div class="form-group">
           <div class="buttons">
             <button type="submit" class="btn btn_square btn_dark btn_narrow">{% trans 'Filter' %}</button>
+            <a class="btn btn_square btn_dark btn_narrow" href="{{ request.path }}">{% trans 'Clear' %}</a>
           </div>
         </div>
       </form>
+
     </div>
   </div>
 </div>
