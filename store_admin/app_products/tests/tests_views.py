@@ -3,6 +3,7 @@ import shutil
 from math import ceil
 from random import randint
 from uuid import uuid4
+from datetime import datetime
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, override_settings
@@ -19,6 +20,9 @@ from app_products.tests.settings import CATEGORY_PARENT, CATEGORY, \
 TEMP_MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'temp_media/')
 
 NUMBERS_PRODUCT = 20
+PRICE_MAX = 10_000
+PRICE_FROM = 10
+PRICE_TO = 5_000
 
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
@@ -64,7 +68,7 @@ class BaseTest(TestCase):
             Product(id=str(uuid4()), product_id=str(uuid4()),
                     name=f'name_{num}', is_limited=True, count=10,
                     slug=f'product-{num}', description='text',
-                    price=randint(0, 100), image=cls.gif_1,
+                    price=randint(0, PRICE_MAX), image=cls.gif_1,
                     category_fk=subcategory, manufacturer_fk=manufacturer)
             for num in range(NUMBERS_PRODUCT)
         ]
@@ -81,6 +85,7 @@ class ProductListTest(BaseTest):
     def setUp(self) -> None:
         self.category = Category.objects.get(parent=None)
         self.subcategory = Category.objects.get(parent=self.category)
+        self.page_count = ceil(NUMBERS_PRODUCT / COUNT_PRODUCT_IN_PAGE)
 
     def test_products_list_url(self):
         """Проверка открытия со списком товаров"""
@@ -114,10 +119,9 @@ class ProductListTest(BaseTest):
 
     def test_products_number(self):
         """Проверка количества отображаемых товаров"""
-        page_count = ceil(NUMBERS_PRODUCT / COUNT_PRODUCT_IN_PAGE)
         products = 0
 
-        for page_num in range(1, page_count + 1):
+        for page_num in range(1, self.page_count + 1):
             response = self.client.get(
                 f'/{self.category.slug}/{self.subcategory.slug}',
                 {'page': page_num},
@@ -130,23 +134,64 @@ class ProductListTest(BaseTest):
 
     def test_sorting_price(self):
         """Проверка сортировки по цене"""
-        #TODO: доделать
-        page_count = ceil(NUMBERS_PRODUCT / COUNT_PRODUCT_IN_PAGE)
         price_current = 0
 
-        for page_num in range(1, page_count + 1):
+        for page_num in range(1, self.page_count + 1):
             response = self.client.get(
-                f'/{self.category.slug}/{self.subcategory.slug}/?sort=price',
-                {'page': page_num},
+                f'/{self.category.slug}/{self.subcategory.slug}/'
+                f'?page={page_num}&sort=price',
                 follow=True
             )
             self.assertEqual(response.status_code, 200)
             products = response.context.get('products')
-            for product in products:
-                print(product.name, product.price)
-            price_first = products.all().first().price
-            price_last = products.all().last().price
-            print(price_first, price_last)
+            price_first = products[:1][0].price
+            price_last = products[(len(products) - 1):][0].price
+
             self.assertTrue(price_first <= price_last)
             self.assertTrue(price_current <= price_last)
             price_current = price_last
+
+    def test_sorting_added(self):
+        """Проверка сортировки по новизне"""
+        added_current = datetime(1970, 1, 1, 0, 0, 0)
+
+        for page_num in range(1, self.page_count + 1):
+            response = self.client.get(
+                f'/{self.category.slug}/{self.subcategory.slug}/'
+                f'?page={page_num}&sort=added',
+                follow=True
+            )
+            self.assertEqual(response.status_code, 200)
+            products = response.context.get('products')
+            added_first = products[:1][0].added
+            added_last = products[(len(products) - 1):][0].added
+
+            self.assertTrue(added_first <= added_last)
+            self.assertTrue(added_current <= added_last)
+            added_current = added_last
+
+    def test_filter_price(self):
+        """Проверка фильтрации по стоимости"""
+
+        response = self.client.get(
+            f'/{self.category.slug}/{self.subcategory.slug}'
+            f'?price={PRICE_FROM};{PRICE_TO}'
+            f'&sort=price',
+            follow=True
+        )
+        self.assertEqual(response.status_code, 200)
+        products = response.context.get('products')
+        price_first = products.all().first().price
+        self.assertTrue(PRICE_FROM <= price_first)
+
+        response = self.client.get(
+            f'/{self.category.slug}/{self.subcategory.slug}/'
+            f'?price={PRICE_FROM};{PRICE_TO}'
+            f'&sort=-price',
+            follow=True
+        )
+
+        self.assertEqual(response.status_code, 200)
+        products = response.context.get('products')
+        price_first = products.all().first().price
+        self.assertTrue(price_first <= PRICE_TO)
