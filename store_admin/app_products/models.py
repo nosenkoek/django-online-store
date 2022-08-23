@@ -80,7 +80,7 @@ class ProductFeature(models.Model):
                                    db_column='feature_fk',
                                    verbose_name=_('feature'))
 
-    value = models.CharField(max_length=20, verbose_name=_('value'))
+    value = models.CharField(max_length=40, verbose_name=_('value'))
 
     class Meta:
         managed = False

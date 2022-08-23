@@ -87,7 +87,7 @@ CREATE TABLE "content".product_feature(
     id uuid PRIMARY KEY ,
     product_fk uuid NOT NULL,
     feature_fk uuid NOT NULL,
-    value varchar(20) NOT NULL
+    value varchar(40) NOT NULL
 );
 
 

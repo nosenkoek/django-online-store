@@ -1,76 +1,13 @@
 [
 {
     "model": "app_categories.category",
-    "pk": "6c6c17f4-4c6a-4dcc-8d57-25056456d235",
-    "fields": {
-        "category_id": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
-        "name": "Смартфоны и гаджеты",
-        "slug": "smartphone-gadgets",
-        "icon": "categories_icons/8.svg",
-        "is_active": true,
-        "parent": null,
-        "lft": 1,
-        "rght": 8,
-        "tree_id": 1,
-        "level": 0
-    }
-},
-{
-    "model": "app_categories.category",
-    "pk": "7929eb62-9bc0-4b0f-bb3a-26e2608b3eb4",
-    "fields": {
-        "category_id": "26458ab1-81da-4e2e-b9f7-05709502bd7c",
-        "name": "Телевизоры, аудио-видео,фото",
-        "slug": "tvset-audio-video-photo",
-        "icon": "",
-        "is_active": true,
-        "parent": null,
-        "lft": 1,
-        "rght": 8,
-        "tree_id": 6,
-        "level": 0
-    }
-},
-{
-    "model": "app_categories.category",
-    "pk": "7a726a7b-783f-48d6-b2c1-dcd07ae8a378",
-    "fields": {
-        "category_id": "cb437a18-3bcf-4468-a76e-72cb106c124e",
-        "name": "Ноутбуки и компьютеры",
-        "slug": "notebook-pc",
-        "icon": "categories_icons/1.svg",
-        "is_active": true,
-        "parent": null,
-        "lft": 1,
-        "rght": 8,
-        "tree_id": 2,
-        "level": 0
-    }
-},
-{
-    "model": "app_categories.category",
-    "pk": "acaa147a-5bd4-413a-83b4-fe4823ad9726",
-    "fields": {
-        "category_id": "caf8e4b8-3909-495d-a085-6f0b0f030e32",
-        "name": "Бытовая техника",
-        "slug": "household-appliances",
-        "icon": "categories_icons/3.svg",
-        "is_active": true,
-        "parent": null,
-        "lft": 1,
-        "rght": 8,
-        "tree_id": 5,
-        "level": 0
-    }
-},
-{
-    "model": "app_categories.category",
     "pk": "c568174c-110e-46b1-944e-0fe7e6b4e1b5",
     "fields": {
         "category_id": "a02414b4-fc4b-46e2-88b3-d45089f099b3",
         "name": "Комплектующие ПК",
         "slug": "pc-components",
         "icon": "",
+        "image": "",
         "is_active": true,
         "parent": null,
         "lft": 1,
@@ -87,11 +24,80 @@
         "name": "Аксессуары",
         "slug": "accessories",
         "icon": "categories_icons/2.svg",
+        "image": "",
         "is_active": true,
         "parent": null,
         "lft": 1,
         "rght": 4,
         "tree_id": 4,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "6c6c17f4-4c6a-4dcc-8d57-25056456d235",
+    "fields": {
+        "category_id": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
+        "name": "Смартфоны и гаджеты",
+        "slug": "smartphone-gadgets",
+        "icon": "categories_icons/8.svg",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 8,
+        "tree_id": 1,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "acaa147a-5bd4-413a-83b4-fe4823ad9726",
+    "fields": {
+        "category_id": "caf8e4b8-3909-495d-a085-6f0b0f030e32",
+        "name": "Бытовая техника",
+        "slug": "household-appliances",
+        "icon": "categories_icons/3.svg",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 8,
+        "tree_id": 5,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "7929eb62-9bc0-4b0f-bb3a-26e2608b3eb4",
+    "fields": {
+        "category_id": "26458ab1-81da-4e2e-b9f7-05709502bd7c",
+        "name": "Телевизоры, аудио-видео,фото",
+        "slug": "tvset-audio-video-photo",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 8,
+        "tree_id": 6,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "7a726a7b-783f-48d6-b2c1-dcd07ae8a378",
+    "fields": {
+        "category_id": "cb437a18-3bcf-4468-a76e-72cb106c124e",
+        "name": "Ноутбуки и компьютеры",
+        "slug": "notebook-pc",
+        "icon": "categories_icons/1.svg",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 8,
+        "tree_id": 2,
         "level": 0
     }
 },
@@ -103,9 +109,9 @@
         "name": "Видеокарты",
         "slug": "videocards",
         "icon": "",
+        "image": "categories_images/videoca.png",
         "is_active": true,
         "parent": "a02414b4-fc4b-46e2-88b3-d45089f099b3",
-        "image": "categories_images/videoca.png",
         "lft": 4,
         "rght": 5,
         "tree_id": 3,
@@ -120,9 +126,9 @@
         "name": "Планшеты",
         "slug": "tablet",
         "icon": "",
+        "image": "categories_images/tablet.png",
         "is_active": true,
         "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
-        "image": "categories_images/tablet.png",
         "lft": 4,
         "rght": 5,
         "tree_id": 1,
@@ -137,9 +143,9 @@
         "name": "Смарт-часы и фитнес-браслеты",
         "slug": "smart-watches",
         "icon": "",
+        "image": "categories_images/watch.png",
         "is_active": true,
         "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
-        "image": "categories_images/watch.png",
         "lft": 6,
         "rght": 7,
         "tree_id": 1,
@@ -154,9 +160,9 @@
         "name": "Кухонные комбайны",
         "slug": "blenders",
         "icon": "categories_icons/12.svg",
+        "image": "categories_images/blender.png",
         "is_active": true,
         "parent": "caf8e4b8-3909-495d-a085-6f0b0f030e32",
-        "image": "categories_images/blender.png",
         "lft": 6,
         "rght": 7,
         "tree_id": 5,
@@ -171,9 +177,9 @@
         "name": "Моноблоки",
         "slug": "monoblocks",
         "icon": "",
+        "image": "categories_images/mac.png",
         "is_active": true,
         "parent": "cb437a18-3bcf-4468-a76e-72cb106c124e",
-        "image": "categories_images/mac.png",
         "lft": 6,
         "rght": 7,
         "tree_id": 2,
@@ -188,9 +194,9 @@
         "name": "Ноутбуки",
         "slug": "notebooks",
         "icon": "",
+        "image": "categories_images/notebook.png",
         "is_active": true,
         "parent": "cb437a18-3bcf-4468-a76e-72cb106c124e",
-        "image": "categories_images/notebook.png",
         "lft": 2,
         "rght": 3,
         "tree_id": 2,
@@ -205,9 +211,9 @@
         "name": "Компьютеры",
         "slug": "pc",
         "icon": "",
+        "image": "categories_images/comp.png",
         "is_active": true,
         "parent": "cb437a18-3bcf-4468-a76e-72cb106c124e",
-        "image": "categories_images/comp.png",
         "lft": 4,
         "rght": 5,
         "tree_id": 2,
@@ -222,9 +228,9 @@
         "name": "Колонки и аудиосистемы",
         "slug": "speakers",
         "icon": "categories_icons/5.svg",
+        "image": "categories_images/audio.png",
         "is_active": true,
         "parent": "26458ab1-81da-4e2e-b9f7-05709502bd7c",
-        "image": "categories_images/audio.png",
         "lft": 6,
         "rght": 7,
         "tree_id": 6,
@@ -239,9 +245,9 @@
         "name": "Телевизоры",
         "slug": "tv-sets",
         "icon": "",
+        "image": "categories_images/tv.png",
         "is_active": true,
         "parent": "26458ab1-81da-4e2e-b9f7-05709502bd7c",
-        "image": "categories_images/tv.png",
         "lft": 2,
         "rght": 3,
         "tree_id": 6,
@@ -256,9 +262,9 @@
         "name": "Микроволновка",
         "slug": "microwaves",
         "icon": "categories_icons/9.svg",
+        "image": "categories_images/microwave.png",
         "is_active": true,
         "parent": "caf8e4b8-3909-495d-a085-6f0b0f030e32",
-        "image": "categories_images/microwave.png",
         "lft": 2,
         "rght": 3,
         "tree_id": 5,
@@ -273,15 +279,16 @@
         "name": "Оперативная память",
         "slug": "rams",
         "icon": "",
+        "image": "categories_images/ddr4.png",
         "is_active": true,
         "parent": "a02414b4-fc4b-46e2-88b3-d45089f099b3",
-        "image": "categories_images/ddr4.png",
         "lft": 2,
         "rght": 3,
         "tree_id": 3,
         "level": 1
     }
 },
+
 {
     "model": "app_categories.category",
     "pk": "7fd36972-522a-4caf-a301-ee2fa248289f",
@@ -290,9 +297,9 @@
         "name": "Стиральные машины",
         "slug": "washers",
         "icon": "",
+        "image": "categories_images/wash.png",
         "is_active": true,
         "parent": "caf8e4b8-3909-495d-a085-6f0b0f030e32",
-        "image": "categories_images/wash.png",
         "lft": 4,
         "rght": 5,
         "tree_id": 5,
@@ -307,9 +314,9 @@
         "name": "Смартфоны",
         "slug": "smartphones",
         "icon": "",
+        "image": "categories_images/smartphone.png",
         "is_active": true,
         "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
-        "image": "categories_images/smartphone.png",
         "lft": 2,
         "rght": 3,
         "tree_id": 1,
@@ -324,9 +331,9 @@
         "name": "Фотоаппараты",
         "slug": "photo",
         "icon": "categories_icons/6.svg",
+        "image": "categories_images/photo.png",
         "is_active": true,
         "parent": "26458ab1-81da-4e2e-b9f7-05709502bd7c",
-        "image": "categories_images/photo.png",
         "lft": 4,
         "rght": 5,
         "tree_id": 6,
@@ -341,9 +348,9 @@
         "name": "Гарнитуры",
         "slug": "headsets",
         "icon": "",
+        "image": "categories_images/headset.png",
         "is_active": true,
         "parent": "3ee73d93-307a-47a6-b32a-aa622aba0b24",
-        "image": "categories_images/headset.png",
         "lft": 2,
         "rght": 3,
         "tree_id": 4,
@@ -392,16 +399,6 @@
 },
 {
     "model": "app_categories.feature",
-    "pk": "783aa547-b7ca-4445-a9d4-674572e26d47",
-    "fields": {
-        "feature_id": "18cc2965-c720-4004-9927-6d060f095d57",
-        "name": "Габариты",
-        "slug": "size",
-        "type_feature": "text"
-    }
-},
-{
-    "model": "app_categories.feature",
     "pk": "9a57d96a-18f6-4744-a00b-027c9c498e27",
     "fields": {
         "feature_id": "3df829f6-8b29-4c83-93d2-e2b5e93c1d19",
@@ -435,8 +432,8 @@
     "pk": "d7aed599-4632-4259-bfdb-f9e9fb4e9653",
     "fields": {
         "feature_id": "a721c742-44cf-444f-886a-93769378ca25",
-        "name": "Вес",
-        "slug": "weight",
+        "name": "Разъемы подключений",
+        "slug": "connections",
         "type_feature": "text"
     }
 },
@@ -482,34 +479,10 @@
 },
 {
     "model": "app_categories.categoryfeature",
-    "pk": "0d49585b-7d0b-43af-b93f-eda0da197fc3",
-    "fields": {
-        "category_fk": "5ab76fba-cb55-4e58-b446-f10544a6a226",
-        "feature_fk": "a721c742-44cf-444f-886a-93769378ca25"
-    }
-},
-{
-    "model": "app_categories.categoryfeature",
     "pk": "1297f9ea-b8ff-425c-aa8a-64eee7623432",
     "fields": {
         "category_fk": "14e0cf53-ce1a-41b1-858e-a13e521e2db9",
         "feature_fk": "b91c77b4-106a-411e-bc39-8b279c4d8fc9"
-    }
-},
-{
-    "model": "app_categories.categoryfeature",
-    "pk": "180f4595-eaa5-438d-a5c4-3d67a1ddd38a",
-    "fields": {
-        "category_fk": "8e8537be-7932-4db6-8a36-9bd7600658cc",
-        "feature_fk": "18cc2965-c720-4004-9927-6d060f095d57"
-    }
-},
-{
-    "model": "app_categories.categoryfeature",
-    "pk": "1ba7652e-d264-4936-b641-5ef3c484d4db",
-    "fields": {
-        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
-        "feature_fk": "18cc2965-c720-4004-9927-6d060f095d57"
     }
 },
 {
@@ -530,26 +503,10 @@
 },
 {
     "model": "app_categories.categoryfeature",
-    "pk": "3b8d88af-9ea2-48af-bc6c-1252ba7fc8a1",
-    "fields": {
-        "category_fk": "338d09c9-172a-4b1c-aaa4-b0983462dad1",
-        "feature_fk": "18cc2965-c720-4004-9927-6d060f095d57"
-    }
-},
-{
-    "model": "app_categories.categoryfeature",
     "pk": "3dfeea42-9321-4955-b5a6-f713c1b9d4ea",
     "fields": {
         "category_fk": "338d09c9-172a-4b1c-aaa4-b0983462dad1",
         "feature_fk": "3df829f6-8b29-4c83-93d2-e2b5e93c1d19"
-    }
-},
-{
-    "model": "app_categories.categoryfeature",
-    "pk": "468b2082-635d-4dad-a4d8-f394519e9f0e",
-    "fields": {
-        "category_fk": "e31b29da-5d21-4941-b435-090facf38cf2",
-        "feature_fk": "a721c742-44cf-444f-886a-93769378ca25"
     }
 },
 {
@@ -562,14 +519,6 @@
 },
 {
     "model": "app_categories.categoryfeature",
-    "pk": "4976e9d0-6c81-42dc-8228-b0eafffba4ae",
-    "fields": {
-        "category_fk": "ac798b78-36fe-4b0c-8fff-50349ddf75c5",
-        "feature_fk": "18cc2965-c720-4004-9927-6d060f095d57"
-    }
-},
-{
-    "model": "app_categories.categoryfeature",
     "pk": "49dc2ea9-a614-4ba7-9cf5-7c23b1a790db",
     "fields": {
         "category_fk": "338d09c9-172a-4b1c-aaa4-b0983462dad1",
@@ -578,18 +527,18 @@
 },
 {
     "model": "app_categories.categoryfeature",
-    "pk": "579a4bce-fc95-4994-a52c-4841129c4e11",
+    "pk": "54ae9906-1601-4aca-9133-7dd53d26a895",
     "fields": {
-        "category_fk": "8e8537be-7932-4db6-8a36-9bd7600658cc",
-        "feature_fk": "d9171f07-148c-4a49-b10f-72ed5de1cb79"
+        "category_fk": "658619cf-15d0-461a-9928-eb84b621ad22",
+        "feature_fk": "a721c742-44cf-444f-886a-93769378ca25"
     }
 },
 {
     "model": "app_categories.categoryfeature",
-    "pk": "5d225257-6947-4fd0-b9c7-30c6c736bf68",
+    "pk": "579a4bce-fc95-4994-a52c-4841129c4e11",
     "fields": {
-        "category_fk": "5ab76fba-cb55-4e58-b446-f10544a6a226",
-        "feature_fk": "18cc2965-c720-4004-9927-6d060f095d57"
+        "category_fk": "8e8537be-7932-4db6-8a36-9bd7600658cc",
+        "feature_fk": "d9171f07-148c-4a49-b10f-72ed5de1cb79"
     }
 },
 {
@@ -682,14 +631,6 @@
 },
 {
     "model": "app_categories.categoryfeature",
-    "pk": "86b88dec-3f31-4b10-b9a9-0133ed7ede4b",
-    "fields": {
-        "category_fk": "ac798b78-36fe-4b0c-8fff-50349ddf75c5",
-        "feature_fk": "a721c742-44cf-444f-886a-93769378ca25"
-    }
-},
-{
-    "model": "app_categories.categoryfeature",
     "pk": "8f2ab7a5-a38e-45ee-9c89-d2e80dfe028c",
     "fields": {
         "category_fk": "658619cf-15d0-461a-9928-eb84b621ad22",
@@ -702,22 +643,6 @@
     "fields": {
         "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
         "feature_fk": "3df829f6-8b29-4c83-93d2-e2b5e93c1d19"
-    }
-},
-{
-    "model": "app_categories.categoryfeature",
-    "pk": "94caa582-6112-436d-a0de-6efeb12e9b2d",
-    "fields": {
-        "category_fk": "e31b29da-5d21-4941-b435-090facf38cf2",
-        "feature_fk": "18cc2965-c720-4004-9927-6d060f095d57"
-    }
-},
-{
-    "model": "app_categories.categoryfeature",
-    "pk": "9518f47b-3027-49cd-a42d-d41726d8a0e5",
-    "fields": {
-        "category_fk": "7abd01a8-6cc6-421a-8c96-614b36b45ab1",
-        "feature_fk": "18cc2965-c720-4004-9927-6d060f095d57"
     }
 },
 {
@@ -754,14 +679,6 @@
 },
 {
     "model": "app_categories.categoryfeature",
-    "pk": "b3ccd977-cba8-429f-87f7-7d2571d42643",
-    "fields": {
-        "category_fk": "14e0cf53-ce1a-41b1-858e-a13e521e2db9",
-        "feature_fk": "18cc2965-c720-4004-9927-6d060f095d57"
-    }
-},
-{
-    "model": "app_categories.categoryfeature",
     "pk": "b7333d0d-d818-4ce0-9856-1fba6196d42b",
     "fields": {
         "category_fk": "94f89486-f1ac-4ca1-8d14-e769e27f4e19",
@@ -790,14 +707,6 @@
     "fields": {
         "category_fk": "14e0cf53-ce1a-41b1-858e-a13e521e2db9",
         "feature_fk": "dda9e9a4-e262-40b1-b1f9-51a3e967c772"
-    }
-},
-{
-    "model": "app_categories.categoryfeature",
-    "pk": "bd7e32ef-2e92-4a6e-b32c-ed0a00bfddc5",
-    "fields": {
-        "category_fk": "c46e1441-d98a-411b-ba5f-e95cb688ba77",
-        "feature_fk": "a721c742-44cf-444f-886a-93769378ca25"
     }
 },
 {
@@ -838,14 +747,6 @@
     "fields": {
         "category_fk": "ae77c325-0409-4541-be84-d8a752e7f3d9",
         "feature_fk": "a721c742-44cf-444f-886a-93769378ca25"
-    }
-},
-{
-    "model": "app_categories.categoryfeature",
-    "pk": "e1a2dfaf-f51f-4cb8-85d2-c6c993dda2de",
-    "fields": {
-        "category_fk": "98fa6aa5-ce35-4b8d-935a-230b51379fda",
-        "feature_fk": "18cc2965-c720-4004-9927-6d060f095d57"
     }
 },
 {

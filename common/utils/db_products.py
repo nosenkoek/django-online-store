@@ -48,7 +48,16 @@ FEATURES_VALUE = {
     'Частота': ['2133МГц', '2666МГц', '3200МГц'],
     'Поколение': ['DDR4', 'DDR3'],
     'Экран': ['9"', '11"', '13"', '15"', '17"'],
+    'Разъемы подключений': ['USB 2.0', 'USB 3.0', 'USB type-C',
+                            'bluetooth', 'HDMI']
 }
+
+FEATURES_GROUP_TEXT = {
+    'a721c742-44cf-444f-886a-93769378ca25': ['USB 2.0', 'USB 3.0',
+                                             'USB type-C', 'bluetooth', 'HDMI']
+}
+
+# todo: придумать заполнение разъемов подключения
 
 now = datetime.utcnow()
 
@@ -143,6 +152,14 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
                          FEATURES_VALUE.get(
                              feature_id_name_select[feature_id])
                      )))
+            elif feature_id in FEATURES_GROUP_TEXT.keys():
+                data_product_feature.append((
+                    str(uuid.uuid4()),
+                    product_id,
+                    feature_id,
+                    ', '.join(set(random.choices(
+                        FEATURES_GROUP_TEXT.get(feature_id), k=3)
+                    ))))
             else:
                 data_product_feature.append(
                     (str(uuid.uuid4()), product_id, feature_id, fake.word()))

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-19 11:44+0300\n"
+"POT-Creation-Date: 2022-08-22 16:18+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,7 +44,7 @@ msgstr "Файл не SVG"
 #: .\app_categories\models.py:19 .\app_categories\models.py:59
 #: .\app_categories\tests\tests_models.py:41
 #: .\app_categories\tests\tests_models.py:58 .\app_products\models.py:16
-#: .\app_products\models.py:32 .\app_products\tests\tests_models.py:65
+#: .\app_products\models.py:32 .\app_products\tests\tests_models.py:30
 msgid "name"
 msgstr "название"
 
@@ -71,7 +71,7 @@ msgstr "вложить в категорию"
 
 #: .\app_categories\models.py:42 .\app_categories\models.py:87
 #: .\app_products\admin.py:41 .\app_products\filters.py:34
-#: .\app_products\models.py:50 .\app_products\tests\tests_models.py:90
+#: .\app_products\models.py:50 .\app_products\tests\tests_models.py:55
 msgid "category"
 msgstr "категория"
 
@@ -106,7 +106,7 @@ msgstr "категории с характеристиками"
 
 #: .\app_products\admin.py:46 .\app_products\filters.py:47
 #: .\app_products\models.py:21 .\app_products\models.py:55
-#: .\app_products\tests\tests_models.py:97
+#: .\app_products\tests\tests_models.py:62
 msgid "manufacturer"
 msgstr "производитель"
 
@@ -126,11 +126,11 @@ msgstr "да"
 msgid "manufacturers"
 msgstr "производители"
 
-#: .\app_products\models.py:34 .\app_products\tests\tests_models.py:70
+#: .\app_products\models.py:34 .\app_products\tests\tests_models.py:35
 msgid "description"
 msgstr "описание"
 
-#: .\app_products\models.py:36 .\app_products\tests\tests_models.py:75
+#: .\app_products\models.py:36 .\app_products\tests\tests_models.py:40
 msgid "price"
 msgstr "цена"
 
@@ -138,11 +138,11 @@ msgstr "цена"
 msgid "added"
 msgstr "добавлен"
 
-#: .\app_products\models.py:42 .\app_products\tests\tests_models.py:80
+#: .\app_products\models.py:42 .\app_products\tests\tests_models.py:45
 msgid "is limited"
 msgstr "ограниченный тираж"
 
-#: .\app_products\models.py:44 .\app_products\tests\tests_models.py:85
+#: .\app_products\models.py:44 .\app_products\tests\tests_models.py:50
 msgid "count_in_storage"
 msgstr "количество на складе"
 
@@ -167,7 +167,7 @@ msgid "Remove"
 msgstr "Удалить"
 
 #: .\templates\app_categories\list_subcategories.html:19
-#: .\templates\app_product\list_products.html:18
+#: .\templates\app_products\list_products.html:18
 msgid "home"
 msgstr "главная"
 
@@ -180,8 +180,8 @@ msgstr "от"
 #: .\templates\app_categories\sections_main_page\limit_edition.html:83
 #: .\templates\app_categories\sections_main_page\popular_product.html:25
 #: .\templates\app_categories\sections_main_page\random_categories.html:14
-#: .\templates\app_product\sections_list_products\filter.html:21
-#: .\templates\app_product\sections_list_products\products.html:30
+#: .\templates\app_products\sections_list_products\filter.html:21
+#: .\templates\app_products\sections_list_products\products.html:37
 #: .\templates\header.html:84
 msgid "$"
 msgstr "₽"
@@ -226,22 +226,30 @@ msgstr "Ограниченные товары"
 msgid "Popular Products"
 msgstr "Популярные товары"
 
-#: .\templates\app_product\sections_list_products\filter.html:7
-#: .\templates\app_product\sections_list_products\filter.html:66
+#: .\templates\app_products\sections_list_products\filter.html:7
+#: .\templates\app_products\sections_list_products\filter.html:81
 msgid "Filter"
 msgstr "Фильтр"
 
-#: .\templates\app_product\sections_list_products\filter.html:18
+#: .\templates\app_products\sections_list_products\filter.html:18
 msgid "Price"
 msgstr "Цена"
 
-#: .\templates\app_product\sections_list_products\filter.html:27
+#: .\templates\app_products\sections_list_products\filter.html:27
 msgid "Name"
 msgstr "Название"
 
-#: .\templates\app_product\sections_list_products\filter.html:36
+#: .\templates\app_products\sections_list_products\filter.html:32
+msgid "Manufacturer"
+msgstr "Производитель"
+
+#: .\templates\app_products\sections_list_products\filter.html:43
 msgid "Available"
 msgstr "В наличии"
+
+#: .\templates\app_products\sections_list_products\filter.html:82
+msgid "Clear"
+msgstr "Очистить"
 
 #: .\templates\footer.html:45
 msgid "Useful Links"
