@@ -10,5 +10,5 @@ urlpatterns = [
 
     path('<slug:category_slug>/',
          SubcategoriesListView.as_view(),
-         name='list_subcategories')
+         name='subcategory_list')
 ]

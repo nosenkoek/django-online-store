@@ -90,7 +90,7 @@ class MainPageView(TemplateView):
 class SubcategoriesListView(ListView):
     """View для списка подкатегорий"""
     model = Category
-    template_name = 'app_categories/list_subcategories.html'
+    template_name = 'app_categories/subcategory_list.html'
     context_object_name = 'subcategories'
     extra_context = NaviCategoriesList().get_context()
 

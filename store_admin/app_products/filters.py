@@ -206,7 +206,6 @@ class ProductFilterCommon(django_filters.FilterSet):
 
 class ProductFilter(ProductFilterCommon):
     """Объект фильтра для товаров. Внешний интерфейс"""
-
     def __init__(self, *args, **kwargs):
         features = kwargs.pop('features')
         super(ProductFilter, self).__init__(*args, **kwargs)
@@ -231,4 +230,4 @@ class ProductFilter(ProductFilterCommon):
 
     class Meta:
         model = Product
-        fields = ['price', 'name', 'available']
+        fields = ['price', 'name', 'available', 'manufacturer']

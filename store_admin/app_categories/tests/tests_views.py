@@ -153,17 +153,17 @@ class SubcategoriesListTest(BaseTest):
     def test_subcategories_template(self):
         """Проверка используемого шаблона"""
         response = self.client.get(
-            reverse('list_subcategories', args=[self.category.slug]),
+            reverse('subcategory_list', args=[self.category.slug]),
             follow=True
         )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
-                                'app_categories/list_subcategories.html')
+                                'app_categories/subcategory_list.html')
 
     def test_categories_number(self):
         """Проверка количества отображаемых категорий в навигации"""
         response = self.client.get(
-            reverse('list_subcategories', args=[self.category.slug]),
+            reverse('subcategory_list', args=[self.category.slug]),
             follow=True
         )
         self.assertEqual(NUMBERS_CATEGORY - 1,
@@ -172,7 +172,7 @@ class SubcategoriesListTest(BaseTest):
     def test_subcategories_number(self):
         """Проверка количества отображаемых лимитированных товаров"""
         response = self.client.get(
-            reverse('list_subcategories', args=[self.category.slug]),
+            reverse('subcategory_list', args=[self.category.slug]),
             follow=True
         )
         self.assertEqual(NUMBERS_CATEGORY,

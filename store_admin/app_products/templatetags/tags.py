@@ -28,5 +28,3 @@ def solve_url(value: str, field_name: str,
         url = f'{url}&{encoded_querystring}'
 
     return url
-
-

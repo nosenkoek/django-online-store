@@ -1,8 +1,7 @@
-import re
 from typing import Tuple
 
 from django.db.models import Max, Prefetch, QuerySet
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from app_categories.views import NaviCategoriesList
 from app_categories.models import Category, Feature
@@ -23,9 +22,10 @@ class AddSortedItemToContextMixin():
         self.extra_context.update({'sorted_list': self.SORTED_LIST})
 
 
-class ProductList(ListView, AddSortedItemToContextMixin, InitialDictFromURLMixin):
+class ProductListView(ListView, AddSortedItemToContextMixin,
+                      InitialDictFromURLMixin):
     model = Product
-    template_name = 'app_products/list_products.html'
+    template_name = 'app_products/product_list.html'
     context_object_name = 'products'
     paginate_by = 8
     extra_context = NaviCategoriesList().get_context()
@@ -48,7 +48,7 @@ class ProductList(ListView, AddSortedItemToContextMixin, InitialDictFromURLMixin
                                        .distinct('value')))
         return subcategory, features
 
-    def get_queryset(self) -> None:
+    def get_queryset(self) -> QuerySet:
         self.add_sorted_item_to_context()
         subcategory, features = self.get_subcategory_and_features()
 
@@ -67,11 +67,32 @@ class ProductList(ListView, AddSortedItemToContextMixin, InitialDictFromURLMixin
             'subcategory': subcategory,
             'features': features,
             'form': product_filter.form,
-            })
+        })
         return product_filter.qs
 
     def get_context_data(self, **kwargs) -> dict:
-        context = super(ProductList, self).get_context_data(**kwargs)
+        context = super(ProductListView, self).get_context_data(**kwargs)
         initial_dict = self.get_initial_dict()
         context.update({'initial_dict': initial_dict})
         return context
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'app_products/product_detail.html'
+    extra_context = NaviCategoriesList().get_context()
+
+    def get_context_data(self, **kwargs) -> dict:
+        context_data = super(ProductDetailView, self).get_context_data(
+            **kwargs)
+        product = self.get_object()
+        subcategory = Category.objects.filter(product=product) \
+            .select_related('parent').first()
+        context_data.update({'subcategory': subcategory})
+        return context_data
+
+    def get_queryset(self) -> QuerySet:
+        queryset = super(ProductDetailView, self).get_queryset() \
+            .prefetch_related('productfeature_set',
+                              'productfeature_set__feature_fk')
+        return queryset

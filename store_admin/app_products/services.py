@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 
 # todo: подумать тут над pydantic
-from typing import Dict, Union, List, Optional
+from typing import Dict
 
 
 @dataclass

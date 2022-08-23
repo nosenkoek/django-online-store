@@ -4,8 +4,8 @@ from django.db import connection
 from app_categories.models import Category, Feature, CategoryFeature
 from app_products.models import Product, Manufacturer
 
-from app_products.tests.settings import CATEGORY_PARENT, MANUFACTURER, PRODUCT, \
-    CATEGORY_LIST, FEATURE_LIST, FEATURE_NEW
+from app_products.tests.settings import CATEGORY_PARENT, MANUFACTURER, \
+    PRODUCT, CATEGORY_LIST, FEATURE_LIST, FEATURE_NEW
 
 
 class TestSignalAddFeatureProduct(TestCase):

@@ -18,7 +18,7 @@
             <li class="breadcrumbs-item"><a href="{% url 'main_page' %}">{% trans 'home' %}</a>
             </li>
             <li class="breadcrumbs-item breadcrumbs-item_current">
-              <a href="{% url 'list_subcategories' subcategory.parent.slug %}">{{ subcategory.parent.name }}</a>
+              <a href="{% url 'subcategory_list' subcategory.parent.slug %}">{{ subcategory.parent.name }}</a>
             </li>
             <li class="breadcrumbs-item breadcrumbs-item_current"><span>{{ subcategory.name }}</span>
             </li>

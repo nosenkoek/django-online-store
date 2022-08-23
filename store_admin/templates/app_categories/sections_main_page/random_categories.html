@@ -5,7 +5,7 @@
   <div class="wrap">
     <div class="BannersHome">
       {% for random_category in random_categories %}
-        <a class="BannersHomeBlock" href="{% url 'list_products' random_category.parent.slug random_category.slug %}">
+        <a class="BannersHomeBlock" href="{% url 'product_list' random_category.parent.slug random_category.slug %}">
           <div class="BannersHomeBlock-row">
             <div class="BannersHomeBlock-block">
               <strong class="BannersHomeBlock-title">{{ random_category.name }}

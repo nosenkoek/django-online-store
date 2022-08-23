@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+  Список товаров
+{% endblock %}
+
+{% block content %}
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title"> {{ subcategory.name }}
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item"><a href="{% url 'main_page' %}">{% trans 'home' %}</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current">
+              <a href="{% url 'subcategory_list' subcategory.parent.slug %}">{{ subcategory.parent.name }}</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current">
+              <a href="{% url 'product_list' subcategory.parent.slug subcategory.slug %}">{{ subcategory.name }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="Section">
+    <div class="wrap">
+      <div class="Product">
+        <div class="ProductCard">
+          <div class="ProductCard-look">
+            <div class="ProductCard-photo">
+              <img src="{{ product.image.url }}" alt="bigGoods.png"/>
+            </div>
+{#            <div class="ProductCard-picts">#}
+{#              <a class="ProductCard-pict ProductCard-pict_ACTIVE" href="assets/img/content/home/bigGoods.png">#}
+{#                <img src="assets/img/content/home/bigGoods.png" alt="bigGoods.png"/>#}
+{#              </a>#}
+{#              <a class="ProductCard-pict" href="assets/img/content/home/slider.png">#}
+{#                <img src="assets/img/content/home/slider.png" alt="slider.png"/>#}
+{#              </a>#}
+{#              <a class="ProductCard-pict" href="assets/img/content/home/videoca.png">#}
+{#                <img src="assets/img/content/home/videoca.png" alt="videoca.png"/>#}
+{#              </a>#}
+{#            </div>#}
+          </div>
+
+          <div class="ProductCard-desc">
+            <div class="ProductCard-header">
+              <h2 class="ProductCard-title">
+                {{ product.name }}
+              </h2>
+              <div class="ProductCard-info">
+                <div class="ProductCard-cost">
+                  <div class="ProductCard-price">
+                    {% trans '$' %}{{ product.price }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ProductCard-text">
+              {{ product.description }}
+            </div>
+
+            <div class="ProductCard-cart">
+              <div class="ProductCard-cartElement ProductCard-cartElement_amount">
+                <div class="Amount Amount_product">
+                  <button class="Amount-remove" type="button">
+                  </button>
+                  <input class="Amount-input form-input" name="amount" type="text" value="1"/>
+                  <button class="Amount-add" type="button">
+                  </button>
+                </div>
+              </div>
+              <div class="ProductCard-cartElement">
+                <a class="btn btn_primary" href="#">
+                  <img class="btn-icon" src="{% static 'app_products/img/icons/card/cart_white.svg' %}" alt="cart_white.svg"/>
+                  <span class="btn-content">{% trans 'Add To Cart' %}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="Tabs Tabs_default">
+            <div class="Tabs-links">
+              <a class="Tabs-link_ACTIVE Tabs-link" href="#description">
+                <span>{% trans 'features' %}</span>
+              </a>
+            </div>
+
+            <div class="Tabs-wrap">
+              <div class="Tabs-block" id="description">
+                <p>
+                  {{ product.description }}
+                </p>
+                <div class="clearfix">
+                </div>
+                <div class="table">
+                  <table>
+                    <tr>
+                      <th>{% trans 'feature' %}
+                      </th>
+                      <th>{% trans 'value' %}
+                      </th>
+                    </tr>
+
+                    {% for product_feature in product.productfeature_set.all %}
+                      <tr>
+                        <td>{{ product_feature.feature_fk.name }}
+                        </td>
+                        <td>{{ product_feature.value }}
+                        </td>
+                      </tr>
+                    {% endfor %}
+
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

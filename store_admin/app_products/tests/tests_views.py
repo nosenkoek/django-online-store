@@ -9,8 +9,6 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, override_settings
 from django.conf import settings
 from django.db import connection
-from django.urls import reverse
-from django.shortcuts import resolve_url
 
 from app_categories.models import Category, Feature, CategoryFeature
 from app_products.models import Manufacturer, Product
@@ -90,11 +88,11 @@ class ProductListTest(BaseTest):
     def test_products_list_url(self):
         """Проверка открытия со списком товаров"""
         response = self.client.get(
-            f'/{self.category.slug}/{self.subcategory.slug}'
+            f'/catalog/{self.category.slug}/{self.subcategory.slug}'
         )
         self.assertEqual(response.status_code, 302)
         response = self.client.get(
-            f'/{self.category.slug}/{self.subcategory.slug}',
+            f'/catalog/{self.category.slug}/{self.subcategory.slug}',
             follow=True
         )
         self.assertEqual(response.status_code, 200)
@@ -102,17 +100,17 @@ class ProductListTest(BaseTest):
     def test_products_list_template(self):
         """Проверка используемого шаблона"""
         response = self.client.get(
-            f'/{self.category.slug}/{self.subcategory.slug}',
+            f'/catalog/{self.category.slug}/{self.subcategory.slug}',
             follow=True
         )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
-                                'app_products/list_products.html')
+                                'app_products/product_list.html')
 
     def test_categories_number(self):
         """Проверка количества отображаемых категорий в навигации"""
         response = self.client.get(
-            f'/{self.category.slug}/{self.subcategory.slug}',
+            f'/catalog/{self.category.slug}/{self.subcategory.slug}',
             follow=True
         )
         self.assertEqual(1, len(response.context.get('navi_categories')))
@@ -123,7 +121,7 @@ class ProductListTest(BaseTest):
 
         for page_num in range(1, self.page_count + 1):
             response = self.client.get(
-                f'/{self.category.slug}/{self.subcategory.slug}',
+                f'/catalog/{self.category.slug}/{self.subcategory.slug}',
                 {'page': page_num},
                 follow=True
             )
@@ -138,7 +136,7 @@ class ProductListTest(BaseTest):
 
         for page_num in range(1, self.page_count + 1):
             response = self.client.get(
-                f'/{self.category.slug}/{self.subcategory.slug}/'
+                f'/catalog/{self.category.slug}/{self.subcategory.slug}/'
                 f'?page={page_num}&sort=price',
                 follow=True
             )
@@ -157,7 +155,7 @@ class ProductListTest(BaseTest):
 
         for page_num in range(1, self.page_count + 1):
             response = self.client.get(
-                f'/{self.category.slug}/{self.subcategory.slug}/'
+                f'/catalog/{self.category.slug}/{self.subcategory.slug}/'
                 f'?page={page_num}&sort=added',
                 follow=True
             )
@@ -174,7 +172,7 @@ class ProductListTest(BaseTest):
         """Проверка фильтрации по стоимости"""
 
         response = self.client.get(
-            f'/{self.category.slug}/{self.subcategory.slug}'
+            f'/catalog/{self.category.slug}/{self.subcategory.slug}'
             f'?price={PRICE_FROM};{PRICE_TO}'
             f'&sort=price',
             follow=True
@@ -185,7 +183,7 @@ class ProductListTest(BaseTest):
         self.assertTrue(PRICE_FROM <= price_first)
 
         response = self.client.get(
-            f'/{self.category.slug}/{self.subcategory.slug}/'
+            f'/catalog/{self.category.slug}/{self.subcategory.slug}/'
             f'?price={PRICE_FROM};{PRICE_TO}'
             f'&sort=-price',
             follow=True
@@ -195,3 +193,24 @@ class ProductListTest(BaseTest):
         products = response.context.get('products')
         price_first = products.all().first().price
         self.assertTrue(price_first <= PRICE_TO)
+
+
+class ProductDetailTest(BaseTest):
+    def setUp(self) -> None:
+        self.product = Product.objects.first()
+
+    def test_product_url(self):
+        """Проверка открытия детальной страницы товара"""
+        response = self.client.get(f'/catalog/{self.product.slug}')
+        self.assertEqual(response.status_code, 302)
+        response = self.client.get(f'/catalog/{self.product.slug}',
+                                   follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_products_list_template(self):
+        """Проверка используемого шаблона"""
+        response = self.client.get(f'/catalog/{self.product.slug}',
+                                   follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,
+                                'app_products/product_detail.html')

@@ -29,9 +29,9 @@
   <div class="Cards">
     {% for product in products %}
       <div class="Card">
-        <a class="Card-picture" href="#"><img src="{{ product.image.url }}" alt="card.jpg"/></a>
+        <a class="Card-picture" href="{% url 'product_detail' product.slug %}"><img src="{{ product.image.url }}" alt="card.jpg"/></a>
         <div class="Card-content">
-          <strong class="Card-title"><a href="#">{{ product.name }}</a>
+          <strong class="Card-title"><a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
           </strong>
           <div class="Card-description">
             <div class="Card-cost"><span class="Card-price">{% trans '$' %}{{ product.price }}</span>
