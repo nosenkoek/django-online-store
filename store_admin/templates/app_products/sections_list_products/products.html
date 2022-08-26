@@ -29,7 +29,7 @@
   <div class="Cards">
     {% for product in products %}
       <div class="Card">
-        <a class="Card-picture" href="{% url 'product_detail' product.slug %}"><img src="{{ product.image.url }}" alt="card.jpg"/></a>
+        <a class="Card-picture" href="{% url 'product_detail' product.slug %}"><img src="{{ product.main_image.url }}" alt="card.jpg"/></a>
         <div class="Card-content">
           <strong class="Card-title"><a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
           </strong>

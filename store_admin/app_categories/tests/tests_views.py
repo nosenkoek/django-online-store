@@ -1,5 +1,6 @@
 import os
 import shutil
+from time import sleep
 from uuid import uuid4
 
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -10,6 +11,8 @@ from django.conf import settings
 
 from app_categories.models import Category
 from app_products.models import Product, Manufacturer
+from app_products.services.decorator_count_views import redis_conn, \
+    SECONDS_CACHE, NAME_ATRS_CACHE
 
 TEMP_MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'temp_media/')
 
@@ -75,7 +78,7 @@ class PullDatabaseMixin():
             Product(id=str(uuid4()), product_id=str(uuid4()),
                     name=f'name_{num}', is_limited=True, count=10,
                     slug=f'product-{num}', description='text',
-                    price=1_000, image=cls.gif_1,
+                    price=1_000, main_image=cls.gif_1,
                     category_fk=cls.subcategories[0],
                     manufacturer_fk=cls.manufacturer)
             for num in range(NUMBERS_PRODUCT_TO_DB)
@@ -96,8 +99,8 @@ class BaseTest(TestCase, PullDatabaseMixin):
     @classmethod
     def tearDownClass(cls):
         super().tearDownClass()
-        # Метод shutil.rmtree удаляет директорию и всё её содержимое
         shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
+        redis_conn.delete(*NAME_ATRS_CACHE.get('testserver'))
 
 
 class MainPageTest(BaseTest):
@@ -128,6 +131,12 @@ class MainPageTest(BaseTest):
 
     def test_popular_products_number(self):
         """Проверка количества отображаемых популярных товаров"""
+        products = Product.objects.order_by('?')[:NUMBERS_POPULAR_PRODUCTS]
+
+        for product in products:
+            self.client.get(f'/catalog/{product.slug}', follow=True)
+            sleep(SECONDS_CACHE / NUMBERS_POPULAR_PRODUCTS)
+
         response = self.client.get('/', follow=True)
         self.assertEqual(NUMBERS_POPULAR_PRODUCTS,
                          len(response.context.get('popular_products')))

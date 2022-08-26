@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-22 16:18+0300\n"
+"POT-Creation-Date: 2022-08-25 10:49+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,7 +57,8 @@ msgstr "отображение в URL"
 msgid "icon"
 msgstr "иконка"
 
-#: .\app_categories\models.py:25 .\app_products\models.py:39
+#: .\app_categories\models.py:25 .\app_products\models.py:73
+#: .\app_products\models.py:83
 msgid "image"
 msgstr "изображение"
 
@@ -70,7 +71,7 @@ msgid "put in category"
 msgstr "вложить в категорию"
 
 #: .\app_categories\models.py:42 .\app_categories\models.py:87
-#: .\app_products\admin.py:41 .\app_products\filters.py:34
+#: .\app_products\admin.py:47 .\app_products\filters.py:34
 #: .\app_products\models.py:50 .\app_products\tests\tests_models.py:55
 msgid "category"
 msgstr "категория"
@@ -88,11 +89,12 @@ msgid "text"
 msgstr "текст"
 
 #: .\app_categories\models.py:72 .\app_categories\models.py:93
-#: .\app_products\models.py:81
+#: .\app_products\models.py:99 .\templates\app_products\product_detail.html:110
 msgid "feature"
 msgstr "характеристика"
 
 #: .\app_categories\models.py:73
+#: .\templates\app_products\product_detail.html:96
 msgid "features"
 msgstr "характеристики"
 
@@ -104,7 +106,7 @@ msgstr "категория с характеристиками"
 msgid "categories with features"
 msgstr "категории с характеристиками"
 
-#: .\app_products\admin.py:46 .\app_products\filters.py:47
+#: .\app_products\admin.py:52 .\app_products\filters.py:47
 #: .\app_products\models.py:21 .\app_products\models.py:55
 #: .\app_products\tests\tests_models.py:62
 msgid "manufacturer"
@@ -134,6 +136,12 @@ msgstr "описание"
 msgid "price"
 msgstr "цена"
 
+#: .\app_products\models.py:39
+#, fuzzy
+#| msgid "image"
+msgid "main image"
+msgstr "изображение"
+
 #: .\app_products\models.py:41
 msgid "added"
 msgstr "добавлен"
@@ -146,45 +154,31 @@ msgstr "ограниченный тираж"
 msgid "count_in_storage"
 msgstr "количество на складе"
 
-#: .\app_products\models.py:62 .\app_products\models.py:76
+#: .\app_products\models.py:62 .\app_products\models.py:78
+#: .\app_products\models.py:94
 msgid "product"
 msgstr "товар"
 
-#: .\app_products\models.py:83
+#: .\app_products\models.py:84
+msgid "images"
+msgstr "изображения"
+
+#: .\app_products\models.py:101
+#: .\templates\app_products\product_detail.html:112
 msgid "value"
 msgstr "значение"
 
-#: .\app_products\models.py:89
+#: .\app_products\models.py:107
 msgid "product with features"
 msgstr "товар с характеристиками"
 
-#: .\app_products\models.py:90
+#: .\app_products\models.py:108
 msgid "products with features"
 msgstr "товары с характеристиками"
 
 #: .\templates\admin_custom\input_filter.html:19
 msgid "Remove"
 msgstr "Удалить"
-
-#: .\templates\app_categories\list_subcategories.html:19
-#: .\templates\app_products\list_products.html:18
-msgid "home"
-msgstr "главная"
-
-#: .\templates\app_categories\list_subcategories.html:42
-#: .\templates\app_categories\sections_main_page\random_categories.html:13
-msgid "from"
-msgstr "от"
-
-#: .\templates\app_categories\list_subcategories.html:42
-#: .\templates\app_categories\sections_main_page\limit_edition.html:83
-#: .\templates\app_categories\sections_main_page\popular_product.html:25
-#: .\templates\app_categories\sections_main_page\random_categories.html:14
-#: .\templates\app_products\sections_list_products\filter.html:21
-#: .\templates\app_products\sections_list_products\products.html:37
-#: .\templates\header.html:84
-msgid "$"
-msgstr "₽"
 
 #: .\templates\app_categories\sections_main_page\limit_edition.html:12
 msgid "Shipping & Returns"
@@ -222,9 +216,43 @@ msgstr "Лучшие товары"
 msgid "Limited edition"
 msgstr "Ограниченные товары"
 
+#: .\templates\app_categories\sections_main_page\limit_edition.html:83
+#: .\templates\app_categories\sections_main_page\popular_product.html:25
+#: .\templates\app_categories\sections_main_page\random_categories.html:14
+#: .\templates\app_categories\subcategory_list.html:42
+#: .\templates\app_products\popular_product_list.html:36
+#: .\templates\app_products\product_detail.html:64
+#: .\templates\app_products\sections_list_products\filter.html:21
+#: .\templates\app_products\sections_list_products\products.html:37
+#: .\templates\header.html:85
+msgid "$"
+msgstr "₽"
+
 #: .\templates\app_categories\sections_main_page\popular_product.html:9
 msgid "Popular Products"
 msgstr "Популярные товары"
+
+#: .\templates\app_categories\sections_main_page\random_categories.html:13
+#: .\templates\app_categories\subcategory_list.html:42
+msgid "from"
+msgstr "от"
+
+#: .\templates\app_categories\subcategory_list.html:19
+#: .\templates\app_products\popular_product_list.html:17
+#: .\templates\app_products\product_detail.html:20
+#: .\templates\app_products\product_list.html:18
+msgid "home"
+msgstr "главная"
+
+#: .\templates\app_products\popular_product_list.html:7
+#: .\templates\app_products\popular_product_list.html:14
+#: .\templates\app_products\popular_product_list.html:19
+msgid "popular products"
+msgstr "Популярные товары"
+
+#: .\templates\app_products\product_detail.html:86
+msgid "Add To Cart"
+msgstr "В корзину"
 
 #: .\templates\app_products\sections_list_products\filter.html:7
 #: .\templates\app_products\sections_list_products\filter.html:81
@@ -271,7 +299,7 @@ msgstr "Информация о заказах"
 msgid "My Account"
 msgstr "Аккаунт"
 
-#: .\templates\footer.html:60 .\templates\header.html:76
+#: .\templates\footer.html:60 .\templates\header.html:77
 msgid "Account"
 msgstr "Аккаунт"
 
@@ -311,19 +339,19 @@ msgstr "Вход / Регистрация"
 msgid "Home"
 msgstr "Главная"
 
-#: .\templates\header.html:73
+#: .\templates\header.html:74
 msgid "Popular"
 msgstr "Популярное"
 
-#: .\templates\header.html:100
+#: .\templates\header.html:101
 msgid "Categories"
 msgstr "Категории"
 
-#: .\templates\header.html:146
+#: .\templates\header.html:147
 msgid "What are you looking for ..."
 msgstr "Что ищете ..."
 
-#: .\templates\header.html:147
+#: .\templates\header.html:148
 msgid "Search"
 msgstr "Поиск"
 

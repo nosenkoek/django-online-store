@@ -7,7 +7,10 @@ from app_categories.views import NaviCategoriesList
 from app_categories.models import Category, Feature
 from app_products.filters import ProductFilter
 from app_products.models import Product, ProductFeature
-from app_products.services import SortedItem, InitialDictFromURLMixin
+from app_products.services.decorator_count_views import \
+    cache_popular_product, redis_conn, NAME_ATRS_CACHE
+from app_products.services.handler_url_params import InitialDictFromURLMixin
+from app_products.services.sorted_item import SortedItem
 
 
 class AddSortedItemToContextMixin():
@@ -24,6 +27,7 @@ class AddSortedItemToContextMixin():
 
 class ProductListView(ListView, AddSortedItemToContextMixin,
                       InitialDictFromURLMixin):
+    """View для каталога товаров"""
     model = Product
     template_name = 'app_products/product_list.html'
     context_object_name = 'products'
@@ -78,21 +82,36 @@ class ProductListView(ListView, AddSortedItemToContextMixin,
 
 
 class ProductDetailView(DetailView):
+    """View для детальной страницы товара"""
     model = Product
     template_name = 'app_products/product_detail.html'
     extra_context = NaviCategoriesList().get_context()
 
-    def get_context_data(self, **kwargs) -> dict:
-        context_data = super(ProductDetailView, self).get_context_data(
-            **kwargs)
-        product = self.get_object()
-        subcategory = Category.objects.filter(product=product) \
-            .select_related('parent').first()
-        context_data.update({'subcategory': subcategory})
-        return context_data
-
     def get_queryset(self) -> QuerySet:
         queryset = super(ProductDetailView, self).get_queryset() \
+            .select_related('category_fk', 'category_fk__parent') \
             .prefetch_related('productfeature_set',
                               'productfeature_set__feature_fk')
+        return queryset
+
+    @cache_popular_product
+    def get(self, request, *args, **kwargs):
+        return super(ProductDetailView, self).get(request, *args, **kwargs)
+
+
+class PopularProductListView(ListView):
+    """View для страницы популярных товаров"""
+    model = Product
+    context_object_name = 'popular_products'
+    template_name = 'app_products/popular_product_list.html'
+    extra_context = NaviCategoriesList().get_context()
+
+    def get_queryset(self) -> QuerySet:
+        popular_product_range = redis_conn.lrange(
+            NAME_ATRS_CACHE.get(self.request.get_host())[1], 0, -1
+        )
+        queryset = super(PopularProductListView, self).get_queryset() \
+            .select_related('category_fk', 'category_fk__parent') \
+            .filter(category_fk__is_active=True,
+                    product_id__in=popular_product_range)
         return queryset

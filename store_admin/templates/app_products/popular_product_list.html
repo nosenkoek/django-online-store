@@ -1,0 +1,56 @@
+{% extends '../base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+  {% trans 'popular products' %}
+{% endblock %}
+
+{% block content %}
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title"> {% trans 'popular products' %}
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item"><a href="{% url 'main_page' %}">{% trans 'home' %}</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current"><span>{% trans 'popular products' %}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+      <div class="Section">
+      <div class="wrap">
+        <div class="Cards">
+          {% for product in popular_products %}
+            <div class="Card">
+              <a class="Card-picture" href="{% url 'product_detail' product.slug %}"><img src="{{ product.main_image.url }}" alt="card.jpg"/></a>
+              <div class="Card-content">
+                <strong class="Card-title"><a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
+                </strong>
+                <div class="Card-description">
+                  <div class="Card-cost"><span class="Card-price">{% trans '$' %}{{ product.price }}</span>
+                  </div>
+                  {% with product.category_fk as subcategory %}
+                    <div class="Card-category">
+                      {{ subcategory.parent.name }}/ {{ subcategory.name }}
+                    </div>
+                  {% endwith %}
+                  <div class="Card-hover">
+                    <a class="Card-btn" href="#"><img src="{% static 'app_products/img/icons/card/cart.svg' %}" alt="cart.svg"/></a>
+                    <a class="Card-btn" href="#"><img src="{% static 'app_products/img/icons/card/change.svg' %}" alt="change.svg"/></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% empty %}
+            <div class="Card-description">Пока нет популярных товаров =(</div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+{% endblock %}

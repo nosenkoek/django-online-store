@@ -13,8 +13,8 @@
       <div class="Cards">
         {% for product in popular_products %}
           <div class="Card">
-            <a class="Card-picture" href="#">
-              <img src="{{ product.image.url }}" alt="{{ product.name | truncatechars:10 }}"/>
+            <a class="Card-picture" href="{% url 'product_detail' product.slug %}">
+              <img src="{{ product.main_image.url }}" alt="{{ product.name | truncatechars:10 }}"/>
             </a>
 
             <div class="Card-content">
@@ -34,6 +34,8 @@
               </div>
             </div>
           </div>
+        {% empty %}
+          <p>Пока нет популярных товаров =(</p>
         {% endfor %}
       </div>
     </div>

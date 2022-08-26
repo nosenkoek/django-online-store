@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.db.models import QuerySet
 from django.utils.translation import gettext as _
 
-from app_products.models import Product, Manufacturer, ProductFeature
+from app_products.models import Product, Image, Manufacturer, ProductFeature
 from app_categories.admin import TypeFeatureFieldMixin
 from app_products.filters import ProductCategoryFilterAdmin, \
     ProductManufacturerFilterAdmin
@@ -27,6 +27,11 @@ class FeatureProductInline(TypeFeatureFieldMixin, admin.TabularInline):
         return False
 
 
+class ImageProductInline(admin.TabularInline):
+    model = Image
+    fields = ['image']
+
+
 class ListDisplayProductExtendMixin():
     """Миксин для расширения list_display"""
     list_select_related = ('category_fk', 'manufacturer_fk')
@@ -35,7 +40,8 @@ class ListDisplayProductExtendMixin():
 
     def get_queryset(self, request) -> QuerySet:
         queryset = super().get_queryset(request)\
-            .select_related(*self.list_select_related)
+            .select_related(*self.list_select_related)\
+            .prefetch_related('image_set')
         return queryset
 
     @admin.display(description=_('category'))
@@ -52,7 +58,7 @@ class ListDisplayProductExtendMixin():
 @admin.register(Product)
 class ProductAdmin(ListDisplayProductExtendMixin, admin.ModelAdmin):
     """Панель продуктов"""
-    inlines = (FeatureProductInline,)
+    inlines = (FeatureProductInline, ImageProductInline)
     ordering = ('-added', )
     search_fields = ('name', )
     list_filter = (ProductCategoryFilterAdmin,

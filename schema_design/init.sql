@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS "content".order_product;
 DROP TABLE IF EXISTS "content".category_feature;
 DROP TABLE IF EXISTS "content".product_feature;
 DROP TABLE IF EXISTS "content".feedback;
+DROP TABLE IF EXISTS "content".image;
 DROP TABLE IF EXISTS "content".product;
 DROP TABLE IF EXISTS "content".feature;
 DROP TABLE IF EXISTS "content".category;
@@ -22,7 +23,7 @@ DROP INDEX IF EXISTS feature_value_idx;
 DROP INDEX IF EXISTS product_limited_idx;
 
 
--- PRODUCTS
+-- CATEGORIES
 CREATE TYPE type_feature_enum AS ENUM ('select', 'checkbox', 'text');
 
 CREATE TABLE "content".category (
@@ -54,11 +55,14 @@ CREATE TABLE "content".category_feature(
     feature_fk uuid NOT NULL
 );
 
+-- PRODUCTS
+
 CREATE TABLE "content".manufacturer (
     id uuid PRIMARY KEY,
     manufacturer_id uuid UNIQUE NOT NULL,
     name varchar(30) NOT NULL
 );
+
 
 CREATE TABLE "content".product(
     id uuid PRIMARY KEY,
@@ -67,12 +71,19 @@ CREATE TABLE "content".product(
     slug varchar(50) UNIQUE NOT NULL,
     description text NOT NULL,
     price decimal NOT NULL,
-    image varchar(100) NOT NULL,
+    main_image varchar(100) NOT NULL,
     added timestamp NOT NULL,
     count int NOT NULL,
     is_limited bool NOT NULL,
     category_fk uuid NOT NULL,
     manufacturer_fk uuid NOT NULL
+);
+
+CREATE TABLE "content".image (
+    id uuid PRIMARY KEY,
+    image_id uuid UNIQUE NOT NULL,
+    image varchar(100) NOT NULL,
+    product_fk uuid NOT NULL
 );
 
 CREATE TABLE "content".feedback(
@@ -168,6 +179,10 @@ ALTER TABLE product
 ALTER TABLE product
     ADD CONSTRAINT manufacturer_fk FOREIGN KEY (manufacturer_fk)
         REFERENCES manufacturer(manufacturer_id) ON DELETE CASCADE;
+
+ALTER TABLE image
+    ADD CONSTRAINT product_fk FOREIGN KEY (product_fk)
+        REFERENCES product(product_id) ON DELETE CASCADE;
 
 ALTER TABLE product_feature
     ADD CONSTRAINT product_fk FOREIGN KEY (product_fk)

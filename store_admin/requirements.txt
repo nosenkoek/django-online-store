@@ -9,3 +9,4 @@ Pillow==8.4.0
 django-mptt
 pydantic
 django-filter
+redis==2.10.6

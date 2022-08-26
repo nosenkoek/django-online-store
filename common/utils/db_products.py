@@ -100,13 +100,14 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
 
     # Заполнение таблицы Product
     query = 'INSERT INTO product (id, product_id, name, slug, description,' \
-            'price, image, added, count, is_limited,' \
+            'price, main_image, added, count, is_limited,' \
             'category_fk, manufacturer_fk) ' \
             'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
 
     product_category = {}
     data_products = []
     counter = 0
+    data_images = []
 
     for num, category_id in enumerate(category_ids):
         product_ids = [str(uuid.uuid4())
@@ -122,13 +123,24 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
 
             data_products.append(
                 (fake.uuid4(), product_id, fake.company(),
-                 f'product-{counter}', fake.sentence(nb_words=10),
-                 round(random.uniform(100, 10_000), 2),
-                 IMAGE_LINKS[num], fake.date_time(), random.randint(0, 50),
+                 f'product-{counter}', fake.sentence(nb_words=20),
+                 round(random.uniform(100, 10_000), 2), IMAGE_LINKS[num],
+                 fake.date_time(), random.randint(0, 50),
                  is_limited, category_id, random.choice(manufacturers_ids))
             )
 
+            data_images.extend([
+                (fake.uuid4(), fake.uuid4(), IMAGE_LINKS[num], product_id)
+                for _ in range(random.randint(1, 4))
+            ])
+
     execute_batch(cur, query, data_products, page_size=PAGE_SIZE)
+
+    # Заполнение таблицы Image
+    query = 'INSERT INTO image (id, image_id, image, product_fk) ' \
+            'VALUES (%s, %s, %s, %s)'
+
+    execute_batch(cur, query, data_images, page_size=PAGE_SIZE)
 
     # Заполнение таблицы product_feature
     query_product_feature = 'INSERT INTO product_feature ' \

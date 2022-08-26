@@ -35,8 +35,8 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=7, decimal_places=2,
                                 verbose_name=_('price'),
                                 validators=[MinValueValidator(0)])
-    image = models.ImageField(upload_to='product_images/',
-                              verbose_name=_('image'))
+    main_image = models.ImageField(upload_to='product_images/',
+                                   verbose_name=_('main image'))
     added = models.DateTimeField(auto_now_add=True,
                                  verbose_name=_('added'))
     is_limited = models.BooleanField(verbose_name=_('is limited'))
@@ -64,6 +64,24 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Image(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    image_id = models.UUIDField(unique=True, default=uuid4, editable=False)
+    image = models.ImageField(upload_to='product_images/',
+                              verbose_name=_('image'))
+    product_fk = models.ForeignKey(Product,
+                                   on_delete=models.CASCADE,
+                                   to_field='product_id',
+                                   db_column='product_fk',
+                                   verbose_name=_('product'))
+
+    class Meta:
+        managed = False
+        db_table = 'image'
+        verbose_name = _('image')
+        verbose_name_plural = _('images')
 
 
 class ProductFeature(models.Model):

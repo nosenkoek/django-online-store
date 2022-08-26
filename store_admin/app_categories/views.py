@@ -5,6 +5,8 @@ from django.views.generic import ListView, TemplateView
 
 from app_categories.models import Category
 from app_products.models import Product
+from app_products.services.decorator_count_views import redis_conn, \
+    NAME_ATRS_CACHE
 
 
 class NaviCategoriesList(ListView):
@@ -20,6 +22,7 @@ class NaviCategoriesList(ListView):
 
 class BaseFactory(ABC, ListView):
     """Базовый класс секций на главной страницы"""
+
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         """Переопределение метода для получения в потомках context_data"""
         object_list = self.get_queryset()
@@ -40,10 +43,16 @@ class RandomCategoriesList(BaseFactory):
 class PopularProductsList(BaseFactory):
     """Описание секции популярных товаров"""
     model = Product
-    queryset = Product.objects.order_by('?') \
-        .select_related('category_fk', 'category_fk__parent') \
-        .filter(category_fk__is_active=True)[:8]
+    queryset = Product.objects.select_related('category_fk',
+                                              'category_fk__parent')
     context_object_name = 'popular_products'
+
+    def get_queryset(self) -> QuerySet:
+        queryset = super(PopularProductsList, self).get_queryset()
+
+        queryset = queryset.filter(category_fk__is_active=True,
+                                   product_id__in=self.popular_product_range)
+        return queryset
 
 
 class LimitEditionList(BaseFactory):
@@ -81,6 +90,10 @@ class MainPageView(TemplateView):
     def get_context_data(self, **kwargs):
         context_data = super(MainPageView, self).get_context_data(**kwargs)
         sections = SectionsFactory()
+
+        sections.SECTIONS['popular_products'].popular_product_range = \
+            redis_conn.lrange(NAME_ATRS_CACHE.get(self.request.get_host())[1],
+                              0, 7)
 
         for _, item in sections.SECTIONS.items():
             context_data.update(item.get_context_data())
