@@ -5,6 +5,7 @@
     "fields": {
         "category_id": "a02414b4-fc4b-46e2-88b3-d45089f099b3",
         "name": "Комплектующие ПК",
+        "updated": "2022-08-28 11:47:30",
         "slug": "pc-components",
         "icon": "",
         "image": "",
@@ -22,6 +23,7 @@
     "fields": {
         "category_id": "3ee73d93-307a-47a6-b32a-aa622aba0b24",
         "name": "Аксессуары",
+        "updated": "2022-08-28 11:47:30",
         "slug": "accessories",
         "icon": "categories_icons/2.svg",
         "image": "",
@@ -39,6 +41,7 @@
     "fields": {
         "category_id": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
         "name": "Смартфоны и гаджеты",
+        "updated": "2022-08-28 11:47:30",
         "slug": "smartphone-gadgets",
         "icon": "categories_icons/8.svg",
         "image": "",
@@ -56,6 +59,7 @@
     "fields": {
         "category_id": "caf8e4b8-3909-495d-a085-6f0b0f030e32",
         "name": "Бытовая техника",
+        "updated": "2022-08-28 11:47:30",
         "slug": "household-appliances",
         "icon": "categories_icons/3.svg",
         "image": "",
@@ -73,6 +77,7 @@
     "fields": {
         "category_id": "26458ab1-81da-4e2e-b9f7-05709502bd7c",
         "name": "Телевизоры, аудио-видео,фото",
+        "updated": "2022-08-28 11:47:30",
         "slug": "tvset-audio-video-photo",
         "icon": "",
         "image": "",
@@ -90,6 +95,7 @@
     "fields": {
         "category_id": "cb437a18-3bcf-4468-a76e-72cb106c124e",
         "name": "Ноутбуки и компьютеры",
+        "updated": "2022-08-28 11:47:30",
         "slug": "notebook-pc",
         "icon": "categories_icons/1.svg",
         "image": "",
@@ -107,6 +113,7 @@
     "fields": {
         "category_id": "1531ac7f-0bf6-4c0a-aef1-9b223ea20396",
         "name": "Видеокарты",
+        "updated": "2022-08-28 11:47:30",
         "slug": "videocards",
         "icon": "",
         "image": "categories_images/videoca.png",
@@ -124,6 +131,7 @@
     "fields": {
         "category_id": "338d09c9-172a-4b1c-aaa4-b0983462dad1",
         "name": "Планшеты",
+        "updated": "2022-08-28 11:47:30",
         "slug": "tablet",
         "icon": "",
         "image": "categories_images/tablet.png",
@@ -141,6 +149,7 @@
     "fields": {
         "category_id": "67f044cd-c2a9-4106-8e1d-b364e88dd084",
         "name": "Смарт-часы и фитнес-браслеты",
+        "updated": "2022-08-28 11:47:30",
         "slug": "smart-watches",
         "icon": "",
         "image": "categories_images/watch.png",
@@ -158,6 +167,7 @@
     "fields": {
         "category_id": "ac798b78-36fe-4b0c-8fff-50349ddf75c5",
         "name": "Кухонные комбайны",
+        "updated": "2022-08-28 11:47:30",
         "slug": "blenders",
         "icon": "categories_icons/12.svg",
         "image": "categories_images/blender.png",
@@ -175,6 +185,7 @@
     "fields": {
         "category_id": "14e0cf53-ce1a-41b1-858e-a13e521e2db9",
         "name": "Моноблоки",
+        "updated": "2022-08-28 11:47:30",
         "slug": "monoblocks",
         "icon": "",
         "image": "categories_images/mac.png",
@@ -192,6 +203,7 @@
     "fields": {
         "category_id": "85e113a4-f740-421d-918f-e19b58d6259b",
         "name": "Ноутбуки",
+        "updated": "2022-08-28 11:47:30",
         "slug": "notebooks",
         "icon": "",
         "image": "categories_images/notebook.png",
@@ -209,6 +221,7 @@
     "fields": {
         "category_id": "98fa6aa5-ce35-4b8d-935a-230b51379fda",
         "name": "Компьютеры",
+        "updated": "2022-08-28 11:47:30",
         "slug": "pc",
         "icon": "",
         "image": "categories_images/comp.png",
@@ -226,6 +239,7 @@
     "fields": {
         "category_id": "7abd01a8-6cc6-421a-8c96-614b36b45ab1",
         "name": "Колонки и аудиосистемы",
+        "updated": "2022-08-28 11:47:30",
         "slug": "speakers",
         "icon": "categories_icons/5.svg",
         "image": "categories_images/audio.png",
@@ -243,6 +257,7 @@
     "fields": {
         "category_id": "8e8537be-7932-4db6-8a36-9bd7600658cc",
         "name": "Телевизоры",
+        "updated": "2022-08-28 11:47:30",
         "slug": "tv-sets",
         "icon": "",
         "image": "categories_images/tv.png",
@@ -260,6 +275,7 @@
     "fields": {
         "category_id": "e31b29da-5d21-4941-b435-090facf38cf2",
         "name": "Микроволновка",
+        "updated": "2022-08-28 11:47:30",
         "slug": "microwaves",
         "icon": "categories_icons/9.svg",
         "image": "categories_images/microwave.png",
@@ -277,6 +293,7 @@
     "fields": {
         "category_id": "94f89486-f1ac-4ca1-8d14-e769e27f4e19",
         "name": "Оперативная память",
+        "updated": "2022-08-28 11:47:30",
         "slug": "rams",
         "icon": "",
         "image": "categories_images/ddr4.png",
@@ -295,6 +312,7 @@
     "fields": {
         "category_id": "5ab76fba-cb55-4e58-b446-f10544a6a226",
         "name": "Стиральные машины",
+        "updated": "2022-08-28 11:47:30",
         "slug": "washers",
         "icon": "",
         "image": "categories_images/wash.png",
@@ -312,6 +330,7 @@
     "fields": {
         "category_id": "658619cf-15d0-461a-9928-eb84b621ad22",
         "name": "Смартфоны",
+        "updated": "2022-08-28 11:47:30",
         "slug": "smartphones",
         "icon": "",
         "image": "categories_images/smartphone.png",
@@ -329,6 +348,7 @@
     "fields": {
         "category_id": "c46e1441-d98a-411b-ba5f-e95cb688ba77",
         "name": "Фотоаппараты",
+        "updated": "2022-08-28 11:47:30",
         "slug": "photo",
         "icon": "categories_icons/6.svg",
         "image": "categories_images/photo.png",
@@ -346,6 +366,7 @@
     "fields": {
         "category_id": "ae77c325-0409-4541-be84-d8a752e7f3d9",
         "name": "Гарнитуры",
+        "updated": "2022-08-28 11:47:30",
         "slug": "headsets",
         "icon": "",
         "image": "categories_images/headset.png",

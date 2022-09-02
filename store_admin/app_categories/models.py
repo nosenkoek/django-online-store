@@ -17,6 +17,7 @@ class Category(MPTTModel):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     category_id = models.UUIDField(unique=True, default=uuid4, editable=False)
     name = models.CharField(max_length=30, verbose_name=_('name'))
+    updated = models.DateTimeField(auto_now=True, verbose_name=_('updated at'))
     slug = models.SlugField(max_length=50, unique=True, verbose_name=_('slug'))
     icon = models.FileField(upload_to='categories_icons/',
                             validators=[svg_validator],

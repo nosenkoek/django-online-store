@@ -92,17 +92,17 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
 
     # Заполнение таблицы Manufacturer
     manufacturers_ids = [str(uuid.uuid4()) for _ in range(MANUFACTURERS_COUNT)]
-    query = 'INSERT INTO manufacturer (id, manufacturer_id, name) ' \
-            'VALUES (%s, %s, %s)'
-    data_manufacturers = [(fake.uuid4(), uk, fake.company())
+    query = 'INSERT INTO manufacturer (id, manufacturer_id, name, updated) ' \
+            'VALUES (%s, %s, %s, %s)'
+    data_manufacturers = [(fake.uuid4(), uk, fake.company(), fake.date_time())
                           for uk in manufacturers_ids]
     execute_batch(cur, query, data_manufacturers, page_size=PAGE_SIZE)
 
     # Заполнение таблицы Product
     query = 'INSERT INTO product (id, product_id, name, slug, description,' \
-            'price, main_image, added, count, is_limited,' \
+            'price, main_image, added, updated, count, is_limited,' \
             'category_fk, manufacturer_fk) ' \
-            'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+            'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
 
     product_category = {}
     data_products = []
@@ -125,7 +125,7 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
                 (fake.uuid4(), product_id, fake.company(),
                  f'product-{counter}', fake.sentence(nb_words=20),
                  round(random.uniform(100, 10_000), 2), IMAGE_LINKS[num],
-                 fake.date_time(), random.randint(0, 50),
+                 fake.date_time(), fake.date_time(), random.randint(0, 50),
                  is_limited, category_id, random.choice(manufacturers_ids))
             )
 

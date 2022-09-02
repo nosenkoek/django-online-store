@@ -13,10 +13,10 @@ from django.urls import reverse
 
 from app_categories.models import Category, Feature, CategoryFeature
 from app_products.models import Manufacturer, Product
-from app_products.services.decorator_count_views import redis_conn, \
-    NAME_ATRS_CACHE
+from app_products.services.decorator_count_views import NAME_ATRS_CACHE
 from app_products.tests.settings import CATEGORY_PARENT, CATEGORY, \
     FEATURE_LIST, MANUFACTURER, COUNT_PRODUCT_IN_PAGE
+from utils.context_managers import redis_connection
 
 TEMP_MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'temp_media/')
 
@@ -79,7 +79,8 @@ class BaseTest(TestCase):
     def tearDownClass(cls):
         super().tearDownClass()
         shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
-        redis_conn.delete(*NAME_ATRS_CACHE.get('testserver'))
+        with redis_connection() as redis_conn:
+            redis_conn.delete(*NAME_ATRS_CACHE.get('testserver'))
 
 
 class ProductListTest(BaseTest):

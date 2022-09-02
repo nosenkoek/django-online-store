@@ -1,15 +1,10 @@
 from datetime import timedelta, datetime
 
-import redis
-
 from functools import wraps
 from typing import Callable
 
-# REDIS_HOST = 'redis'
 from app_products.models import Product
-
-REDIS_HOST = 'localhost'
-REDIS_PORT = 6379
+from utils.context_managers import redis_connection
 
 NAME_ATRS_CACHE = {
     '127.0.0.1:8000': ['count_views', 'popular_product_ids'],
@@ -18,13 +13,10 @@ NAME_ATRS_CACHE = {
 
 SECONDS_CACHE = 10
 
-redis_conn = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT,
-                               charset="utf-8", decode_responses=True)
-
 
 class StrategyBase():
     """Интерфейс стратегии"""
-    def cache_views_product(self, product: Product) -> None:
+    def cache_views_product(self, product: Product, redis_conn) -> None:
         """
         Добавляет в кэш редиса хэш таблицу просмотренных товаров.
         :param product: просмотренный товар
@@ -40,7 +32,7 @@ class StrategyBase():
         else:
             redis_conn.hset(self.count_views, str(product.product_id), 1)
 
-    def cache_popular_product(self):
+    def cache_popular_product(self, redis_conn):
         """Добавляет в кэш редиса список с популярными товарами"""
         redis_conn.delete(self.popular_product_ids)
 
@@ -76,11 +68,12 @@ class CachePopularProduct():
         self._strategy = strategy
 
     def __call__(self, product: Product, func: Callable) -> None:
-        self._strategy.cache_views_product(product)
+        with redis_connection() as redis_conn:
+            self._strategy.cache_views_product(product, redis_conn)
 
-        if datetime.utcnow() >= func.expiration:
-            self._strategy.cache_popular_product()
-            func.expiration = datetime.utcnow() + func.cache_time
+            if datetime.utcnow() >= func.expiration:
+                self._strategy.cache_popular_product(redis_conn)
+                func.expiration = datetime.utcnow() + func.cache_time
 
 
 class CachePopularProductHandler():

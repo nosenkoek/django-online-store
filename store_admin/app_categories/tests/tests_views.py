@@ -11,8 +11,9 @@ from django.conf import settings
 
 from app_categories.models import Category
 from app_products.models import Product, Manufacturer
-from app_products.services.decorator_count_views import redis_conn, \
-    SECONDS_CACHE, NAME_ATRS_CACHE
+from app_products.services.decorator_count_views import SECONDS_CACHE, \
+    NAME_ATRS_CACHE
+from utils.context_managers import redis_connection
 
 TEMP_MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'temp_media/')
 
@@ -100,7 +101,8 @@ class BaseTest(TestCase, PullDatabaseMixin):
     def tearDownClass(cls):
         super().tearDownClass()
         shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
-        redis_conn.delete(*NAME_ATRS_CACHE.get('testserver'))
+        with redis_connection() as redis_conn:
+            redis_conn.delete(*NAME_ATRS_CACHE.get('testserver'))
 
 
 class MainPageTest(BaseTest):

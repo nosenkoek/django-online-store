@@ -8,9 +8,10 @@ from app_categories.models import Category, Feature
 from app_products.filters import ProductFilter
 from app_products.models import Product, ProductFeature
 from app_products.services.decorator_count_views import \
-    cache_popular_product, redis_conn, NAME_ATRS_CACHE
+    cache_popular_product, NAME_ATRS_CACHE
 from app_products.services.handler_url_params import InitialDictFromURLMixin
 from app_products.services.sorted_item import SortedItem
+from utils.context_managers import redis_connection
 
 
 class AddSortedItemToContextMixin():
@@ -107,9 +108,10 @@ class PopularProductListView(ListView):
     extra_context = NaviCategoriesList().get_context()
 
     def get_queryset(self) -> QuerySet:
-        popular_product_range = redis_conn.lrange(
-            NAME_ATRS_CACHE.get(self.request.get_host())[1], 0, -1
-        )
+        with redis_connection() as redis_conn:
+            popular_product_range = redis_conn.lrange(
+                NAME_ATRS_CACHE.get(self.request.get_host())[1], 0, -1
+            )
         queryset = super(PopularProductListView, self).get_queryset() \
             .select_related('category_fk', 'category_fk__parent') \
             .filter(category_fk__is_active=True,

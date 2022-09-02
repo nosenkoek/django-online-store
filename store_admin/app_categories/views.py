@@ -5,8 +5,8 @@ from django.views.generic import ListView, TemplateView
 
 from app_categories.models import Category
 from app_products.models import Product
-from app_products.services.decorator_count_views import redis_conn, \
-    NAME_ATRS_CACHE
+from app_products.services.decorator_count_views import NAME_ATRS_CACHE
+from utils.context_managers import redis_connection
 
 
 class NaviCategoriesList(ListView):
@@ -34,9 +34,9 @@ class RandomCategoriesList(BaseFactory):
     """Описание секции случайных категорий"""
     model = Category
     queryset = Category.objects.filter(is_active=True, level=1) \
-        .select_related('parent') \
-        .annotate(min_price=Min('product__price')) \
-        .order_by('?')[:3]
+                   .select_related('parent') \
+                   .annotate(min_price=Min('product__price')) \
+                   .order_by('?')[:3]
     context_object_name = 'random_categories'
 
 
@@ -59,9 +59,9 @@ class LimitEditionList(BaseFactory):
     """Описание секции лимитированных товаров"""
     model = Product
     queryset = Product.objects.filter(is_limited=True) \
-        .order_by('?') \
-        .select_related('category_fk', 'category_fk__parent') \
-        .filter(category_fk__is_active=True)[:16]
+                   .order_by('?') \
+                   .select_related('category_fk', 'category_fk__parent') \
+                   .filter(category_fk__is_active=True)[:16]
     context_object_name = 'limit_edition'
 
 
@@ -91,9 +91,11 @@ class MainPageView(TemplateView):
         context_data = super(MainPageView, self).get_context_data(**kwargs)
         sections = SectionsFactory()
 
-        sections.SECTIONS['popular_products'].popular_product_range = \
-            redis_conn.lrange(NAME_ATRS_CACHE.get(self.request.get_host())[1],
-                              0, 7)
+        with redis_connection() as redis_conn:
+            sections.SECTIONS['popular_products'].popular_product_range = \
+                redis_conn.lrange(
+                    NAME_ATRS_CACHE.get(self.request.get_host())[1],
+                    0, 7)
 
         for _, item in sections.SECTIONS.items():
             context_data.update(item.get_context_data())

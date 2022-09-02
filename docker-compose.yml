@@ -21,6 +21,31 @@ services:
     ports:
       - "6379:6379"
 
+
+  elasticsearch:
+    image: elasticsearch:7.17.6
+    container_name: es01
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - cluster.initial_master_nodes=es01
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+#      - discovery.type=single-node
+#      - xpack.ml.enabled=false
+#      - JAVA_OPTS=$JAVA_OPTS
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    expose:
+      - "9200"
+    ports:
+      - "9200:9200"
+    depends_on:
+      - db
+      - redis
+
 #  store_app:
 #    build: ./store_admin/
 #    restart: always

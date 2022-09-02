@@ -14,6 +14,7 @@ class Manufacturer(models.Model):
     manufacturer_id = models.UUIDField(unique=True, default=uuid4,
                                        editable=False)
     name = models.CharField(max_length=30, verbose_name=_('name'))
+    updated = models.DateTimeField(auto_now=True, verbose_name=_('updated at'))
 
     class Meta:
         managed = False
@@ -39,6 +40,7 @@ class Product(models.Model):
                                    verbose_name=_('main image'))
     added = models.DateTimeField(auto_now_add=True,
                                  verbose_name=_('added'))
+    updated = models.DateTimeField(auto_now=True, verbose_name=_('updated at'))
     is_limited = models.BooleanField(verbose_name=_('is limited'))
     count = models.PositiveIntegerField(default=1,
                                         verbose_name=_('count_in_storage'))

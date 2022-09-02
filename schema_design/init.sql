@@ -1,4 +1,6 @@
 CREATE SCHEMA IF NOT EXISTS "content";
+ALTER ROLE admin SET search_path TO content,public;
+SET search_path TO content,public;
 
 DROP TABLE IF EXISTS "content".order_product;
 DROP TABLE IF EXISTS "content".category_feature;
@@ -31,6 +33,7 @@ CREATE TABLE "content".category (
     category_id uuid UNIQUE NOT NULL,
     slug varchar(50) UNIQUE NOT NULL,
     name varchar(30) NOT NULL,
+    updated timestamp NOT NULL,
     icon varchar(100),
     image varchar(100),
     is_active bool NOT NULL,
@@ -60,7 +63,8 @@ CREATE TABLE "content".category_feature(
 CREATE TABLE "content".manufacturer (
     id uuid PRIMARY KEY,
     manufacturer_id uuid UNIQUE NOT NULL,
-    name varchar(30) NOT NULL
+    name varchar(30) NOT NULL,
+    updated timestamp NOT NULL
 );
 
 
@@ -73,6 +77,7 @@ CREATE TABLE "content".product(
     price decimal NOT NULL,
     main_image varchar(100) NOT NULL,
     added timestamp NOT NULL,
+    updated timestamp NOT NULL,
     count int NOT NULL,
     is_limited bool NOT NULL,
     category_fk uuid NOT NULL,

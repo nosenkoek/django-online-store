@@ -9,6 +9,7 @@ class InitialDictFromURLMixin():
         :param urlencode: параметры фильтра в url
         :return: словарь со значениями фильтрации
         """
+        # todo: re.compile
         initial = re.findall(r"([^&]*=[^&]{1,})", self.request.GET.urlencode())
         initial_dict = {item.split('=')[0]: item.split('=')[1]
                         for item in initial}

@@ -1,7 +1,19 @@
 from dataclasses import dataclass
 
 
-# todo: подумать тут над pydantic
+# @dataclass
+# class ReveresedField():
+#     field: str
+#     reverse_field: str = f'-{field}'
+#
+# # todo: подумать тут над pydantic
+#
+#
+# class SortedItem(ReveresedField):
+#     title: str
+#     link: str = None
+#     reverse_link: str = None
+
 
 @dataclass
 class SortedItem():

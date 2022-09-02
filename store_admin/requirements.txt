@@ -10,3 +10,4 @@ django-mptt
 pydantic
 django-filter
 redis==2.10.6
+elasticsearch-dsl==7.4.0
