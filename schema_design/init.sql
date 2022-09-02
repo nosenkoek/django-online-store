@@ -240,6 +240,5 @@ ALTER TABLE profile
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 CREATE INDEX product_name_trgm_idx ON product USING GIN (UPPER(name) gin_trgm_ops);
 CREATE INDEX product_price_idx ON product(price);
-CREATE INDEX feature_value_idx ON product_feature(value); -- todo: возможно придется исправить
+CREATE INDEX feature_value_idx ON product_feature(value);
 CREATE INDEX product_limited_idx ON product(id) WHERE is_limited;
--- todo: можно добавить еще "content".category(id) WHERE is_active;

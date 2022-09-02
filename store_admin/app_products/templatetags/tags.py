@@ -3,6 +3,8 @@ from typing import Optional
 
 from django import template
 
+from app_products.services.settings import PATTERN_URL
+
 register = template.Library()
 
 
@@ -19,7 +21,7 @@ def solve_url(value: str, field_name: str,
     url = f'?{field_name}={value}'
 
     if urlencode:
-        querystring = re.findall(r"([^&]*=[^&]{1,})", urlencode)
+        querystring = re.findall(PATTERN_URL, urlencode)
 
         filtered_querystring = filter(
             lambda param: param.split('=')[0] != field_name,

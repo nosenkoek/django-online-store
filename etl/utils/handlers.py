@@ -126,4 +126,3 @@ class ETLHandler():
 
     def load_es_data(self, es_data, *args, **kwargs):
         self._STRATEGY.get('es').load_data(es_data, *args, **kwargs)
-

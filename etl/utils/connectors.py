@@ -1,11 +1,11 @@
-# todo: pg_conn, es_conn (context manager + backoff)
-#  Factory -> pg_conn, es_conn -> yield conn
+import backoff
+
 from abc import ABC, abstractmethod
 from contextlib import contextmanager
 from typing import Callable
 
 from etl.utils.settings import DSN, REDIS_HOST, REDIS_PORT, ES_PORT, ES_HOST
-from psycopg2 import connect, OperationalError, Error
+from psycopg2 import connect as pg_connect, OperationalError, Error as PG_Error
 from redis import StrictRedis, RedisError
 from redis.exceptions import TimeoutError
 from elasticsearch import Elasticsearch, ElasticsearchException
@@ -20,21 +20,23 @@ class BaseConnection(ABC):
 
 class PostgresConnection(BaseConnection):
     """Подключение к БД postgresql"""
+    @backoff.on_exception(backoff.expo, PG_Error, max_tries=5)
     @contextmanager
-    def __call__(self) -> connect:
+    def __call__(self) -> pg_connect:
         try:
-            conn = connect(**DSN)
+            conn = pg_connect(**DSN)
         except OperationalError:
-            raise Error('Error connect to PostgreSQL')
+            raise PG_Error('Error connect to PostgreSQL')
 
         if not conn.status:
-            raise Error('Error connect to PostgreSQL')
+            raise PG_Error('Error connect to PostgreSQL')
         yield conn
         conn.close()
 
 
 class RedisConnection(BaseConnection):
     """Подключение к Redis"""
+    @backoff.on_exception(backoff.expo, RedisError, max_tries=5)
     @contextmanager
     def __call__(self) -> StrictRedis:
         conn = StrictRedis(host=REDIS_HOST, port=REDIS_PORT,
@@ -51,6 +53,7 @@ class RedisConnection(BaseConnection):
 
 class ElasticConnection(BaseConnection):
     """Подключение к ElasticSearch"""
+    @backoff.on_exception(backoff.expo, ElasticsearchException, max_tries=5)
     @contextmanager
     def __call__(self) -> Elasticsearch:
         try:

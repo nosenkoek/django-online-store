@@ -4,6 +4,8 @@ from utils.handlers import ETLHandler
 from utils.pg_es_adapter import PgEsAdapter
 
 
+# TODO: сделать загрузку в es и выгрузку из pg пачками
+
 class ETL():
     """
     Фасад, реализующий миграцию данных из БД в Elasticsearch
@@ -11,6 +13,7 @@ class ETL():
         handler: класс обработчик данных объектов миграции,
         adapter: класс адаптер, трансформирующий данные из БД в elasticsearch
     """
+
     def __init__(self, handler: Type[ETLHandler], adapter: Type[PgEsAdapter]):
         self.handler_cls = handler
         self.adapter_cls = adapter

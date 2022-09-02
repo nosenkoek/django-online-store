@@ -9,7 +9,7 @@ from app_categories.models import Category, CategoryFeature, Feature
 
 class TypeFeatureFieldMixin():
     """Миксин для добавления поля и оптимизации запроса"""
-    list_select_related = ('feature_fk', )
+    list_select_related = ('feature_fk',)
 
     def get_queryset(self, request) -> QuerySet:
         queryset = super().get_queryset(request)\
@@ -70,7 +70,12 @@ class CategoryAdmin(MPTTModelAdmin, ActionsMixin):
     prepopulated_fields = {'slug': ('name',)}
 
     inlines = (FeatureCategoryInline, )
-    # todo: здесь убрать изображение у категории-родителя
+
+    def get_fields(self, request, obj=None):
+        fields = super(CategoryAdmin, self).get_fields(request, obj)
+        if obj.is_root_node():
+            fields.remove('image')
+        return fields
 
     def get_field_queryset(self, db, db_field, request) -> QuerySet:
         """Только 0 уровень вложенности"""

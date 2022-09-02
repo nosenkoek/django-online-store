@@ -34,9 +34,9 @@ class RandomCategoriesList(BaseFactory):
     """Описание секции случайных категорий"""
     model = Category
     queryset = Category.objects.filter(is_active=True, level=1) \
-                   .select_related('parent') \
-                   .annotate(min_price=Min('product__price')) \
-                   .order_by('?')[:3]
+        .select_related('parent') \
+        .annotate(min_price=Min('product__price')) \
+        .order_by('?')[:3]
     context_object_name = 'random_categories'
 
 
@@ -59,9 +59,9 @@ class LimitEditionList(BaseFactory):
     """Описание секции лимитированных товаров"""
     model = Product
     queryset = Product.objects.filter(is_limited=True) \
-                   .order_by('?') \
-                   .select_related('category_fk', 'category_fk__parent') \
-                   .filter(category_fk__is_active=True)[:16]
+        .order_by('?') \
+        .select_related('category_fk', 'category_fk__parent') \
+        .filter(category_fk__is_active=True)[:16]
     context_object_name = 'limit_edition'
 
 

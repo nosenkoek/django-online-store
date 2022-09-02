@@ -37,7 +37,6 @@ now = datetime.utcnow()
 # В конце блока автоматически закроется курсор (cursor.close())
 # и соединение (conn.close())
 with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
-    # todo: подумать может вынести заполнение таблиц в отдельные функции/классы
     # Заполнение таблицы delivery_method
     query = 'INSERT INTO delivery_method (id, method_id, name, price, free_from) VALUES (%s, %s, %s, %s, %s)'
     data_delivery_methods = [

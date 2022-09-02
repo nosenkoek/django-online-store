@@ -57,6 +57,8 @@ class TestCache(StrategyBase):
         self.count_views = NAME_ATRS_CACHE.get('testserver')[0]
         self.popular_product_ids = NAME_ATRS_CACHE.get('testserver')[1]
 
+# todo: добавить еще одну стратегию, когда отвалился редис
+
 
 class CachePopularProduct():
     """

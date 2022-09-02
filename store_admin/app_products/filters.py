@@ -167,7 +167,6 @@ class FactoryFilterFeature():
 
 class ProductFilterCommon(django_filters.FilterSet):
     """Общий для всех категорий фильтр. Цена, Наименование и Наличие"""
-    # todo: добавить производителя
     price = django_filters.CharFilter(field_name='price',
                                       method='filter_price')
     name = django_filters.CharFilter(field_name='name',

@@ -13,4 +13,3 @@ REDIS_PORT = 6379
 
 ES_HOST = 'localhost'
 ES_PORT = 9200
-
