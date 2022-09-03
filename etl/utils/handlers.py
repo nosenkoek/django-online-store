@@ -1,9 +1,11 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
-from elasticsearch import ElasticsearchException
 from elasticsearch.helpers import streaming_bulk
 
 from etl.utils.connectors import FactoryConnection
+from etl.utils.logger import ETLLogger
+
+logger = ETLLogger().get_logger()
 
 
 class BaseHandler(ABC):
@@ -29,6 +31,7 @@ class RedisHandler(BaseHandler):
         """
         with self._conn() as redis_conn:
             pg_updated_at = redis_conn.get('pg_updated_at')
+        logger.info(f'last migrate to es {pg_updated_at}')
         return pg_updated_at
 
     def load_data(self):
@@ -36,8 +39,8 @@ class RedisHandler(BaseHandler):
         Загрузка даты и времени обновления elastic
         """
         with self._conn() as redis_conn:
-            # todo: поменять на datetime.now()
-            redis_conn.set('pg_updated_at', datetime(2022, 8, 31, 15, 22, 0))
+            redis_conn.set('pg_updated_at', datetime.now().utcnow())
+        logger.info('time last migration updated')
 
 
 class PostgresHandler(BaseHandler):
@@ -58,6 +61,7 @@ class PostgresHandler(BaseHandler):
         with self._conn() as pg_conn, pg_conn.cursor() as cur:
             cur.execute(query, (pg_updated_at, pg_updated_at, pg_updated_at))
             data = [item for item in cur]
+        logger.info('data received from database')
         return data
 
     def load_data(self, *args, **kwargs):
@@ -80,11 +84,11 @@ class ElasticHandler(BaseHandler):
                     yield line
 
             result = streaming_bulk(es_conn, gen_data())
+
             for item in result:
                 if not item[1]:
-                    raise ElasticsearchException(
-                        f"Error load doc {item[2]['_id']} in "
-                    )
+                    logger.warning(f"error load doc {item[2]['_id']}")
+        logger.info('data loaded to elasticsearch')
 
 
 class ETLObject():

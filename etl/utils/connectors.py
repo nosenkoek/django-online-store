@@ -4,11 +4,15 @@ from abc import ABC, abstractmethod
 from contextlib import contextmanager
 from typing import Callable
 
-from etl.utils.settings import DSN, REDIS_HOST, REDIS_PORT, ES_PORT, ES_HOST
 from psycopg2 import connect as pg_connect, OperationalError, Error as PG_Error
 from redis import StrictRedis, RedisError
 from redis.exceptions import TimeoutError
 from elasticsearch import Elasticsearch, ElasticsearchException
+
+from etl.utils.settings import DSN, REDIS_HOST, REDIS_PORT, ES_PORT, ES_HOST
+from etl.utils.logger import ETLLogger
+
+logger = ETLLogger().get_logger()
 
 
 class BaseConnection(ABC):
@@ -25,10 +29,12 @@ class PostgresConnection(BaseConnection):
     def __call__(self) -> pg_connect:
         try:
             conn = pg_connect(**DSN)
-        except OperationalError:
+        except OperationalError as err:
+            logger.error(f'not connect to database | {err}')
             raise PG_Error('Error connect to PostgreSQL')
 
         if not conn.status:
+            logger.error('database not responding')
             raise PG_Error('Error connect to PostgreSQL')
         yield conn
         conn.close()
@@ -45,6 +51,7 @@ class RedisConnection(BaseConnection):
         try:
             conn.ping()
         except TimeoutError:
+            logger.error('redis not responding')
             raise RedisError('Error connection to Redis')
 
         yield conn
@@ -58,10 +65,12 @@ class ElasticConnection(BaseConnection):
     def __call__(self) -> Elasticsearch:
         try:
             conn = Elasticsearch(f'http://{ES_HOST}:{ES_PORT}')
-        except ElasticsearchException:
+        except ElasticsearchException as err:
+            logger.error(f'not connect to elasticsearch | {err}')
             raise ElasticsearchException
 
         if not conn.ping():
+            logger.error('elasticsearch not responding')
             raise ElasticsearchException('Error elastic connection')
 
         yield conn

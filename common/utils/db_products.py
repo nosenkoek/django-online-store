@@ -7,8 +7,8 @@ from faker import Faker
 from psycopg2.extras import execute_batch
 
 fake = Faker()
+now = datetime.utcnow()
 
-# Подготавливаем DSN (Data Source Name) для подключения к БД Postgres
 dsn = {
     'dbname': 'store_db',
     'user': 'admin',
@@ -57,13 +57,6 @@ FEATURES_GROUP_TEXT = {
                                              'USB type-C', 'bluetooth', 'HDMI']
 }
 
-# todo: придумать заполнение разъемов подключения
-
-now = datetime.utcnow()
-
-# Установим соединение с БД используя контекстный менеджер with.
-# В конце блока автоматически закроется курсор (cursor.close())
-# и соединение (conn.close())
 with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
     query = 'SELECT category_id FROM category WHERE level=1 ' \
             'ORDER BY category_id;'
@@ -94,7 +87,7 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
     manufacturers_ids = [str(uuid.uuid4()) for _ in range(MANUFACTURERS_COUNT)]
     query = 'INSERT INTO manufacturer (id, manufacturer_id, name, updated) ' \
             'VALUES (%s, %s, %s, %s)'
-    data_manufacturers = [(fake.uuid4(), uk, fake.company(), fake.date_time())
+    data_manufacturers = [(fake.uuid4(), uk, fake.company(), now)
                           for uk in manufacturers_ids]
     execute_batch(cur, query, data_manufacturers, page_size=PAGE_SIZE)
 
@@ -125,7 +118,7 @@ with psycopg2.connect(**dsn) as conn, conn.cursor() as cur:
                 (fake.uuid4(), product_id, fake.company(),
                  f'product-{counter}', fake.sentence(nb_words=20),
                  round(random.uniform(100, 10_000), 2), IMAGE_LINKS[num],
-                 fake.date_time(), fake.date_time(), random.randint(0, 50),
+                 fake.date_time(), now, random.randint(0, 50),
                  is_limited, category_id, random.choice(manufacturers_ids))
             )
 
