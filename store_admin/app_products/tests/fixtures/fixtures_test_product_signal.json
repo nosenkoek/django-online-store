@@ -1,0 +1,163 @@
+[
+{
+    "model": "app_categories.category",
+    "pk": "7d151793-5056-45a8-b826-0fa927efe898",
+    "fields": {
+        "category_id": "d5987e9a-c6d1-48c1-a056-259b7a36c680",
+        "name": "category",
+        "updated": "2022-09-05T15:48:43.233+03:00",
+        "slug": "category",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 6,
+        "tree_id": 1,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "1a80be36-964d-4225-b832-51a8dad6fee4",
+    "fields": {
+        "category_id": "78e3b297-4107-44cb-aae2-8731b6038081",
+        "name": "subcategory_1",
+        "updated": "2022-09-05T15:51:25.975+03:00",
+        "slug": "subcategory_1",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": "d5987e9a-c6d1-48c1-a056-259b7a36c680",
+        "lft": 2,
+        "rght": 3,
+        "tree_id": 1,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "a82642aa-89c8-47d7-a065-0d73edc7a835",
+    "fields": {
+        "category_id": "331bccf6-4d78-4f4e-b5e1-6c8503a443c4",
+        "name": "subcategory_2",
+        "updated": "2022-09-05T15:51:36.245+03:00",
+        "slug": "subcategory_2",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": "d5987e9a-c6d1-48c1-a056-259b7a36c680",
+        "lft": 4,
+        "rght": 5,
+        "tree_id": 1,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.feature",
+    "pk": "1f6d6cb8-c0db-42ad-b80d-f1a17e086d48",
+    "fields": {
+        "feature_id": "82a0b411-4383-4139-9beb-b63995bf0a23",
+        "name": "feature_5",
+        "slug": "feature_5",
+        "type_feature": "checkbox"
+    }
+},
+{
+    "model": "app_categories.feature",
+    "pk": "770501f2-9bb4-4d20-aecd-7aea7b1b2a45",
+    "fields": {
+        "feature_id": "37472149-8c36-47aa-ad24-72c9b2694dae",
+        "name": "feature_3",
+        "slug": "feature_3",
+        "type_feature": "select"
+    }
+},
+{
+    "model": "app_categories.feature",
+    "pk": "78bb0ef9-2d2d-4aa5-96e9-a4f527210f59",
+    "fields": {
+        "feature_id": "001116bb-bcc9-4b9f-a3a2-f02409712543",
+        "name": "feature_2",
+        "slug": "feature_2",
+        "type_feature": "checkbox"
+    }
+},
+{
+    "model": "app_categories.feature",
+    "pk": "b7b15a01-246c-46c8-bdff-67cf52040a8a",
+    "fields": {
+        "feature_id": "f54a4bbe-b174-4bec-b913-0766577d9b44",
+        "name": "feature_4",
+        "slug": "feature_4",
+        "type_feature": "text"
+    }
+},
+{
+    "model": "app_categories.feature",
+    "pk": "eb567e42-2a68-4395-8f3d-8617700a43aa",
+    "fields": {
+        "feature_id": "7932630b-43cf-42b1-980a-6d9b42693791",
+        "name": "feature_1",
+        "slug": "feature_1",
+        "type_feature": "text"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "236cf187-4673-411d-9e11-283644fcb4ce",
+    "fields": {
+        "category_fk": "78e3b297-4107-44cb-aae2-8731b6038081",
+        "feature_fk": "37472149-8c36-47aa-ad24-72c9b2694dae"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "470082c7-d13a-401a-9a7b-0979fc7d01b9",
+    "fields": {
+        "category_fk": "331bccf6-4d78-4f4e-b5e1-6c8503a443c4",
+        "feature_fk": "f54a4bbe-b174-4bec-b913-0766577d9b44"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "6c785ffc-7551-484f-b8ee-db1a1d6a928c",
+    "fields": {
+        "category_fk": "331bccf6-4d78-4f4e-b5e1-6c8503a443c4",
+        "feature_fk": "82a0b411-4383-4139-9beb-b63995bf0a23"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "d79b6e4d-0a6e-4828-b88e-1e8b00c11acf",
+    "fields": {
+        "category_fk": "331bccf6-4d78-4f4e-b5e1-6c8503a443c4",
+        "feature_fk": "37472149-8c36-47aa-ad24-72c9b2694dae"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "e3e8612c-af7d-4b99-a0ac-2f168dc63ff6",
+    "fields": {
+        "category_fk": "78e3b297-4107-44cb-aae2-8731b6038081",
+        "feature_fk": "001116bb-bcc9-4b9f-a3a2-f02409712543"
+    }
+},
+{
+    "model": "app_categories.categoryfeature",
+    "pk": "e70e88ea-430f-41a5-ac4a-219b9180e52c",
+    "fields": {
+        "category_fk": "78e3b297-4107-44cb-aae2-8731b6038081",
+        "feature_fk": "7932630b-43cf-42b1-980a-6d9b42693791"
+    }
+},
+{
+    "model": "app_products.manufacturer",
+    "pk": "33a6c0d4-8b59-47df-a2bb-e583d1a142a9",
+    "fields": {
+        "manufacturer_id": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "name": "manufacturer",
+        "updated": "2022-08-28 11:47:30+03:00"
+    }
+}
+]

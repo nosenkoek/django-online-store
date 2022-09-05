@@ -1,27 +1,9 @@
-from uuid import uuid4
-
 from django.test import TestCase
 from django.utils.translation import gettext as _
 from django.db import connection
 
 from app_categories.models import Category, Feature
-
-FEATURE = {
-    'id': str(uuid4()),
-    'feature_id': str(uuid4()),
-    'name': 'feature_name',
-    'slug': 'slug',
-    'type_feature': 'text'
-}
-
-CATEGORY = {
-    'id': str(uuid4()),
-    'category_id': str(uuid4()),
-    'name': 'category_name',
-    'icon': None,
-    'is_active': True,
-    'parent_id': None,
-}
+from app_categories.tests.settings import FEATURE, CATEGORY
 
 
 class BaseModelTest(TestCase):

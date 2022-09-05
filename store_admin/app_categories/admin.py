@@ -73,7 +73,7 @@ class CategoryAdmin(MPTTModelAdmin, ActionsMixin):
 
     def get_fields(self, request, obj=None):
         fields = super(CategoryAdmin, self).get_fields(request, obj)
-        if obj.is_root_node():
+        if not obj or obj.is_root_node():
             fields.remove('image')
         return fields
 

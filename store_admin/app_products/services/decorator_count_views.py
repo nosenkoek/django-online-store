@@ -41,7 +41,6 @@ class StrategyBase():
                                      key=lambda key: int(data.get(key)),
                                      reverse=True)[:16]
         redis_conn.rpush(self.popular_product_ids, *popular_product_ids)
-        print('cached')
 
 
 class WorkCache(StrategyBase):

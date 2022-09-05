@@ -2,25 +2,20 @@ from django.test import TestCase
 from django.utils.translation import gettext as _
 from django.db import connection
 
-from app_products.models import Product, Manufacturer
-from app_categories.models import Category
-
-from app_products.tests.settings import CATEGORY_PARENT, CATEGORY, \
-    MANUFACTURER, PRODUCT
+from app_products.models import Product
 
 
 class BaseModelTest(TestCase):
+    fixtures = \
+        ['app_products/tests/fixtures/fixtures_test_product_model.json']
+
     @classmethod
-    def setUpTestData(cls) -> None:
+    def setUpClass(cls) -> None:
         with connection.cursor() as cursor:
             cursor.execute(open('..\\schema_design\\init.sql', 'r').read())
 
-        Category.objects.create(**CATEGORY_PARENT)
-        category = Category.objects.create(**CATEGORY)
-        manufacturer = Manufacturer.objects.create(**MANUFACTURER)
-        cls.product = Product.objects.create(**PRODUCT,
-                                             category_fk=category,
-                                             manufacturer_fk=manufacturer)
+        super(BaseModelTest, cls).setUpClass()
+        cls.product = Product.objects.first()
 
 
 class TestProduct(BaseModelTest):

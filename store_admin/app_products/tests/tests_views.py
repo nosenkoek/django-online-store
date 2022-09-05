@@ -1,79 +1,39 @@
-import os
 import shutil
 from math import ceil
-from random import randint
-from uuid import uuid4
 from datetime import datetime
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, override_settings
-from django.conf import settings
 from django.db import connection
 from django.urls import reverse
 
-from app_categories.models import Category, Feature, CategoryFeature
-from app_products.models import Manufacturer, Product
+from app_categories.models import Category
+from app_products.models import Product
 from app_products.services.decorator_count_views import NAME_ATRS_CACHE
-from app_products.tests.settings import CATEGORY_PARENT, CATEGORY, \
-    FEATURE_LIST, MANUFACTURER, COUNT_PRODUCT_IN_PAGE
+from app_products.tests.settings import COUNT_PRODUCT_IN_PAGE, \
+    TEMP_MEDIA_ROOT, PRICE_FROM, PRICE_TO, NUMBERS_PRODUCT
 from utils.context_managers import redis_connection
-
-TEMP_MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'temp_media/')
-
-NUMBERS_PRODUCT = 20
-PRICE_MAX = 10_000
-PRICE_FROM = 10
-PRICE_TO = 5_000
 
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
 class BaseTest(TestCase):
-    @classmethod
-    @property
-    def gif_1(cls):
-        small_gif = (
-            b'\x47\x49\x46\x38\x39\x61\x02\x00'
-            b'\x01\x00\x80\x00\x00\x00\x00\x00'
-            b'\xFF\xFF\xFF\x21\xF9\x04\x00\x00'
-            b'\x00\x00\x00\x2C\x00\x00\x00\x00'
-            b'\x02\x00\x01\x00\x00\x02\x02\x0C'
-            b'\x0A\x00\x3B'
-        )
-
-        gif_1 = SimpleUploadedFile(
-            name='small_1.gif',
-            content=small_gif,
-            content_type='image/gif'
-        )
-        return gif_1
+    fixtures = ['app_products/tests/fixtures/fixtures_test_product_view.json']
 
     @classmethod
-    def setUpTestData(cls):
+    def setUpClass(cls):
         with connection.cursor() as cursor:
             cursor.execute(open('..\\schema_design\\init.sql', 'r').read())
 
-        Category.objects.create(**CATEGORY_PARENT)
-        subcategory = Category.objects.create(**CATEGORY)
+        SimpleUploadedFile(name='small_1.gif',
+                           content=(b'\x47\x49\x46\x38\x39\x61\x02\x00'
+                                    b'\x01\x00\x80\x00\x00\x00\x00\x00'
+                                    b'\xFF\xFF\xFF\x21\xF9\x04\x00\x00'
+                                    b'\x00\x00\x00\x2C\x00\x00\x00\x00'
+                                    b'\x02\x00\x01\x00\x00\x02\x02\x0C'
+                                    b'\x0A\x00\x3B'),
+                           content_type='image/gif')
 
-        features = [Feature(**feature) for feature in FEATURE_LIST]
-        Feature.objects.bulk_create(features)
-
-        feature_category = [
-            CategoryFeature(category_fk=subcategory, feature_fk=feature)
-            for feature in features]
-        CategoryFeature.objects.bulk_create(feature_category)
-
-        manufacturer = Manufacturer.objects.create(**MANUFACTURER)
-
-        products = [
-            Product(id=str(uuid4()), product_id=str(uuid4()),
-                    name=f'name_{num}', is_limited=True, count=10,
-                    slug=f'product-{num}', description='text',
-                    price=randint(0, PRICE_MAX), main_image=cls.gif_1,
-                    category_fk=subcategory, manufacturer_fk=manufacturer)
-            for num in range(NUMBERS_PRODUCT)
-        ]
-        Product.objects.bulk_create(products)
+        super(BaseTest, cls).setUpClass()
 
     @classmethod
     def tearDownClass(cls):
