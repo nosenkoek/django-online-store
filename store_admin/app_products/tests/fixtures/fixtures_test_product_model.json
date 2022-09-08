@@ -41,6 +41,7 @@
     "fields": {
         "manufacturer_id": "85e113a4-f740-421d-918f-e19b58d6259b",
         "name": "manufacturer",
+        "description": "description",
         "updated": "2022-08-28 11:47:30+03:00"
     }
 },

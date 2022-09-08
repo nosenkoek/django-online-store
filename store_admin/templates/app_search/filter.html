@@ -1,0 +1,63 @@
+{% load static %}
+{% load i18n %}
+
+{% load tags %}
+
+<div class="Section-column">
+  <div class="Section-columnSection">
+    <header class="Section-header">
+      <strong class="Section-title">{% trans 'Filter' %}
+      </strong>
+    </header>
+
+    <div class="Section-columnContent">
+      <form class="form" method="get">
+        <div class="form-group">
+          <div class="range Section-columnRange">
+            <input class="search-input" id="query" name="query" type="hidden" value="{{ request.GET.query }}"/>
+            <input class="range-line" id="price" name="price" type="text" data-type="double"
+                   data-min="0" data-max="{{ price_max|stringformat:"f" }}"
+                           data-from="{{ initial_dict.price_from }}" data-to="{{ initial_dict.price_to }}"/>
+            <div class="range-price">{% trans 'Price' %}:
+              <div class="rangePrice">
+              </div>
+              &nbsp{% trans '$' %}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input class="form-input form-input_full" id="name" name="name" type="text"
+                 placeholder="{% trans 'Name' %}"
+                 {% if 'name' in initial_dict %} value="{{  initial_dict.name }}" {% endif %}/>
+        </div>
+        <div class="form-group">
+          <input class="form-input form-input_full" id="manufacturer" name="manufacturer" type="text"
+                 placeholder="{% trans 'Manufacturer' %}"
+                 {% if 'manufacturer' in initial_dict %} value="{{  initial_dict.manufacturer }}" {% endif %}/>
+        </div>
+        <div class="form-group">
+          <!-- - var options = setOptions(items, ['value', 'selected', 'disabled']);-->
+        </div>
+        <div class="form-group">
+          <label class="toggle">
+            <input id="available" name="available" type="checkbox"
+                    {% if 'available' in initial_dict %} checked {% endif %}/>
+            <span class="toggle-box"></span>
+            <span class="toggle-text">{% trans 'Available' %}</span>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <div class="buttons">
+            <button type="submit" class="btn btn_square btn_dark btn_narrow" >
+              {% trans 'Filter' %}
+            </button>
+            <a class="btn btn_square btn_dark btn_narrow" href="{% url_clear_filter request.GET.query %}">
+              {% trans 'Clear' %}
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

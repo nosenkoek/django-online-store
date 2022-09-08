@@ -24,6 +24,7 @@ urlpatterns = i18n_patterns(
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     path('admin/', admin.site.urls),
     path('__debug__/', include('debug_toolbar.urls')),
+    path('search/', include('app_search.urls')),
     path('', include('app_categories.urls')),
     path('catalog/', include('app_products.urls')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

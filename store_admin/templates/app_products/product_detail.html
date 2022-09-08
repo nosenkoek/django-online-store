@@ -95,6 +95,9 @@
               <a class="Tabs-link_ACTIVE Tabs-link" href="#description">
                 <span>{% trans 'features' %}</span>
               </a>
+              <a class="Tabs-link" href="#manufacturer">
+                <span>{% trans 'manufacturer' %}</span>
+              </a>
             </div>
 
             <div class="Tabs-wrap">
@@ -128,6 +131,17 @@
                       </tr>
                     {% endfor %}
                   </table>
+                </div>
+              </div>
+              <div class="Tabs-block" id="manufacturer">
+                <h2>
+                  {{ product.manufacturer_fk.name }}
+                </h2>
+                <p>
+                  {{ product.manufacturer_fk.description }}
+                </p>
+
+                <div class="clearfix">
                 </div>
               </div>
             </div>

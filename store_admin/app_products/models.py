@@ -14,6 +14,8 @@ class Manufacturer(models.Model):
     manufacturer_id = models.UUIDField(unique=True, default=uuid4,
                                        editable=False)
     name = models.CharField(max_length=30, verbose_name=_('name'))
+    description = models.CharField(max_length=100,
+                                   verbose_name=_('description'))
     updated = models.DateTimeField(auto_now=True, verbose_name=_('updated at'))
 
     class Meta:

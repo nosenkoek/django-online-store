@@ -1,7 +1,9 @@
+import logging
 from datetime import timedelta, datetime
 
 from functools import wraps
 from typing import Callable
+from redis.exceptions import RedisError
 
 from app_products.models import Product
 from utils.context_managers import redis_connection
@@ -10,8 +12,10 @@ NAME_ATRS_CACHE = {
     '127.0.0.1:8000': ['count_views', 'popular_product_ids'],
     'testserver': ['count_views_test', 'popular_product_ids_test'],
 }
-
 SECONDS_CACHE = 10
+
+err_logger = logging.getLogger('error')
+logger = logging.getLogger('info')
 
 
 class StrategyBase():
@@ -56,8 +60,6 @@ class TestCache(StrategyBase):
         self.count_views = NAME_ATRS_CACHE.get('testserver')[0]
         self.popular_product_ids = NAME_ATRS_CACHE.get('testserver')[1]
 
-# todo: добавить еще одну стратегию, когда отвалился редис
-
 
 class CachePopularProduct():
     """
@@ -69,12 +71,16 @@ class CachePopularProduct():
         self._strategy = strategy
 
     def __call__(self, product: Product, func: Callable) -> None:
-        with redis_connection() as redis_conn:
-            self._strategy.cache_views_product(product, redis_conn)
+        try:
+            with redis_connection() as redis_conn:
+                self._strategy.cache_views_product(product, redis_conn)
 
-            if datetime.utcnow() >= func.expiration:
-                self._strategy.cache_popular_product(redis_conn)
-                func.expiration = datetime.utcnow() + func.cache_time
+                if datetime.utcnow() >= func.expiration:
+                    self._strategy.cache_popular_product(redis_conn)
+                    func.expiration = datetime.utcnow() + func.cache_time
+        except RedisError as err:
+            err_logger.error(f'Error connection to Redis | {err}')
+            logger.warning(f'not cache popular product')
 
 
 class CachePopularProductHandler():

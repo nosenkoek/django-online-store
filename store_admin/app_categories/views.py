@@ -1,23 +1,20 @@
+import logging
+
 from abc import ABC
 
 from django.db.models import Min, QuerySet
 from django.views.generic import ListView, TemplateView
+from redis.exceptions import RedisError
 
 from app_categories.models import Category
 from app_products.models import Product
 from app_products.services.decorator_count_views import NAME_ATRS_CACHE
 from utils.context_managers import redis_connection
+from app_categories.services.navi_categories_list_mixin import \
+    NaviCategoriesList
 
-
-class NaviCategoriesList(ListView):
-    """Класс навигации в хедере"""
-    model = Category
-    queryset = Category.objects.filter(is_active=True, level=0) \
-        .prefetch_related('children')
-    context_object_name = 'navi_categories'
-
-    def get_context(self):
-        return {self.context_object_name: self.get_queryset()}
+err_logger = logging.getLogger('error')
+logger = logging.getLogger('info')
 
 
 class BaseFactory(ABC, ListView):
@@ -91,11 +88,16 @@ class MainPageView(TemplateView):
         context_data = super(MainPageView, self).get_context_data(**kwargs)
         sections = SectionsFactory()
 
-        with redis_connection() as redis_conn:
-            sections.SECTIONS['popular_products'].popular_product_range = \
-                redis_conn.lrange(
-                    NAME_ATRS_CACHE.get(self.request.get_host())[1],
-                    0, 7)
+        try:
+            with redis_connection() as redis_conn:
+                sections.SECTIONS['popular_products'].popular_product_range = \
+                    redis_conn.lrange(
+                        NAME_ATRS_CACHE.get(self.request.get_host())[1],
+                        0, 7)
+        except RedisError as err:
+            err_logger.error(f'Error connection to Redis | {err}')
+            logger.warning(f'not cache popular product')
+            sections.SECTIONS['popular_products'].popular_product_range = []
 
         for _, item in sections.SECTIONS.items():
             context_data.update(item.get_context_data())

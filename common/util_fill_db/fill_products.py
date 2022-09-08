@@ -110,8 +110,9 @@ class LoadDataBuilder(Builder):
 
     def load_manufacturer(self):
         query = 'INSERT INTO manufacturer (id, manufacturer_id, ' \
-                'name, updated) VALUES (%s, %s, %s, %s)'
-        data_manufacturers = [(fake.uuid4(), uk, fake.company(), now)
+                'name, description, updated) VALUES (%s, %s, %s, %s, %s)'
+        data_manufacturers = [(fake.uuid4(), uk, fake.company(),
+                               fake.sentence(nb_words=10), now)
                               for uk in self.manufacturer_ids]
 
         execute_batch(self.cur, query, data_manufacturers)

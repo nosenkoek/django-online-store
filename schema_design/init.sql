@@ -64,6 +64,7 @@ CREATE TABLE "content".manufacturer (
     id uuid PRIMARY KEY,
     manufacturer_id uuid UNIQUE NOT NULL,
     name varchar(30) NOT NULL,
+    description varchar(100) NOT NULL,
     updated timestamp NOT NULL
 );
 

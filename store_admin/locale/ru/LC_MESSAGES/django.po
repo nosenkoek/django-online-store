@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-25 10:49+0300\n"
+"POT-Creation-Date: 2022-09-08 11:56+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,8 +20,8 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: .\app_categories\admin.py:19 .\app_categories\models.py:63
-#: .\app_categories\tests\tests_models.py:51
+#: .\app_categories\admin.py:19 .\app_categories\models.py:64
+#: .\app_categories\tests\tests_models.py:33
 msgid "type feature"
 msgstr "тип характеристики"
 
@@ -33,7 +33,7 @@ msgstr "Сделать активным"
 msgid "Mark is not active"
 msgstr "Сделать не активным"
 
-#: .\app_categories\apps.py:8 .\app_categories\models.py:43
+#: .\app_categories\apps.py:8 .\app_categories\models.py:44
 msgid "categories"
 msgstr "категории"
 
@@ -41,138 +41,144 @@ msgstr "категории"
 msgid "File not SVG"
 msgstr "Файл не SVG"
 
-#: .\app_categories\models.py:19 .\app_categories\models.py:59
-#: .\app_categories\tests\tests_models.py:41
-#: .\app_categories\tests\tests_models.py:58 .\app_products\models.py:16
-#: .\app_products\models.py:32 .\app_products\tests\tests_models.py:30
+#: .\app_categories\models.py:19 .\app_categories\models.py:60
+#: .\app_categories\tests\tests_models.py:23
+#: .\app_categories\tests\tests_models.py:40 .\app_products\models.py:16
+#: .\app_products\models.py:35 .\app_products\tests\tests_models.py:25
 msgid "name"
 msgstr "название"
 
-#: .\app_categories\models.py:20 .\app_categories\models.py:60
-#: .\app_categories\tests\tests_models.py:46 .\app_products\models.py:33
+#: .\app_categories\models.py:20 .\app_products\models.py:19
+#: .\app_products\models.py:45
+msgid "updated at"
+msgstr "обновлено"
+
+#: .\app_categories\models.py:21 .\app_categories\models.py:61
+#: .\app_categories\tests\tests_models.py:28 .\app_products\models.py:36
 msgid "slug"
 msgstr "отображение в URL"
 
-#: .\app_categories\models.py:23 .\app_categories\tests\tests_models.py:63
+#: .\app_categories\models.py:24 .\app_categories\tests\tests_models.py:45
 msgid "icon"
 msgstr "иконка"
 
-#: .\app_categories\models.py:25 .\app_products\models.py:73
-#: .\app_products\models.py:83
+#: .\app_categories\models.py:26 .\app_products\models.py:77
+#: .\app_products\models.py:87
 msgid "image"
 msgstr "изображение"
 
-#: .\app_categories\models.py:26 .\app_categories\tests\tests_models.py:68
+#: .\app_categories\models.py:27 .\app_categories\tests\tests_models.py:50
 msgid "is active"
 msgstr "активен"
 
-#: .\app_categories\models.py:31 .\app_categories\tests\tests_models.py:73
+#: .\app_categories\models.py:32 .\app_categories\tests\tests_models.py:55
 msgid "put in category"
 msgstr "вложить в категорию"
 
-#: .\app_categories\models.py:42 .\app_categories\models.py:87
+#: .\app_categories\models.py:43 .\app_categories\models.py:88
 #: .\app_products\admin.py:47 .\app_products\filters.py:34
-#: .\app_products\models.py:50 .\app_products\tests\tests_models.py:55
+#: .\app_products\models.py:54 .\app_products\tests\tests_models.py:50
 msgid "category"
 msgstr "категория"
 
-#: .\app_categories\models.py:53
+#: .\app_categories\models.py:54
 msgid "select"
 msgstr "множественный выбор"
 
-#: .\app_categories\models.py:54
+#: .\app_categories\models.py:55
 msgid "yes/no"
 msgstr "да/нет"
 
-#: .\app_categories\models.py:55
+#: .\app_categories\models.py:56
 msgid "text"
 msgstr "текст"
 
-#: .\app_categories\models.py:72 .\app_categories\models.py:93
-#: .\app_products\models.py:99 .\templates\app_products\product_detail.html:110
+#: .\app_categories\models.py:73 .\app_categories\models.py:94
+#: .\app_products\models.py:103
+#: .\templates\app_products\product_detail.html:113
 msgid "feature"
 msgstr "характеристика"
 
-#: .\app_categories\models.py:73
+#: .\app_categories\models.py:74
 #: .\templates\app_products\product_detail.html:96
 msgid "features"
 msgstr "характеристики"
 
-#: .\app_categories\models.py:99
+#: .\app_categories\models.py:100
 msgid "category with features"
 msgstr "категория с характеристиками"
 
-#: .\app_categories\models.py:100
+#: .\app_categories\models.py:101
 msgid "categories with features"
 msgstr "категории с характеристиками"
 
 #: .\app_products\admin.py:52 .\app_products\filters.py:47
-#: .\app_products\models.py:21 .\app_products\models.py:55
-#: .\app_products\tests\tests_models.py:62
+#: .\app_products\models.py:24 .\app_products\models.py:59
+#: .\app_products\tests\tests_models.py:57
+#: .\templates\app_products\product_detail.html:99
 msgid "manufacturer"
 msgstr "производитель"
 
-#: .\app_products\apps.py:8 .\app_products\models.py:63
+#: .\app_products\apps.py:8 .\app_products\models.py:67
 msgid "products"
 msgstr "товары"
 
-#: .\app_products\forms.py:21
+#: .\app_products\forms.py:15
 msgid "no"
 msgstr "нет"
 
-#: .\app_products\forms.py:21
+#: .\app_products\forms.py:16
 msgid "yes"
 msgstr "да"
 
-#: .\app_products\models.py:22
-msgid "manufacturers"
-msgstr "производители"
-
-#: .\app_products\models.py:34 .\app_products\tests\tests_models.py:35
+#: .\app_products\models.py:18 .\app_products\models.py:37
+#: .\app_products\tests\tests_models.py:30
 msgid "description"
 msgstr "описание"
 
-#: .\app_products\models.py:36 .\app_products\tests\tests_models.py:40
+#: .\app_products\models.py:25
+msgid "manufacturers"
+msgstr "производители"
+
+#: .\app_products\models.py:39 .\app_products\tests\tests_models.py:35
 msgid "price"
 msgstr "цена"
 
-#: .\app_products\models.py:39
-#, fuzzy
-#| msgid "image"
+#: .\app_products\models.py:42
 msgid "main image"
-msgstr "изображение"
+msgstr "главное изображение"
 
-#: .\app_products\models.py:41
+#: .\app_products\models.py:44
 msgid "added"
 msgstr "добавлен"
 
-#: .\app_products\models.py:42 .\app_products\tests\tests_models.py:45
+#: .\app_products\models.py:46 .\app_products\tests\tests_models.py:40
 msgid "is limited"
 msgstr "ограниченный тираж"
 
-#: .\app_products\models.py:44 .\app_products\tests\tests_models.py:50
+#: .\app_products\models.py:48 .\app_products\tests\tests_models.py:45
 msgid "count_in_storage"
 msgstr "количество на складе"
 
-#: .\app_products\models.py:62 .\app_products\models.py:78
-#: .\app_products\models.py:94
+#: .\app_products\models.py:66 .\app_products\models.py:82
+#: .\app_products\models.py:98
 msgid "product"
 msgstr "товар"
 
-#: .\app_products\models.py:84
+#: .\app_products\models.py:88
 msgid "images"
 msgstr "изображения"
 
-#: .\app_products\models.py:101
-#: .\templates\app_products\product_detail.html:112
+#: .\app_products\models.py:105
+#: .\templates\app_products\product_detail.html:115
 msgid "value"
 msgstr "значение"
 
-#: .\app_products\models.py:107
+#: .\app_products\models.py:111
 msgid "product with features"
 msgstr "товар с характеристиками"
 
-#: .\app_products\models.py:108
+#: .\app_products\models.py:112
 msgid "products with features"
 msgstr "товары с характеристиками"
 
@@ -224,6 +230,7 @@ msgstr "Ограниченные товары"
 #: .\templates\app_products\product_detail.html:64
 #: .\templates\app_products\sections_list_products\filter.html:21
 #: .\templates\app_products\sections_list_products\products.html:37
+#: .\templates\app_search\filter.html:24 .\templates\app_search\results.html:37
 #: .\templates\header.html:85
 msgid "$"
 msgstr "₽"
@@ -241,6 +248,7 @@ msgstr "от"
 #: .\templates\app_products\popular_product_list.html:17
 #: .\templates\app_products\product_detail.html:20
 #: .\templates\app_products\product_list.html:18
+#: .\templates\app_search\search_list.html:18
 msgid "home"
 msgstr "главная"
 
@@ -256,28 +264,39 @@ msgstr "В корзину"
 
 #: .\templates\app_products\sections_list_products\filter.html:7
 #: .\templates\app_products\sections_list_products\filter.html:81
+#: .\templates\app_search\filter.html:9 .\templates\app_search\filter.html:53
 msgid "Filter"
 msgstr "Фильтр"
 
 #: .\templates\app_products\sections_list_products\filter.html:18
+#: .\templates\app_search\filter.html:21
 msgid "Price"
 msgstr "Цена"
 
 #: .\templates\app_products\sections_list_products\filter.html:27
+#: .\templates\app_search\filter.html:30
 msgid "Name"
 msgstr "Название"
 
 #: .\templates\app_products\sections_list_products\filter.html:32
+#: .\templates\app_search\filter.html:35
 msgid "Manufacturer"
 msgstr "Производитель"
 
 #: .\templates\app_products\sections_list_products\filter.html:43
+#: .\templates\app_search\filter.html:46
 msgid "Available"
 msgstr "В наличии"
 
 #: .\templates\app_products\sections_list_products\filter.html:82
+#: .\templates\app_search\filter.html:56
 msgid "Clear"
 msgstr "Очистить"
+
+#: .\templates\app_search\search_list.html:15
+#: .\templates\app_search\search_list.html:20
+msgid "search"
+msgstr "Поиск"
 
 #: .\templates\footer.html:45
 msgid "Useful Links"
@@ -351,17 +370,6 @@ msgstr "Категории"
 msgid "What are you looking for ..."
 msgstr "Что ищете ..."
 
-#: .\templates\header.html:148
+#: .\templates\header.html:150
 msgid "Search"
 msgstr "Поиск"
-
-#, fuzzy
-#~| msgid "Available"
-#~ msgid "available"
-#~ msgstr "В наличии"
-
-#~ msgid "Title"
-#~ msgstr "Название"
-
-#~ msgid "Value must be yes/no"
-#~ msgstr "Значение должно быть да/нет"

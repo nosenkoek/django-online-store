@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.utils.translation import gettext as _
 from django.db import connection
 
-from app_products.models import Product
+from app_products.models import Product, Manufacturer
 
 
 class BaseModelTest(TestCase):
@@ -16,6 +16,7 @@ class BaseModelTest(TestCase):
 
         super(BaseModelTest, cls).setUpClass()
         cls.product = Product.objects.first()
+        cls.manufacturer = Manufacturer.objects.first()
 
 
 class TestProduct(BaseModelTest):
@@ -55,3 +56,15 @@ class TestProduct(BaseModelTest):
             .get_field('manufacturer_fk')\
             .verbose_name
         self.assertEquals(field_label,  _('manufacturer'))
+
+
+class TestManufacturer(BaseModelTest):
+    def test_name_label(self) -> None:
+        """Проверка подписи поля названия товара"""
+        field_label = self.product._meta.get_field('name').verbose_name
+        self.assertEquals(field_label,  _('name'))
+
+    def test_description_label(self) -> None:
+        """Проверка подписи поля описания товара"""
+        field_label = self.product._meta.get_field('description').verbose_name
+        self.assertEquals(field_label,  _('description'))
