@@ -9,8 +9,8 @@ from redis import StrictRedis, RedisError
 from redis.exceptions import TimeoutError
 from elasticsearch import Elasticsearch, ElasticsearchException
 
-from etl.settings import DSN, REDIS_HOST, REDIS_PORT, ES_PORT, ES_HOST
-from etl.utils.logger import ETLLogger
+from settings import DSN, REDIS_HOST, REDIS_PORT, ES_PORT, ES_HOST
+from utils.logger import ETLLogger
 
 logger = ETLLogger().get_logger()
 

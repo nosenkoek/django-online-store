@@ -22,18 +22,14 @@ services:
       - "6379:6379"
 
 
-  elasticsearch:
+  es:
     image: elasticsearch:7.17.6
-    container_name: es01
     environment:
       - node.name=es01
       - cluster.name=es-docker-cluster
       - cluster.initial_master_nodes=es01
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-#      - discovery.type=single-node
-#      - xpack.ml.enabled=false
-#      - JAVA_OPTS=$JAVA_OPTS
     ulimits:
       memlock:
         soft: -1
@@ -46,15 +42,23 @@ services:
       - db
       - redis
 
-#  store_app:
-#    build: ./store_admin/
-#    restart: always
-#    command: >
-#      bash -c "sleep 10
-#      && python manage.py runserver 0.0.0.0:8000"
-#    ports:
-#      - "8000:8000"
-#    depends_on:
-#      - db
+  store_app:
+    build: ./store_admin/
+    command: >
+      bash -c "sleep 10
+      && python manage.py migrate
+      && python manage.py loaddata fixtures/categories_with_features.json
+      && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      -   es
 
-#        #      && python manage.py migrate
+  etl:
+    build: ./etl/
+    command: >
+      bash -c "echo 'chmod' 
+      && chmod +x ./etl.sh
+      && ./etl.sh"
+    depends_on:
+      - es

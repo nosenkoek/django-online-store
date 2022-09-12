@@ -19,6 +19,7 @@ from utils.context_managers import redis_connection
 err_logger = logging.getLogger('error')
 logger = logging.getLogger('info')
 
+
 class AddSortedItemToContextMixin():
     """Миксин для добавления полей сортировки товаров"""
     SORTED_LIST = [

@@ -2,8 +2,8 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 from elasticsearch.helpers import streaming_bulk
 
-from etl.utils.connectors import FactoryConnection
-from etl.utils.logger import ETLLogger
+from utils.connectors import FactoryConnection
+from utils.logger import ETLLogger
 
 logger = ETLLogger().get_logger()
 
@@ -39,7 +39,7 @@ class RedisHandler(BaseHandler):
         Загрузка даты и времени обновления elastic
         """
         with self._conn() as redis_conn:
-            redis_conn.set('pg_updated_at', datetime.now().utcnow())
+            redis_conn.set('pg_updated_at', datetime.now())
         logger.info('time last migration updated')
 
 
