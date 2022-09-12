@@ -7,8 +7,6 @@ from utils.logger import ETLLogger
 logger = ETLLogger().get_logger()
 
 
-# TODO: сделать загрузку в es и выгрузку из pg пачками
-
 class ETL():
     """
     Фасад, реализующий миграцию данных из БД в Elasticsearch
@@ -27,9 +25,8 @@ class ETL():
         """
         handler = self.handler_cls()
         pg_updated_at = handler.get_pg_updated_at()
-        pg_data = handler.get_pg_data(pg_updated_at)
 
-        if pg_data:
+        for pg_data in handler.get_pg_data(pg_updated_at):
             adapter = self.adapter_cls(pg_data)
             data = adapter.get_dict_for_load()
             handler.load_es_data(data)

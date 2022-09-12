@@ -1,9 +1,13 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
+from typing import Callable
+
 from elasticsearch.helpers import streaming_bulk
 
 from utils.connectors import FactoryConnection
 from utils.logger import ETLLogger
+
+from settings import COUNT_ROW_IN_PACKAGE
 
 logger = ETLLogger().get_logger()
 
@@ -47,7 +51,7 @@ class PostgresHandler(BaseHandler):
     """Стратегия взаимодействия с PostgreSQL"""
     def get_data(self, pg_updated_at) -> list[tuple[str]]:
         """
-        Получение данных запроса из БД
+        Генератор. Получение пакета данных запроса из БД
         :param pg_updated_at: дата и время последнего обновления elastic
         :return: список с данными для загрузки в elastic
         """
@@ -60,9 +64,13 @@ class PostgresHandler(BaseHandler):
 
         with self._conn() as pg_conn, pg_conn.cursor() as cur:
             cur.execute(query, (pg_updated_at, pg_updated_at, pg_updated_at))
-            data = [item for item in cur]
+            data = [item for item in cur.fetchmany(COUNT_ROW_IN_PACKAGE)]
+
+            while data:
+                yield data
+                data = [item for item in cur.fetchmany(COUNT_ROW_IN_PACKAGE)]
+
         logger.info('data received from database')
-        return data
 
     def load_data(self, *args, **kwargs):
         pass
@@ -92,7 +100,7 @@ class ElasticHandler(BaseHandler):
 
 
 class ETLObject():
-    """Класс составляющей ETL"""
+    """Класс составляющих ETL"""
     def __init__(self, strategy: BaseHandler):
         self.strategy = strategy
 
@@ -118,15 +126,22 @@ class ETLHandler():
         }
 
     def get_pg_updated_at(self) -> str:
+        """
+        Получение даты и времени из Redis последней миграции данных.
+        :return: дата и время
+        """
         pg_updated_at = self._STRATEGY.get('redis').get_data()
         return pg_updated_at
 
     def load_pg_updated_at(self):
+        """Запись даты и времени выполненной миграции"""
         self._STRATEGY.get('redis').load_data()
 
-    def get_pg_data(self, pg_updated_at):
+    def get_pg_data(self, pg_updated_at) -> Callable:
+        """Генератор для получения пакета данных из БД"""
         pg_data = self._STRATEGY.get('pg').get_data(pg_updated_at)
         return pg_data
 
     def load_es_data(self, es_data, *args, **kwargs):
+        """Запись данных в ES"""
         self._STRATEGY.get('es').load_data(es_data, *args, **kwargs)

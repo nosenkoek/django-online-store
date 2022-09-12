@@ -240,7 +240,7 @@ class ProductLoadDataHandler():
 
 if __name__ == '__main__':
     fake = Faker()
-    now = datetime.utcnow()
+    now = datetime.now()
 
     with psycopg2.connect(**DSN) as conn, conn.cursor() as curs:
         download_handler = CategoryDataHandler(curs)

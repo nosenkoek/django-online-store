@@ -57,7 +57,7 @@ services:
   etl:
     build: ./etl/
     command: >
-      bash -c "echo 'chmod' 
+      bash -c "echo 'chmod'
       && chmod +x ./etl.sh
       && ./etl.sh"
     depends_on:
