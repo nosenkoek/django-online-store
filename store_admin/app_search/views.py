@@ -1,49 +1,13 @@
-from typing import List
-
 from django.db.models import QuerySet, Max
 from django.views.generic import ListView
-from elasticsearch_dsl import Search
 
-from utils.context_managers import es_connection
-from app_categories.services.navi_categories_list_mixin import \
+from app_categories.services.navi_categories_list import \
     NaviCategoriesList
 from app_products.models import Product
-from app_products.services.sorted_item import SortedItem
+from app_products.services.sorted_item import AddSortedItemToContextMixin
 from app_products.filters import ProductFilterCommon
 from app_products.services.handler_url_params import InitialDictFromURLMixin
-
-
-class AddSortedItemToContextMixin():
-    """Миксин для добавления полей сортировки товаров"""
-    SORTED_LIST = [
-        SortedItem('price', 'Цене'),
-        SortedItem('added', 'Новизне')
-    ]
-
-    def add_sorted_item_to_context(self) -> None:
-        """ Добавление списка полей для сортировки"""
-        self.extra_context.update({'sorted_list': self.SORTED_LIST})
-
-
-class SearchResultMixin():
-    """Миксин для поиска по elasticsearch"""
-    @staticmethod
-    def search_match(query: str) -> List[str]:
-        """
-        Поиск товаров по запросу пользователя.
-        :param query: строка запроса на поиск от пользователя,
-        :return: список product_id по совпадению
-        """
-        with es_connection() as es_conn:
-            search = Search(using=es_conn).query(
-                'multi_match',
-                query=query,
-                fields=['category^2', 'name^2', 'description', 'manufacturer']
-            )[:100]
-            response = search.execute()
-
-        res_product_ids = [hit.product_id for hit in response]
-        return res_product_ids
+from app_search.services.search_result_mixin import SearchResultMixin
 
 
 class SearchResultListView(ListView, AddSortedItemToContextMixin,

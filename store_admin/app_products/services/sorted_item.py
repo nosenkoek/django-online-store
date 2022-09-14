@@ -11,3 +11,15 @@ class SortedItem():
 
     def __post_init__(self):
         self.reverse_field = f'-{self.field}'
+
+
+class AddSortedItemToContextMixin():
+    """Миксин для добавления полей сортировки товаров"""
+    SORTED_LIST = [
+        SortedItem('price', 'Цене'),
+        SortedItem('added', 'Новизне')
+    ]
+
+    def add_sorted_item_to_context(self) -> None:
+        """ Добавление списка полей для сортировки"""
+        self.extra_context.update({'sorted_list': self.SORTED_LIST})

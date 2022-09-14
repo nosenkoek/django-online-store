@@ -5,7 +5,7 @@ from django.db.models import Max, Prefetch, QuerySet
 from django.views.generic import ListView, DetailView
 from redis.exceptions import RedisError
 
-from app_categories.services.navi_categories_list_mixin import \
+from app_categories.services.navi_categories_list import \
     NaviCategoriesList
 from app_categories.models import Category, Feature
 from app_products.filters import ProductFilter
@@ -13,23 +13,11 @@ from app_products.models import Product, ProductFeature
 from app_products.services.decorator_count_views import \
     cache_popular_product, NAME_ATRS_CACHE
 from app_products.services.handler_url_params import InitialDictFromURLMixin
-from app_products.services.sorted_item import SortedItem
+from app_products.services.sorted_item import AddSortedItemToContextMixin
 from utils.context_managers import redis_connection
 
 err_logger = logging.getLogger('error')
 logger = logging.getLogger('info')
-
-
-class AddSortedItemToContextMixin():
-    """Миксин для добавления полей сортировки товаров"""
-    SORTED_LIST = [
-        SortedItem('price', 'Цене'),
-        SortedItem('added', 'Новизне')
-    ]
-
-    def add_sorted_item_to_context(self) -> None:
-        """ Добавление списка полей для сортировки"""
-        self.extra_context.update({'sorted_list': self.SORTED_LIST})
 
 
 class ProductListView(ListView, AddSortedItemToContextMixin,

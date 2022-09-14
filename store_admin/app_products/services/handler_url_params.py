@@ -7,7 +7,7 @@ from app_products.services.settings import PATTERN_URL
 class InitialDictFromURLMixin():
     def get_initial_dict(self) -> Dict[str, str]:
         """
-        Преобразование диапазона цен.
+        Создает словарь с данными фильтра из url-адреса.
         :param urlencode: параметры фильтра в url
         :return: словарь со значениями фильтрации
         """

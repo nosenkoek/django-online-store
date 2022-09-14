@@ -12,3 +12,11 @@ DATABASES = {
         }
     }
 }
+
+# REDIS_HOST = 'localhost'
+REDIS_HOST = 'redis'
+REDIS_PORT = 6379
+
+# ES_HOST = 'localhost'
+ES_HOST = 'es'
+ES_PORT = 9200

@@ -1,22 +1,16 @@
 import backoff
 
+from django.conf import settings
+
 from elasticsearch import Elasticsearch, ElasticsearchException
 from redis import StrictRedis, RedisError
 from contextlib import contextmanager
-
-# REDIS_HOST = 'localhost'
-REDIS_HOST = 'redis'
-REDIS_PORT = 6379
-
-# ES_HOST = 'localhost'
-ES_HOST = 'es'
-ES_PORT = 9200
 
 
 @backoff.on_exception(backoff.expo, RedisError, max_tries=5)
 @contextmanager
 def redis_connection():
-    conn = StrictRedis(host=REDIS_HOST, port=REDIS_PORT,
+    conn = StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT,
                        charset="utf-8", decode_responses=True,
                        socket_timeout=3)
     try:
@@ -32,7 +26,7 @@ def redis_connection():
 @contextmanager
 def es_connection() -> Elasticsearch:
     try:
-        conn = Elasticsearch(f'http://{ES_HOST}:{ES_PORT}')
+        conn = Elasticsearch(f'http://{settings.ES_HOST}:{settings.ES_PORT}')
     except ElasticsearchException:
         raise ElasticsearchException('Error elastic connection')
 
