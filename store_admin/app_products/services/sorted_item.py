@@ -22,4 +22,8 @@ class AddSortedItemToContextMixin():
 
     def add_sorted_item_to_context(self) -> None:
         """ Добавление списка полей для сортировки"""
-        self.extra_context.update({'sorted_list': self.SORTED_LIST})
+        context = {'sorted_list': self.SORTED_LIST}
+        if not self.extra_context:
+            self.extra_context = context
+        else:
+            self.extra_context.update(context)

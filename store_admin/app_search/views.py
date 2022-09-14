@@ -16,7 +16,6 @@ class SearchResultListView(ListView, AddSortedItemToContextMixin,
     context_object_name = 'products'
     paginate_by = 8
     template_name = 'app_search/search_list.html'
-    extra_context = NaviCategoriesList().get_context()
 
     def get_queryset(self) -> QuerySet:
         self.add_sorted_item_to_context()
@@ -46,4 +45,5 @@ class SearchResultListView(ListView, AddSortedItemToContextMixin,
         context = super(SearchResultListView, self).get_context_data(**kwargs)
         initial_dict = self.get_initial_dict()
         context.update({'initial_dict': initial_dict})
+        context.update(NaviCategoriesList().get_context())
         return context

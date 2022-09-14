@@ -27,7 +27,6 @@ class ProductListView(ListView, AddSortedItemToContextMixin,
     template_name = 'app_products/product_list.html'
     context_object_name = 'products'
     paginate_by = 8
-    extra_context = NaviCategoriesList().get_context()
 
     def get_subcategory_and_features(self) -> Tuple[Category, QuerySet]:
         """Возвращает объект категории и его характеристики"""
@@ -73,6 +72,7 @@ class ProductListView(ListView, AddSortedItemToContextMixin,
         context = super(ProductListView, self).get_context_data(**kwargs)
         initial_dict = self.get_initial_dict()
         context.update({'initial_dict': initial_dict})
+        context.update(NaviCategoriesList().get_context())
         return context
 
 
@@ -80,7 +80,6 @@ class ProductDetailView(DetailView):
     """View для детальной страницы товара"""
     model = Product
     template_name = 'app_products/product_detail.html'
-    extra_context = NaviCategoriesList().get_context()
 
     def get_queryset(self) -> QuerySet:
         queryset = super(ProductDetailView, self).get_queryset() \
@@ -89,6 +88,11 @@ class ProductDetailView(DetailView):
             .prefetch_related('productfeature_set',
                               'productfeature_set__feature_fk')
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetailView, self).get_context_data(**kwargs)
+        context.update(NaviCategoriesList().get_context())
+        return context
 
     @cache_popular_product
     def get(self, request, *args, **kwargs):
@@ -100,7 +104,6 @@ class PopularProductListView(ListView):
     model = Product
     context_object_name = 'popular_products'
     template_name = 'app_products/popular_product_list.html'
-    extra_context = NaviCategoriesList().get_context()
 
     def get_queryset(self) -> QuerySet:
         try:
@@ -110,7 +113,7 @@ class PopularProductListView(ListView):
                 )
         except RedisError as err:
             err_logger.error(f'Error connection to Redis | {err}')
-            logger.warning(f'not cache popular product')
+            logger.warning('not cache popular product')
             popular_product_range = []
 
         queryset = super(PopularProductListView, self).get_queryset() \
@@ -118,3 +121,9 @@ class PopularProductListView(ListView):
             .filter(category_fk__is_active=True,
                     product_id__in=popular_product_range)
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(PopularProductListView, self)\
+            .get_context_data(**kwargs)
+        context.update(NaviCategoriesList().get_context())
+        return context

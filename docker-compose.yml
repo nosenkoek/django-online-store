@@ -42,18 +42,18 @@ services:
       - db
       - redis
 
-  store_app:
-    build: ./store_admin/
-    command: >
-      bash -c "sleep 10
-      && python manage.py migrate
-      && python manage.py compilemessages
-      && python manage.py loaddata fixtures/categories_with_features.json
-      && python manage.py runserver 0.0.0.0:8000"
-    ports:
-      - "8000:8000"
-    depends_on:
-      -   es
+#  store_app:
+#    build: ./store_admin/
+#    command: >
+#      bash -c "sleep 10
+#      && python manage.py migrate
+#      && python manage.py compilemessages
+#      && python manage.py loaddata fixtures/categories_with_features.json
+#      && python manage.py runserver 0.0.0.0:8000"
+#    ports:
+#      - "8000:8000"
+#    depends_on:
+#      -   es
 
   etl:
     build: ./etl/

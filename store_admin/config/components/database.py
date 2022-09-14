@@ -4,8 +4,8 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST', 'db'),
-        # 'HOST': os.environ.get('DB_HOST', 'localhost'),
+        # 'HOST': os.environ.get('DB_HOST', 'db'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': os.environ.get('DB_PORT', 5432),
         'OPTIONS': {
             'options': '-c search_path=public,content'
@@ -13,10 +13,10 @@ DATABASES = {
     }
 }
 
-# REDIS_HOST = 'localhost'
-REDIS_HOST = 'redis'
+REDIS_HOST = 'localhost'
+# REDIS_HOST = 'redis'
 REDIS_PORT = 6379
 
-# ES_HOST = 'localhost'
-ES_HOST = 'es'
+ES_HOST = 'localhost'
+# ES_HOST = 'es'
 ES_PORT = 9200

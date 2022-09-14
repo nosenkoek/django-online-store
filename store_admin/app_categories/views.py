@@ -18,7 +18,6 @@ logger = logging.getLogger('info')
 class MainPageView(TemplateView):
     """View для главной страницы"""
     template_name = 'app_categories/main_page.html'
-    extra_context = NaviCategoriesList().get_context()
 
     def get_context_data(self, **kwargs):
         context_data = super(MainPageView, self).get_context_data(**kwargs)
@@ -32,11 +31,13 @@ class MainPageView(TemplateView):
                         0, 7)
         except RedisError as err:
             err_logger.error(f'Error connection to Redis | {err}')
-            logger.warning(f'not cache popular product')
+            logger.warning('not cache popular product')
             sections.SECTIONS['popular_products'].popular_product_range = []
 
         for _, item in sections.SECTIONS.items():
             context_data.update(item.get_context_data())
+
+        context_data.update(NaviCategoriesList().get_context())
         return context_data
 
 
@@ -45,7 +46,6 @@ class SubcategoriesListView(ListView):
     model = Category
     template_name = 'app_categories/subcategory_list.html'
     context_object_name = 'subcategories'
-    extra_context = NaviCategoriesList().get_context()
 
     def get_queryset(self) -> QuerySet:
         category_slug = self.kwargs.get('category_slug')
@@ -63,4 +63,5 @@ class SubcategoriesListView(ListView):
                 slug=self.kwargs.get('category_slug')
             )
         })
+        context_data.update(NaviCategoriesList().get_context())
         return context_data

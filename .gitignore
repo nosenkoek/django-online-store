@@ -138,9 +138,9 @@ dmypy.json
 # directory logging
 store_admin/log/
 
-##media upload
-#media/
-#.media
+#media upload
+media/
+.media
 
 #data_db
 data_db/

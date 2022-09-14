@@ -28,7 +28,8 @@ include(
     'components/templates.py',
     'components/internationalization.py',
     'components/debug_toolbar_panels.py',
-    'components/logger.py'
+    'components/logger.py',
+    'components/caches.py'
 )
 
 STATIC_URL = '/static/'
