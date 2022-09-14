@@ -8,3 +8,5 @@ COPY requirements.txt /store_app/
 RUN pip install -r requirements.txt
 
 COPY . /store_app
+
+RUN apt update && apt install gettext -y
