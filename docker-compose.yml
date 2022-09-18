@@ -1,0 +1,64 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:14-alpine
+    restart: always
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./schema_design/pg.env
+    volumes:
+      - ./schema_design/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    expose:
+      - "6379"
+    ports:
+      - "6379:6379"
+
+  es:
+    image: elasticsearch:7.17.6
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - cluster.initial_master_nodes=es01
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    expose:
+      - "9200"
+    ports:
+      - "9200:9200"
+    depends_on:
+      - db
+      - redis
+
+  store_app:
+    build: ./store_admin/
+    command: >
+      bash -c "sleep 10
+      && python manage.py migrate
+      && python manage.py compilemessages
+      && python manage.py loaddata fixtures/categories_with_features.json
+      && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      -   es
+
+  etl:
+    build: ./etl/
+    command: >
+      bash -c "echo 'chmod'
+      && chmod +x ./etl.sh
+      && ./etl.sh"
+    depends_on:
+      - es

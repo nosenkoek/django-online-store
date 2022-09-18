@@ -1,0 +1,52 @@
+{% load i18n %}
+{% load static %}
+{% load tags %}
+
+
+<div class="Section-content">
+  <div class="Sort">
+    <div class="Sort-title">Сортировать по:
+    </div>
+    <div class="Sort-variants">
+      {% for sorted_item in sorted_list %}
+        {% if sorted_item.field == request.GET.sort %}
+          <a class="Sort-sortBy Sort-sortBy_dec"
+             href="{% solve_url sorted_item.reverse_field 'sort' request.GET.urlencode %}">
+            {{ sorted_item.title }}
+          </a>
+        {% elif sorted_item.reverse_field == request.GET.sort %}
+          <a class="Sort-sortBy Sort-sortBy_inc"
+             href="{% solve_url sorted_item.field 'sort' request.GET.urlencode %}">
+            {{ sorted_item.title }}</a>
+        {% else %}
+          <a class="Sort-sortBy"
+             href="{% solve_url sorted_item.field 'sort' request.GET.urlencode %}">
+            {{ sorted_item.title }}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="Cards">
+    {% for product in products %}
+      <div class="Card">
+        <a class="Card-picture" href="{% url 'product_detail' product.slug %}"><img src="{{ product.main_image.url }}" alt="card.jpg"/></a>
+        <div class="Card-content">
+          <strong class="Card-title"><a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
+          </strong>
+          <div class="Card-description">
+            <div class="Card-cost"><span class="Card-price">{% trans '$' %}{{ product.price }}</span>
+            </div>
+            <div class="Card-category"> {{ subcategory.parent.name }}/ {{ subcategory.name }}
+            </div>
+            <div class="Card-hover">
+              <a class="Card-btn" href="#"><img src="{% static 'app_products/img/icons/card/cart.svg' %}" alt="cart.svg"/></a>
+              <a class="Card-btn" href="#"><img src="{% static 'app_products/img/icons/card/change.svg' %}" alt="change.svg"/></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% include 'app_products/sections_list_products/paginator.html' %}
+</div>

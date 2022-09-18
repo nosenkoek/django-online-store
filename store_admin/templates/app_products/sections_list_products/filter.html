@@ -1,0 +1,88 @@
+{% load static %}
+{% load i18n %}
+
+<div class="Section-column">
+  <div class="Section-columnSection">
+    <header class="Section-header">
+      <strong class="Section-title">{% trans 'Filter' %}
+      </strong>
+    </header>
+
+    <div class="Section-columnContent">
+      <form class="form" method="get">
+        <div class="form-group">
+          <div class="range Section-columnRange">
+            <input class="range-line" id="price" name="price" type="text" data-type="double"
+                   data-min="0" data-max="{{ subcategory.max_price|stringformat:"f" }}"
+                           data-from="{{ initial_dict.price_from }}" data-to="{{ initial_dict.price_to }}"/>
+            <div class="range-price">{% trans 'Price' %}:
+              <div class="rangePrice">
+              </div>
+              &nbsp{% trans '$' %}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input class="form-input form-input_full" id="name" name="name" type="text"
+                 placeholder="{% trans 'Name' %}"
+                 {% if 'name' in initial_dict %} value="{{  initial_dict.name }}" {% endif %}/>
+        </div>
+        <div class="form-group">
+          <input class="form-input form-input_full" id="manufacturer" name="manufacturer" type="text"
+                 placeholder="{% trans 'Manufacturer' %}"
+                 {% if 'manufacturer' in initial_dict %} value="{{  initial_dict.manufacturer }}" {% endif %}/>
+        </div>
+        <div class="form-group">
+          <!-- - var options = setOptions(items, ['value', 'selected', 'disabled']);-->
+        </div>
+        <div class="form-group">
+          <label class="toggle">
+            <input id="available" name="available" type="checkbox"
+                    {% if 'available' in initial_dict %} checked {% endif %}/>
+            <span class="toggle-box"></span>
+            <span class="toggle-text">{% trans 'Available' %}</span>
+          </label>
+        </div>
+
+        {% for feature in features %}
+          <div class="form-group">
+            {% if feature.type_feature == 'checkbox' %}
+              <label class="toggle">
+                <input type="checkbox" id="{{ feature.slug }}" name="{{ feature.slug }}"
+                        {% if feature.slug in initial_dict %} checked {% endif %}/>
+                <span class="toggle-box"></span>
+                <span class="toggle-text">{{ feature.name }}</span>
+              </label>
+
+            {% elif feature.type_feature == 'select' %}
+              {% for field in form %}
+                {% if field.name == feature.slug %}
+                  {{ field.errors }}
+                  <label for="{{ field.id_for_label }}">{{ feature.name }}</label>
+                  {{ field }}
+                {% endif %}
+              {% endfor %}
+
+            {% else %}
+              <input class="form-input form-input_full" id="{{ feature.slug }}" name="{{ feature.slug }}"
+                     type="text" placeholder="{{ feature.name }}"
+                     {% for key, item in initial_dict.items %}
+                      {% if feature.slug == key %}
+                        value="{{ item }}"
+                      {% endif %}
+                      {% endfor %}
+              />
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <div class="form-group">
+          <div class="buttons">
+            <button type="submit" class="btn btn_square btn_dark btn_narrow">{% trans 'Filter' %}</button>
+            <a class="btn btn_square btn_dark btn_narrow" href="{{ request.path }}">{% trans 'Clear' %}</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

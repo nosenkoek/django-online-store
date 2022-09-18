@@ -1,0 +1,29 @@
+{% load static %}
+{% load i18n %}
+
+<div class="Middle">
+  <div class="wrap">
+    <div class="BannersHome">
+      {% for random_category in random_categories %}
+        <a class="BannersHomeBlock" href="{% url 'product_list' random_category.parent.slug random_category.slug %}">
+          <div class="BannersHomeBlock-row">
+            <div class="BannersHomeBlock-block">
+              <strong class="BannersHomeBlock-title">{{ random_category.name }}
+              </strong>
+              <div class="BannersHomeBlock-content">{% trans 'from' %}
+                <span class="BannersHomeBlock-price">{% trans '$' %}{{ random_category.min_price }}</span>
+              </div>
+            </div>
+            <div class="BannersHomeBlock-block">
+              <div class="BannersHomeBlock-img">
+                {% if random_category.image %}
+                  <img src="{{ random_category.image.url }}" alt="{{ random_category.name | truncatechars:3 }}"/>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>

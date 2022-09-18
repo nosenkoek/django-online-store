@@ -1,0 +1,587 @@
+[
+{
+    "model": "app_categories.category",
+    "pk": "c568174c-110e-46b1-944e-0fe7e6b4e1b5",
+    "fields": {
+        "category_id": "a02414b4-fc4b-46e2-88b3-d45089f099b3",
+        "name": "Комплектующие ПК",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "pc-components",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 6,
+        "tree_id": 3,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "eddf229d-512b-40c4-adc3-0640a517d12e",
+    "fields": {
+        "category_id": "3ee73d93-307a-47a6-b32a-aa622aba0b24",
+        "name": "Аксессуары",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "accessories",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 4,
+        "tree_id": 4,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "6c6c17f4-4c6a-4dcc-8d57-25056456d235",
+    "fields": {
+        "category_id": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
+        "name": "Смартфоны и гаджеты",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "smartphone-gadgets",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 8,
+        "tree_id": 1,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "acaa147a-5bd4-413a-83b4-fe4823ad9726",
+    "fields": {
+        "category_id": "caf8e4b8-3909-495d-a085-6f0b0f030e32",
+        "name": "Бытовая техника",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "household-appliances",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 8,
+        "tree_id": 5,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "7929eb62-9bc0-4b0f-bb3a-26e2608b3eb4",
+    "fields": {
+        "category_id": "26458ab1-81da-4e2e-b9f7-05709502bd7c",
+        "name": "Телевизоры, аудио-видео,фото",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "tvset-audio-video-photo",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 8,
+        "tree_id": 6,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "7a726a7b-783f-48d6-b2c1-dcd07ae8a378",
+    "fields": {
+        "category_id": "cb437a18-3bcf-4468-a76e-72cb106c124e",
+        "name": "Ноутбуки и компьютеры",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "notebook-pc",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 8,
+        "tree_id": 2,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "02aadb87-d84b-45b9-8c73-6e0d15d9d75f",
+    "fields": {
+        "category_id": "1531ac7f-0bf6-4c0a-aef1-9b223ea20396",
+        "name": "Видеокарты",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "videocards",
+        "icon": "",
+        "image": "small_1.gif",
+        "is_active": true,
+        "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
+        "lft": 4,
+        "rght": 5,
+        "tree_id": 3,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "064db6bd-ef5d-480d-a8e8-a385407dc86d",
+    "fields": {
+        "category_id": "338d09c9-172a-4b1c-aaa4-b0983462dad1",
+        "name": "Планшеты",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "tablet",
+        "icon": "",
+        "image": "small_1.gif",
+        "is_active": true,
+        "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
+        "lft": 4,
+        "rght": 5,
+        "tree_id": 1,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "261fbc07-bb21-40cb-b32d-6fb255ea07b9",
+    "fields": {
+        "category_id": "67f044cd-c2a9-4106-8e1d-b364e88dd084",
+        "name": "Смарт-часы и фитнес-браслеты",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "smart-watches",
+        "icon": "",
+        "image": "small_1.gif",
+        "is_active": true,
+        "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
+        "lft": 6,
+        "rght": 7,
+        "tree_id": 1,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "26783772-940b-40b5-bf0c-b7be64cae8b5",
+    "fields": {
+        "category_id": "ac798b78-36fe-4b0c-8fff-50349ddf75c5",
+        "name": "Кухонные комбайны",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "blenders",
+        "icon": "",
+        "image": "small_1.gif",
+        "is_active": true,
+        "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
+        "lft": 6,
+        "rght": 7,
+        "tree_id": 5,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "33090696-d4d1-45ac-92ba-b42e1254d169",
+    "fields": {
+        "category_id": "14e0cf53-ce1a-41b1-858e-a13e521e2db9",
+        "name": "Моноблоки",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "monoblocks",
+        "icon": "",
+        "image": "small_1.gif",
+        "is_active": true,
+        "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
+        "lft": 6,
+        "rght": 7,
+        "tree_id": 2,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "33a6c0d4-8b59-47df-a2bb-e583d1a142a9",
+    "fields": {
+        "category_id": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "name": "Ноутбуки",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "notebooks",
+        "icon": "",
+        "image": "small_1.gif",
+        "is_active": true,
+        "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
+        "lft": 2,
+        "rght": 3,
+        "tree_id": 2,
+        "level": 1
+    }
+},
+{
+    "model": "app_products.manufacturer",
+    "pk": "33a6c0d4-8b59-47df-a2bb-e583d1a142a9",
+    "fields": {
+        "manufacturer_id": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "name": "manufacturer",
+        "updated": "2022-08-28 11:47:30+03:00"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "d73992a9-3ab2-4a66-bdf6-3d24e9644bf3",
+    "fields": {
+        "product_id": "0e4be10f-c2c8-497e-8b0c-06b9ca02a77c",
+        "name": "product_1",
+        "slug": "product_1",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "507f1270-4538-44e9-8fc4-5fa979b19b27",
+    "fields": {
+        "product_id": "0daa0099-8ceb-4b03-83fc-1b6d7fe43c64",
+        "name": "product_2",
+        "slug": "product_2",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "b064d4e3-d483-4e54-bca2-c8ded3c12ae2",
+    "fields": {
+        "product_id": "9743f140-53f1-4ee6-b47c-971228d9415c",
+        "name": "product_3",
+        "slug": "product_3",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "dafaf767-bd02-4f15-bda7-9edb9202b555",
+    "fields": {
+        "product_id": "251b38b0-5c99-4249-aa14-e27ec022cb9d",
+        "name": "product_4",
+        "slug": "product_4",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "e4fabb09-168a-4780-a80f-33bd64620da5",
+    "fields": {
+        "product_id": "c2d4bab4-aeb9-471d-ba33-bf39369e57bb",
+        "name": "product_5",
+        "slug": "product_5",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "5f658498-c97b-4087-9c07-2a7af71b8c6e",
+    "fields": {
+        "product_id": "b0db4234-e942-4b5c-90ea-1e1fe142c1c6",
+        "name": "product_6",
+        "slug": "product_6",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "e8087957-31cf-4dcc-b38b-c161c3cb17de",
+    "fields": {
+        "product_id": "3308a7d4-c5b0-467c-8e75-6774cb4a34f0",
+        "name": "product_7",
+        "slug": "product_7",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "495c011a-5fa3-47df-91e6-f56eba17d762",
+    "fields": {
+        "product_id": "30e0e3d5-8ca3-4bbd-a7c2-31ffb83927c2",
+        "name": "product_8",
+        "slug": "product_8",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "a28fffbe-7bcf-473b-a18a-f635549a7289",
+    "fields": {
+        "product_id": "d4cecbff-3dc2-4b20-a393-735a1339aeaf",
+        "name": "product_9",
+        "slug": "product_9",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "ddd7defc-0f5d-4ead-a3d5-2ec00592fc84",
+    "fields": {
+        "product_id": "2129591f-a169-4a4b-a2a5-31260c584964",
+        "name": "product_10",
+        "slug": "product_10",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "fcd096f6-e130-483d-b5dc-9708cf8d89ee",
+    "fields": {
+        "product_id": "0f6448d4-5cac-4ef7-8149-6ae8c638ea41",
+        "name": "product_11",
+        "slug": "product_11",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "8a0722b8-ae8d-4e18-8ee3-26266e945c8a",
+    "fields": {
+        "product_id": "61a79ccb-543d-4250-a260-9c646fe62a10",
+        "name": "product_12",
+        "slug": "product_12",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "22b2a8b6-e81f-4170-89cd-035c5ccbbaaf",
+    "fields": {
+        "product_id": "eb0ca930-a0b8-4ccf-9950-e3442d815851",
+        "name": "product_13",
+        "slug": "product_13",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "2470f953-6d85-419c-9717-f71ef5c74d63",
+    "fields": {
+        "product_id": "2f606a6e-bf56-4dd3-8201-cc01699b8684",
+        "name": "product_14",
+        "slug": "product_14",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "a9b8f539-781e-491b-8db3-e4b84af065be",
+    "fields": {
+        "product_id": "aa744868-9b4e-4d40-b4bc-ab9d213b2ada",
+        "name": "product_15",
+        "slug": "product_15",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "d72fc940-b81c-4c6b-a602-e62e88cf653a",
+    "fields": {
+        "product_id": "a3e33a10-e3b5-4bae-bcda-3def8e16956f",
+        "name": "product_16",
+        "slug": "product_16",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "b01a7a2e-9fca-4ec0-aede-e2ee13ad4c70",
+    "fields": {
+        "product_id": "5a0e73d6-356a-4b6a-857f-df58bd9cd3b8",
+        "name": "product_17",
+        "slug": "product_17",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": false,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "96c29daf-422a-4f53-a2a9-820c791e5502",
+    "fields": {
+        "product_id": "992ea6d9-00ac-49c8-8208-50116a0c7491",
+        "name": "product_18",
+        "slug": "product_18",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": false,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "91417a04-9f7f-4243-aeee-57c470e8d174",
+    "fields": {
+        "product_id": "d89e3549-893f-4513-ae1f-a457ebe21487",
+        "name": "product_19",
+        "slug": "product_19",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": false,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "d7c5a871-4b98-4f01-8e04-3272ce97a9f8",
+    "fields": {
+        "product_id": "77418047-2ae1-4c2e-9110-2a8df5ae31de",
+        "name": "product_20",
+        "slug": "product_20",
+        "description": "text",
+        "price": 1000,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": false,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+}
+]

@@ -1,0 +1,25 @@
+{% extends '../base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+  Главная страница
+{% endblock %}
+
+{% block content %}
+  <div class="Middle">
+    <div class="Section">
+      {% include 'app_categories/sections_main_page/random_categories.html' %}
+    </div>
+
+     <div class="Section Section_column Section_columnDesktop">
+       {% include 'app_categories/sections_main_page/popular_product.html' %}
+     </div>
+
+    <div class="Section Section_column Section_columnRight">
+      {% include 'app_categories/sections_main_page/limit_edition.html' %}
+   </div>
+  </div>
+{% endblock %}
+

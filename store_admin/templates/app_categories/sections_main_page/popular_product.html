@@ -1,0 +1,43 @@
+{% load static %}
+{% load i18n %}
+
+<div class="Middle">
+  <div class="wrap">
+    <div class="Section-content">
+      <header class="Section-header">
+        <h2 class="Section-title">
+          {% trans 'Popular Products' %}
+        </h2>
+      </header>
+
+      <div class="Cards">
+        {% for product in popular_products %}
+          <div class="Card">
+            <a class="Card-picture" href="{% url 'product_detail' product.slug %}">
+              <img src="{{ product.main_image.url }}" alt="{{ product.name | truncatechars:10 }}"/>
+            </a>
+
+            <div class="Card-content">
+              <strong class="Card-title">
+                <a href="#">{{ product.name }}</a>
+              </strong>
+              <div class="Card-description">
+                <div class="Card-cost"><span class="Card-price">{% trans '$' %}{{ product.price }}</span>
+                </div>
+                <div class="Card-category">
+                  {{ product.category_fk.parent.name }} / {{ product.category_fk.name }}
+                </div>
+                <div class="Card-hover">
+                  <a class="Card-btn" href="#"><img src="{% static 'app_products/img/icons/card/cart.svg' %}" alt="cart.svg"/></a>
+                  <a class="Card-btn" href="#"><img src="{% static 'app_products/img/icons/card/change.svg' %}" alt="change.svg"/></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <p>Пока нет популярных товаров =(</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>

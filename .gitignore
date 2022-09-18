@@ -136,7 +136,7 @@ dmypy.json
 .idea/
 
 # directory logging
-logger/
+store_admin/log/
 
 #media upload
 media/

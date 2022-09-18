@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+  Результат поиска
+{% endblock %}
+
+{% block content %}
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title"> {% trans 'search' %}
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item"><a href="{% url 'main_page' %}">{% trans 'home' %}</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current"><span>{% trans 'search' %}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="Section Section_column Section_columnLeft">
+    <div class="wrap">
+      {% include 'app_search/filter.html' %}
+      {% include 'app_search/results.html' %}
+    </div>
+  </div>
+{% endblock %}

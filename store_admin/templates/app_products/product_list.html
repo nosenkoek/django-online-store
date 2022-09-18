@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+  Список товаров
+{% endblock %}
+
+{% block content %}
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title"> {{ subcategory.name }}
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item"><a href="{% url 'main_page' %}">{% trans 'home' %}</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current">
+              <a href="{% url 'subcategory_list' subcategory.parent.slug %}">{{ subcategory.parent.name }}</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current"><span>{{ subcategory.name }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="Section Section_column Section_columnLeft">
+    <div class="wrap">
+      {% include 'app_products/sections_list_products/filter.html' %}
+      {% include 'app_products/sections_list_products/products.html' %}
+    </div>
+  </div>
+{% endblock %}
