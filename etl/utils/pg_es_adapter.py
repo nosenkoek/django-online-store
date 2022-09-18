@@ -1,7 +1,10 @@
-from typing import List, Dict, Tuple
+from abc import abstractmethod, ABC
+from typing import List, Iterable, Dict
 from uuid import UUID
 
 from pydantic import BaseModel, StrictStr
+
+from settings import ES_FIELDS
 
 
 class ProductEs(BaseModel):
@@ -13,42 +16,55 @@ class ProductEs(BaseModel):
     manufacturer: StrictStr
 
 
-class PgEsAdapter():
-    """
-    Адаптер, трансформирующий данные из БД в elasticsearch
-    Args:
-        pg_data: данные из БД
-    """
-    def __init__(self, pg_data: List[Tuple[str]]):
-        self.pg_data = pg_data
-        self.fields = ['product_id', 'category', 'name',
-                       'description', 'manufacturer']
+class BaseData(ABC):
+    @abstractmethod
+    def get_data(self):
+        pass
 
-    def _transform_to_dict(self) -> List[Dict[str, str]]:
+
+class PackageDataPG(BaseData):
+    """
+    Объект пакета данных из PostgreSQL
+    Args:
+        pg_data: генератор с пакетом данных
+    """
+    def __init__(self, pg_data: Iterable):
+        self._pg_data = pg_data
+
+    def get_data(self):
         """
-        Перевод данные из кортежа в словарь, для создания модели.
-        :return: список со словарями с данными
+        Возвращает пакет данных из PG.
+        :return: генератор с пакетом данных
         """
-        data = [dict(zip(self.fields, line)) for line in self.pg_data]
-        return data
+        return self._pg_data
+
+
+class PackageDataAdapter(BaseData):
+    """
+    Адаптер для пакета данных из PG в ES
+    Args:
+        data_object: объект с пакетом данных из PG
+    """
+    def __init__(self, data_object: PackageDataPG):
+        self._data_object = data_object
 
     def _create_model(self) -> List[ProductEs]:
         """
         Создания модели pydantic и валидация данных.
         :return: список с моделями
         """
-        data = self._transform_to_dict()
-        products = [ProductEs(**item) for item in data]
+        data_dict = [dict(zip(ES_FIELDS, line))
+                     for line in self._data_object.get_data()]
+        products = [ProductEs(**item) for item in data_dict]
         return products
 
-    def get_dict_for_load(self) -> List[Dict[str, str]]:
+    def get_data(self) -> List[Dict[str, str]]:
         """
-        Получение конечного списка со словарями для загрузки в elasticsearch
-        :return: список со словарями для загрузки в elasticsearch
+        Возвращает пакет данных для ES.
+        :return: словарь с данными для загрузки в ES
         """
-        dict_list = [product.dict()
-                     for product in self._create_model()]
+        es_data = [product.dict() for product in self._create_model()]
 
-        for item in dict_list:
+        for item in es_data:
             item.update({'_index': 'products', '_id': item['product_id']})
-        return dict_list
+        return es_data

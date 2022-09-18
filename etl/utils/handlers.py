@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
-from typing import Callable
+from typing import Iterable
 
 from elasticsearch.helpers import streaming_bulk
 
@@ -14,9 +14,6 @@ logger = ETLLogger().get_logger()
 
 class BaseHandler(ABC):
     """Абстрактный класс для работы с разными БД"""
-    def __init__(self, key: str) -> None:
-        self._conn = FactoryConnection().get_connection(key)
-
     @abstractmethod
     def get_data(self, *args, **kwargs):
         pass
@@ -27,7 +24,10 @@ class BaseHandler(ABC):
 
 
 class RedisHandler(BaseHandler):
-    """Стратегия взаимодействия с Redis"""
+    """Обработчик загрузки/выгрузки данных из Redis"""
+    def __init__(self):
+        self._conn = FactoryConnection().get_connection('redis')
+
     def get_data(self) -> str:
         """
         Получение информации из Redis о последнем обновлении elastic
@@ -43,12 +43,15 @@ class RedisHandler(BaseHandler):
         Загрузка даты и времени обновления elastic
         """
         with self._conn() as redis_conn:
-            redis_conn.set('pg_updated_at', datetime.now())
+            redis_conn.set('pg_updated_at', str(datetime.now()))
         logger.info('time last migration updated')
 
 
 class PostgresHandler(BaseHandler):
-    """Стратегия взаимодействия с PostgreSQL"""
+    """Обработчик загрузки/выгрузки данных из PostgreSQL"""
+    def __init__(self):
+        self._conn = FactoryConnection().get_connection('pg')
+
     def get_data(self, pg_updated_at) -> list[tuple[str]]:
         """
         Генератор. Получение пакета данных запроса из БД
@@ -64,11 +67,13 @@ class PostgresHandler(BaseHandler):
 
         with self._conn() as pg_conn, pg_conn.cursor() as cur:
             cur.execute(query, (pg_updated_at, pg_updated_at, pg_updated_at))
-            data = [item for item in cur.fetchmany(COUNT_ROW_IN_PACKAGE)]
+            data_fetchmany = cur.fetchmany(COUNT_ROW_IN_PACKAGE)
+            data = (item for item in data_fetchmany)
 
-            while data:
+            while data_fetchmany:
                 yield data
-                data = [item for item in cur.fetchmany(COUNT_ROW_IN_PACKAGE)]
+                data_fetchmany = cur.fetchmany(COUNT_ROW_IN_PACKAGE)
+                data = (item for item in data_fetchmany)
 
         logger.info('data received from database')
 
@@ -77,7 +82,10 @@ class PostgresHandler(BaseHandler):
 
 
 class ElasticHandler(BaseHandler):
-    """Стратегия взаимодействия с Elasticsearch"""
+    """Обработчик загрузки/выгрузки данных из Elasticsearch"""
+    def __init__(self):
+        self._conn = FactoryConnection().get_connection('es')
+
     def get_data(self):
         pass
 
@@ -96,52 +104,53 @@ class ElasticHandler(BaseHandler):
             for item in result:
                 if not item[1]:
                     logger.warning(f"error load doc {item[2]['_id']}")
-        logger.info('data loaded to elasticsearch')
+        logger.info('package data loaded to elasticsearch')
 
 
-class ETLObject():
-    """Класс составляющих ETL"""
-    def __init__(self, strategy: BaseHandler):
-        self.strategy = strategy
+class ETLObjectFactory():
+    """Класс-фабрика составляющих ETL"""
+    def __init__(self):
+        self._ETL_OBJECT = {
+            'redis': RedisHandler(),
+            'pg': PostgresHandler(),
+            'es': ElasticHandler()
+        }
 
-    def get_data(self, *args, **kwargs):
-        result = self.strategy.get_data(*args, **kwargs)
+    def get_etl_object(self, key: str) -> BaseHandler:
+        """
+        Возвращает обработчик составляющих ETL
+        :param key: ключ обработчика ('redis', 'pg, 'es')
+        :return:
+        """
+        result = self._ETL_OBJECT.get(key)
         return result
-
-    def load_data(self, *args, **kwargs):
-        self.strategy.load_data(*args, **kwargs)
 
 
 class ETLHandler():
     """Внешний интерфейс для взаимодействия с объектами составляющие ETL"""
     def __init__(self):
-        self._redis_handler = RedisHandler('redis')
-        self._pg_handler = PostgresHandler('pg')
-        self._es_handler = ElasticHandler('es')
-
-        self._STRATEGY = {
-            'redis': ETLObject(self._redis_handler),
-            'pg': ETLObject(self._pg_handler),
-            'es': ETLObject(self._es_handler)
-        }
+        self._etl_object_factory = ETLObjectFactory()
 
     def get_pg_updated_at(self) -> str:
         """
         Получение даты и времени из Redis последней миграции данных.
         :return: дата и время
         """
-        pg_updated_at = self._STRATEGY.get('redis').get_data()
+        pg_updated_at = self._etl_object_factory\
+            .get_etl_object('redis').get_data()
         return pg_updated_at
 
     def load_pg_updated_at(self):
         """Запись даты и времени выполненной миграции"""
-        self._STRATEGY.get('redis').load_data()
+        self._etl_object_factory.get_etl_object('redis').load_data()
 
-    def get_pg_data(self, pg_updated_at) -> Callable:
+    def get_pg_data(self, pg_updated_at: str) -> Iterable:
         """Генератор для получения пакета данных из БД"""
-        pg_data = self._STRATEGY.get('pg').get_data(pg_updated_at)
+        pg_data = self._etl_object_factory\
+            .get_etl_object('pg').get_data(pg_updated_at)
         return pg_data
 
-    def load_es_data(self, es_data, *args, **kwargs):
+    def load_es_data(self, es_data):
         """Запись данных в ES"""
-        self._STRATEGY.get('es').load_data(es_data, *args, **kwargs)
+        self._etl_object_factory\
+            .get_etl_object('es').load_data(es_data)

@@ -28,5 +28,3 @@ urlpatterns = i18n_patterns(
     path('', include('app_categories.urls')),
     path('catalog/', include('app_products.urls')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-# TODO: узнать как правильно прописать медиа
-#  узнать как работать с timezone лучше (приводить к 0 или по локальному)

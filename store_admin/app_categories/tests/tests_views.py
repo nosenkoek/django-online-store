@@ -12,8 +12,7 @@ from app_products.services.decorator_count_views import SECONDS_CACHE, \
     NAME_ATRS_CACHE
 from utils.context_managers import redis_connection
 from app_categories.tests.settings import TEMP_MEDIA_ROOT, NUMBERS_CATEGORY, \
-    NUMBERS_RANDOM_CATEGORY, NUMBERS_POPULAR_PRODUCTS, \
-    NUMBERS_LIMIT_PRODUCTS
+    NUMBERS_RANDOM_CATEGORY, NUMBERS_POPULAR_PRODUCTS, NUMBERS_LIMIT_PRODUCTS
 
 
 @override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
