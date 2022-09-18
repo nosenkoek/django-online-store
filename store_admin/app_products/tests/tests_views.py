@@ -65,11 +65,6 @@ class ProductListTest(BaseTest):
         self.assertTemplateUsed(response,
                                 'app_products/product_list.html')
 
-    def test_categories_number(self):
-        """Проверка количества отображаемых категорий в навигации"""
-        response = self.client.get(self.main_url, follow=True)
-        self.assertEqual(1, len(response.context.get('navi_categories')))
-
     def test_products_number(self):
         """Проверка количества отображаемых товаров"""
         products = 0
@@ -181,7 +176,3 @@ class PopularProductTest(BaseTest):
         self.assertTemplateUsed(response,
                                 'app_products/popular_product_list.html')
 
-    def test_categories_number(self):
-        """Проверка количества отображаемых категорий в навигации"""
-        response = self.client.get(self.main_url, follow=True)
-        self.assertEqual(1, len(response.context.get('navi_categories')))

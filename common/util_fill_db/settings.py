@@ -38,11 +38,10 @@ FEATURES_VALUE = {
     'Частота': ['2133МГц', '2666МГц', '3200МГц'],
     'Поколение': ['DDR4', 'DDR3'],
     'Экран': ['9"', '11"', '13"', '15"', '17"'],
-    'Разъемы подключений': ['USB 2.0', 'USB 3.0', 'USB type-C',
-                            'bluetooth', 'HDMI']
+    'Разъемы подключений': ['USB 2.0', 'USB 3.0', 'USB type-C', 'HDMI']
 }
 
 FEATURES_GROUP_TEXT = {
     'a721c742-44cf-444f-886a-93769378ca25': ['USB 2.0', 'USB 3.0',
-                                             'USB type-C', 'bluetooth', 'HDMI']
+                                             'USB type-C', 'HDMI']
 }
