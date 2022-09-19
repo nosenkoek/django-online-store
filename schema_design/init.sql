@@ -96,8 +96,9 @@ CREATE TABLE "content".feedback(
     id uuid PRIMARY KEY,
     feedback_id uuid UNIQUE NOT NULL,
     text text NOT NULL,
+    added timestamp NOT NULL,
     product_fk uuid NOT NULL,
-    user_fk int NOT NULL
+    user_fk_id int NOT NULL
 );
 
 CREATE TABLE "content".product_feature(
@@ -162,7 +163,7 @@ CREATE TABLE "content".profile (
     tel_number varchar(10) NOT NULL,
 	patronymic varchar(30) NOT NULL,
 	avatar varchar(100),
-	user_fk int UNIQUE NOT NULL
+	user_fk_id int UNIQUE NOT NULL
 );
 
 
@@ -203,7 +204,7 @@ ALTER TABLE feedback
     ADD CONSTRAINT product_fk FOREIGN KEY (product_fk)
         REFERENCES product(product_id) ON DELETE CASCADE;
 ALTER TABLE feedback
-    ADD CONSTRAINT user_fk FOREIGN KEY (user_fk)
+    ADD CONSTRAINT user_fk FOREIGN KEY (user_fk_id)
         REFERENCES auth_user(id) ON DELETE CASCADE;
 
 ALTER TABLE delivery
@@ -234,7 +235,7 @@ ALTER TABLE order_product
     ADD CONSTRAINT order_product_uk UNIQUE (order_fk, product_fk);
 
 ALTER TABLE profile
-    ADD CONSTRAINT user_fk FOREIGN KEY (user_fk)
+    ADD CONSTRAINT user_fk FOREIGN KEY (user_fk_id)
         REFERENCES auth_user(id) ON DELETE CASCADE;
 
 
