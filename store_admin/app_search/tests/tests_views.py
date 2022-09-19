@@ -1,7 +1,17 @@
 from django.test import TestCase
+from django.db import connection
 
 
 class SearchResultProductListTest(TestCase):
+    fixtures = ['app_search/tests/fixtures/fixtures_test_search_model.json']
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        with connection.cursor() as cursor:
+            cursor.execute(open('..\\schema_design\\init.sql', 'r').read())
+
+        super(SearchResultProductListTest, cls).setUpClass()
+
     def setUp(self) -> None:
         self.main_url = '/search/?query=text'
 
