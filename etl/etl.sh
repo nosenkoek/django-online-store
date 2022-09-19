@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 checked_status_server() {
   result=false
 
