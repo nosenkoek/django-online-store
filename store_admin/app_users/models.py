@@ -11,6 +11,7 @@ class Profile(models.Model):
     """Дополнительная информация о пользователях"""
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     profile_id = models.UUIDField(unique=True, default=uuid4, editable=False)
+    # todo: придумать по кодам разных стран
     tel_number = models.CharField(max_length=10, unique=True,
                                   verbose_name=_('telephone number'))
     patronymic = models.CharField(max_length=30,
@@ -28,6 +29,9 @@ class Profile(models.Model):
         verbose_name = _('profile')
         verbose_name_plural = _('profiles')
 
+    def __str__(self):
+        return self.user_fk.username
+
 
 class Feedback(models.Model):
     """Отзывы о товарах от пользователей"""
@@ -43,6 +47,8 @@ class Feedback(models.Model):
                                    verbose_name=_('product'))
     user_fk = models.ForeignKey(User,
                                 on_delete=models.CASCADE,
+                                to_field='id',
+                                db_column='user_fk',
                                 verbose_name=_('user'))
 
     class Meta:
@@ -50,3 +56,6 @@ class Feedback(models.Model):
         db_table = 'feedback'
         verbose_name = _('feedback')
         verbose_name_plural = _('feedbacks')
+
+    def __str__(self):
+        return self.text[:15]

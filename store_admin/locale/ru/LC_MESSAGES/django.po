@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-19 16:36+0300\n"
+"POT-Creation-Date: 2022-10-03 21:20+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,7 +90,8 @@ msgstr "множественный выбор"
 msgid "yes/no"
 msgstr "да/нет"
 
-#: .\app_categories\models.py:56 .\app_users\models.py:36
+#: .\app_categories\models.py:56 .\app_users\admin.py:54
+#: .\app_users\models.py:37 .\app_users\tests\tests_models.py:66
 msgid "text"
 msgstr "текст"
 
@@ -150,7 +151,7 @@ msgstr "цена"
 msgid "main image"
 msgstr "главное изображение"
 
-#: .\app_products\models.py:44 .\app_users\models.py:37
+#: .\app_products\models.py:44 .\app_users\models.py:38
 msgid "added"
 msgstr "добавлен"
 
@@ -163,7 +164,8 @@ msgid "count_in_storage"
 msgstr "количество на складе"
 
 #: .\app_products\models.py:66 .\app_products\models.py:82
-#: .\app_products\models.py:98 .\app_users\models.py:43
+#: .\app_products\models.py:98 .\app_users\admin.py:64 .\app_users\filters.py:9
+#: .\app_users\models.py:44 .\app_users\tests\tests_models.py:71
 msgid "product"
 msgstr "товар"
 
@@ -184,35 +186,46 @@ msgstr "товар с характеристиками"
 msgid "products with features"
 msgstr "товары с характеристиками"
 
-#: .\app_users\models.py:15
-msgid "telephone number"
-msgstr "номер телефона"
-
-#: .\app_users\models.py:17
+#: .\app_users\admin.py:30 .\app_users\models.py:18
+#: .\app_users\tests\tests_models.py:49
 msgid "patronymic"
 msgstr "отчество"
 
-#: .\app_users\models.py:19
-msgid "avatar"
-msgstr "аватар"
+#: .\app_users\admin.py:35
+#| msgid "telephone number"
+msgid "tel_number"
+msgstr "номер телефона"
 
-#: .\app_users\models.py:23 .\app_users\models.py:46
+#: .\app_users\admin.py:59 .\app_users\models.py:24 .\app_users\models.py:49
+#: .\app_users\tests\tests_models.py:59 .\app_users\tests\tests_models.py:76
 msgid "user"
 msgstr "пользователь"
 
-#: .\app_users\models.py:28
+#: .\app_users\filters.py:21
+msgid "username"
+msgstr "логин"
+
+#: .\app_users\models.py:16 .\app_users\tests\tests_models.py:44
+msgid "telephone number"
+msgstr "номер телефона"
+
+#: .\app_users\models.py:20 .\app_users\tests\tests_models.py:54
+msgid "avatar"
+msgstr "аватар"
+
+#: .\app_users\models.py:29
 msgid "profile"
 msgstr "профиль"
 
-#: .\app_users\models.py:29
+#: .\app_users\models.py:30
 msgid "profiles"
 msgstr "профили"
 
-#: .\app_users\models.py:51
+#: .\app_users\models.py:54
 msgid "feedback"
 msgstr "отзыв"
 
-#: .\app_users\models.py:52
+#: .\app_users\models.py:55
 msgid "feedbacks"
 msgstr "отзывы"
 

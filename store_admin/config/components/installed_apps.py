@@ -8,7 +8,7 @@ INSTALLED_APPS = [
     'app_categories.apps.AppCategoriesConfig',
     'app_products.apps.AppProductsConfig',
     'app_search.apps.AppSearchConfig',
-    'app_users',
+    'app_users.apps.AppUsersConfig',
     'debug_toolbar',
     'mptt',
 ]
