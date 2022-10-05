@@ -43,8 +43,30 @@
                 </ul>
             </div>
 
-            <div class="row-block">
-              <a class="ControlPanel-title" href="#">{% trans 'Login / Register' %} </a>
+            {% if request.user.is_authenticated %}
+              <div class="row-block">
+                <a class="ControlPanel-title" href="#">
+                  {% trans 'Account' %}
+                </a>
+              </div>
+
+              <div class="row-block">
+                <a class="ControlPanel-title" href="{% url 'logout' %}">
+                  {% trans 'Logout' %}
+                </a>
+              </div>
+            {% else %}
+              <div class="row-block">
+                <a class="ControlPanel-title" href="{% url 'login' %}">
+                  {% trans 'Login' %}
+                </a>
+              </div>
+              <div class="row-block">
+                <a class="ControlPanel-title" href="{% url 'register' %}">
+                  {% trans 'Register' %}
+                </a>
+              </div>
+            {% endif %}
             </div>
           </div>
         </nav>

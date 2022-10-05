@@ -16,11 +16,13 @@ class Profile(models.Model):
                                   verbose_name=_('telephone number'))
     patronymic = models.CharField(max_length=30,
                                   verbose_name=_('patronymic'))
-    avatar = models.ImageField(upload_to='avatars/', null=True,
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True,
                                verbose_name=_('avatar'))
 
     user_fk = models.OneToOneField(User,
                                    on_delete=models.CASCADE,
+                                   to_field='id',
+                                   db_column='user_fk_id',
                                    verbose_name=_('user'))
 
     class Meta:
@@ -48,7 +50,7 @@ class Feedback(models.Model):
     user_fk = models.ForeignKey(User,
                                 on_delete=models.CASCADE,
                                 to_field='id',
-                                db_column='user_fk',
+                                db_column='user_fk_id',
                                 verbose_name=_('user'))
 
     class Meta:

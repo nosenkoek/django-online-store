@@ -27,4 +27,5 @@ urlpatterns = i18n_patterns(
     path('search/', include('app_search.urls')),
     path('', include('app_categories.urls')),
     path('catalog/', include('app_products.urls')),
+    path('users/', include('app_users.urls')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

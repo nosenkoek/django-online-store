@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-03 21:20+0300\n"
+"POT-Creation-Date: 2022-10-04 19:23+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -91,7 +91,7 @@ msgid "yes/no"
 msgstr "да/нет"
 
 #: .\app_categories\models.py:56 .\app_users\admin.py:54
-#: .\app_users\models.py:37 .\app_users\tests\tests_models.py:66
+#: .\app_users\models.py:42 .\app_users\tests\tests_models.py:66
 msgid "text"
 msgstr "текст"
 
@@ -151,7 +151,7 @@ msgstr "цена"
 msgid "main image"
 msgstr "главное изображение"
 
-#: .\app_products\models.py:44 .\app_users\models.py:38
+#: .\app_products\models.py:44 .\app_users\models.py:43
 msgid "added"
 msgstr "добавлен"
 
@@ -165,7 +165,7 @@ msgstr "количество на складе"
 
 #: .\app_products\models.py:66 .\app_products\models.py:82
 #: .\app_products\models.py:98 .\app_users\admin.py:64 .\app_users\filters.py:9
-#: .\app_users\models.py:44 .\app_users\tests\tests_models.py:71
+#: .\app_users\models.py:49 .\app_users\tests\tests_models.py:71
 msgid "product"
 msgstr "товар"
 
@@ -192,18 +192,25 @@ msgid "patronymic"
 msgstr "отчество"
 
 #: .\app_users\admin.py:35
-#| msgid "telephone number"
 msgid "tel_number"
 msgstr "номер телефона"
 
-#: .\app_users\admin.py:59 .\app_users\models.py:24 .\app_users\models.py:49
+#: .\app_users\admin.py:59 .\app_users\models.py:26 .\app_users\models.py:54
 #: .\app_users\tests\tests_models.py:59 .\app_users\tests\tests_models.py:76
 msgid "user"
 msgstr "пользователь"
 
+#: .\app_users\apps.py:8
+msgid "users"
+msgstr "пользователи"
+
 #: .\app_users\filters.py:21
 msgid "username"
 msgstr "логин"
+
+#: .\app_users\forms.py:19
+msgid "Profile with this Email already exists."
+msgstr "Профиль с таким Email уже создан"
 
 #: .\app_users\models.py:16 .\app_users\tests\tests_models.py:44
 msgid "telephone number"
@@ -213,21 +220,29 @@ msgstr "номер телефона"
 msgid "avatar"
 msgstr "аватар"
 
-#: .\app_users\models.py:29
+#: .\app_users\models.py:31
 msgid "profile"
 msgstr "профиль"
 
-#: .\app_users\models.py:30
+#: .\app_users\models.py:32
 msgid "profiles"
 msgstr "профили"
 
-#: .\app_users\models.py:54
+#: .\app_users\models.py:59
 msgid "feedback"
 msgstr "отзыв"
 
-#: .\app_users\models.py:55
+#: .\app_users\models.py:60
 msgid "feedbacks"
 msgstr "отзывы"
+
+#: .\app_users\views.py:31
+msgid "Registration successful"
+msgstr "Профиль сохранен"
+
+#: .\app_users\views.py:33
+msgid "Please correct the error"
+msgstr "Пожалуйста, исправьте ошибки"
 
 #: .\templates\admin_custom\input_filter.html:19
 msgid "Remove"
@@ -278,7 +293,7 @@ msgstr "Ограниченные товары"
 #: .\templates\app_products\sections_list_products\filter.html:21
 #: .\templates\app_products\sections_list_products\products.html:37
 #: .\templates\app_search\filter.html:24 .\templates\app_search\results.html:37
-#: .\templates\header.html:85
+#: .\templates\header.html:107
 msgid "$"
 msgstr "₽"
 
@@ -296,6 +311,7 @@ msgstr "от"
 #: .\templates\app_products\product_detail.html:20
 #: .\templates\app_products\product_list.html:18
 #: .\templates\app_search\search_list.html:18
+#: .\templates\app_users\login.html:18 .\templates\app_users\register.html:18
 msgid "home"
 msgstr "главная"
 
@@ -345,6 +361,32 @@ msgstr "Очистить"
 msgid "search"
 msgstr "Поиск"
 
+#: .\templates\app_users\login.html:7 .\templates\app_users\login.html:15
+#: .\templates\app_users\login.html:35 .\templates\header.html:61
+msgid "Login"
+msgstr "Войти"
+
+#: .\templates\app_users\login.html:20
+msgid "login"
+msgstr "войти"
+
+#: .\templates\app_users\register.html:7 .\templates\app_users\register.html:15
+#: .\templates\app_users\register.html:111 .\templates\header.html:66
+msgid "Register"
+msgstr "Регистрация"
+
+#: .\templates\app_users\register.html:20
+msgid "register"
+msgstr "регистрация"
+
+#: .\templates\app_users\register.html:99
+msgid "Enter password"
+msgstr "Введите пароль"
+
+#: .\templates\app_users\register.html:106
+msgid "Enter password again"
+msgstr "Повторите пароль"
+
 #: .\templates\footer.html:45
 msgid "Useful Links"
 msgstr "Полезные ссылки"
@@ -365,7 +407,8 @@ msgstr "Информация о заказах"
 msgid "My Account"
 msgstr "Аккаунт"
 
-#: .\templates\footer.html:60 .\templates\header.html:78
+#: .\templates\footer.html:60 .\templates\header.html:49
+#: .\templates\header.html:100
 msgid "Account"
 msgstr "Аккаунт"
 
@@ -397,26 +440,26 @@ msgstr "Принимаем оплату"
 msgid "Follow us"
 msgstr "Подписаться"
 
-#: .\templates\header.html:47
-msgid "Login / Register"
-msgstr "Вход / Регистрация"
+#: .\templates\header.html:55
+msgid "Logout"
+msgstr "Выйти"
 
-#: .\templates\header.html:71
+#: .\templates\header.html:93
 msgid "Home"
 msgstr "Главная"
 
-#: .\templates\header.html:75
+#: .\templates\header.html:97
 msgid "Popular"
 msgstr "Популярное"
 
-#: .\templates\header.html:102
+#: .\templates\header.html:124
 msgid "Categories"
 msgstr "Категории"
 
-#: .\templates\header.html:148
+#: .\templates\header.html:170
 msgid "What are you looking for ..."
 msgstr "Что ищете ..."
 
-#: .\templates\header.html:151
+#: .\templates\header.html:173
 msgid "Search"
 msgstr "Поиск"

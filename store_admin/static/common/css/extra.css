@@ -3811,6 +3811,11 @@ a.Cart-title {
 .Profile-btn {
   text-align: right;
 }
+
+.Login-btn {
+  text-align: left;
+}
+
 .Profile-form {
   margin-top: 0;
 }
@@ -4243,9 +4248,15 @@ a.Cart-title {
 .Section_column .wrap {
   display: flex;
 }
+
 .Section_columnLeft .Section-content {
   padding-left: 354px;
 }
+
+.Section-register.Section-content {
+  padding-left: 0;
+}
+
 .Section_columnLeft .Section-column {
   margin-right: -304px;
 }

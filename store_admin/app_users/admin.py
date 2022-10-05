@@ -20,7 +20,8 @@ class ListDisplayUserExtendMixin():
     """Миксин для расширения list_display"""
     list_select_related = ('profile', )
     list_display = ('username', 'first_name', 'last_name',
-                    'patronymic', 'tel_number', 'is_staff', 'is_active')
+                    'patronymic', 'tel_number', 'email',
+                    'is_staff', 'is_active')
 
     def get_queryset(self, request) -> QuerySet:
         queryset = super().get_queryset(request)\

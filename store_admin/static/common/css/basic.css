@@ -834,6 +834,11 @@ select + select {
   background-color: #f9fafc;
   line-height: 46px;
 }
+.form-tel {
+  display: inline-block;
+  width: 96%;
+}
+
 .form .form-input_error {
   border-color: #f26d7d;
 }
