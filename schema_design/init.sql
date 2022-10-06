@@ -161,7 +161,7 @@ CREATE TABLE "content".profile (
     id uuid PRIMARY KEY,
 	profile_id uuid UNIQUE NOT NULL,
     tel_number varchar(10) NOT NULL,
-	patronymic varchar(30) NOT NULL,
+	patronymic varchar(30),
 	avatar varchar(100),
 	user_fk_id int UNIQUE NOT NULL
 );

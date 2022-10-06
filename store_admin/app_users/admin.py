@@ -42,7 +42,7 @@ class ListDisplayUserExtendMixin():
 @admin.register(User)
 class UserAdmin(ListDisplayUserExtendMixin, admin.ModelAdmin):
     inlines = (UserInLine,)
-    search_fields = ('username', )
+    search_fields = ('username', 'first_name', 'last_name')
     list_filter = ('is_staff', 'is_active')
 
 

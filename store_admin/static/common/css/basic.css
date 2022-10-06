@@ -839,6 +839,11 @@ select + select {
   width: 96%;
 }
 
+.form-tel-edit {
+  display: inline-block;
+  width: 95%;
+}
+
 .form .form-input_error {
   border-color: #f26d7d;
 }

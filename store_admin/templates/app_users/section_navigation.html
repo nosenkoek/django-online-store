@@ -1,0 +1,26 @@
+{% load static %}
+{% load i18n %}
+
+<div class="Section-columnSection">
+  <header class="Section-header">
+    <strong class="Section-title">{% trans 'Navigation' %}
+    </strong>
+  </header>
+  <div class="Section-columnContent">
+    <div class="NavigateProfile">
+      {% with request.path|slice:'4:' as path %}
+      <ul class="menu menu_vt">
+        <li class="{% if path == 'users/account/' %}menu-item_ACTIVE{% endif %} menu-item ">
+          <a class="menu-link" href="{% url 'account' %}">{% trans 'My Account' %}</a>
+        </li>
+        <li class="{% if path == 'users/profile/' %}menu-item_ACTIVE{% endif %} menu-item">
+          <a class="menu-link" href="{% url 'profile' %}">{% trans 'Profile' %}</a>
+        </li>
+        <li class="{% if path == 'users/history/' %}menu-item_ACTIVE{% endif %} menu-item">
+          <a class="menu-link" href="#">{% trans 'History order' %}</a>
+        </li>
+      </ul>
+      {% endwith %}
+    </div>
+  </div>
+</div>

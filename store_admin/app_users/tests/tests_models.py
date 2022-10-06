@@ -29,7 +29,6 @@ class BaseModelTest(TestCase):
         cls.user = user
         cls.profile = Profile.objects.create(tel_number='9165236894',
                                              patronymic='patronymic',
-                                             avatar='avatar',
                                              user_fk=user)
 
         cls.feedback = Feedback.objects.create(text='text',

@@ -6,7 +6,8 @@ from django.db import connection
 
 from app_users.models import Profile
 from app_users.tests.tests_models import BaseModelTest
-from app_users.tests.settings import USERNAME, PASSWORD, DATA_USER
+from app_users.tests.settings import USERNAME, PASSWORD, DATA_USER, \
+    DATA_EDIT_PROFILE
 
 
 class RegisterTest(TestCase):
@@ -41,9 +42,6 @@ class RegisterTest(TestCase):
         self.assertEqual(User.objects.count(), 1)
         self.assertEqual(Profile.objects.count(), 1)
 
-        login_user = self.client.login(username=DATA_USER.get('username'),
-                                       password=DATA_USER.get('password1'))
-        self.assertTrue(login_user)
         user_db = User.objects.first()
         user = get_user(self.client)
         self.assertEqual(user, user_db)
@@ -92,3 +90,54 @@ class LogoutTest(TestCase):
 
         user = get_user(self.client)
         self.assertTrue(user.is_anonymous)
+
+
+class AccountTest(BaseModelTest):
+    def setUp(self) -> None:
+        self.main_url = '/users/account'
+
+    def test_account_url(self):
+        """Проверка открытия страницы профиля"""
+        self.client.login(username=USERNAME, password=PASSWORD)
+        response = self.client.get(self.main_url)
+        self.assertEqual(response.status_code, 302)
+        response = self.client.get(self.main_url, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_account_template(self):
+        """Проверка используемого шаблона"""
+        self.client.login(username=USERNAME, password=PASSWORD)
+        response = self.client.get(self.main_url, follow=True)
+        self.assertTemplateUsed(response, 'app_users/account.html')
+
+
+class ProfileTest(BaseModelTest):
+    def setUp(self) -> None:
+        self.main_url = '/users/profile'
+
+    def test_profile_url(self):
+        """Проверка открытия страницы профиля"""
+        self.client.login(username=USERNAME, password=PASSWORD)
+        response = self.client.get(self.main_url, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_profile_template(self):
+        """Проверка используемого шаблона"""
+        self.client.login(username=USERNAME, password=PASSWORD)
+        response = self.client.get(self.main_url, follow=True)
+        self.assertTemplateUsed(response, 'app_users/profile.html')
+
+    def test_edit_profile(self):
+        """Проверка изменения профиля пользователя"""
+        self.client.login(username=USERNAME, password=PASSWORD)
+        response = self.client.post(reverse('profile'),
+                                    data=DATA_EDIT_PROFILE,
+                                    follow=True)
+        self.assertEqual(response.status_code, 200)
+        user = get_user(self.client)
+        self.assertEqual(user.first_name, 'test_new')
+        self.assertEqual(user.last_name, 'test_new')
+        self.assertEqual(user.profile.patronymic, 'patronymic_new')
+        self.assertEqual(user.email, DATA_EDIT_PROFILE.get('email'))
+        self.assertEqual(user.profile.tel_number,
+                         DATA_EDIT_PROFILE.get('tel_number'))
