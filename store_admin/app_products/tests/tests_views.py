@@ -175,4 +175,3 @@ class PopularProductTest(BaseTest):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
                                 'app_products/popular_product_list.html')
-

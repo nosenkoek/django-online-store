@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -12,8 +14,9 @@ from app_users.models import Profile
 from app_users.services.edit_profile_services import GetProfileFormMixin, \
     LoginUserMixin
 
-
-# TODO: может html форм вынести как джанговский шаблон, для того чтобы использовать как form.as_p()
+logger = logging.getLogger(__name__)
+# TODO: может html форм вынести как джанговский шаблон,
+#  для того чтобы использовать как form.as_p()
 
 
 class RegisterView(CreateView, LoginUserMixin):
@@ -41,6 +44,7 @@ class RegisterView(CreateView, LoginUserMixin):
                 username = form.cleaned_data.get('username')
                 raw_password = form.cleaned_data.get('password1')
                 self.authenticate_and_login(username, raw_password)
+                logger.info(f'New user | {username}')
                 return result
         messages.error(request, _('Please correct the error'))
         return self.form_invalid(form)
@@ -48,7 +52,7 @@ class RegisterView(CreateView, LoginUserMixin):
     def get_context_data(self, **kwargs):
         if self.request.method == 'POST':
             profile_form = self.profile_form(self.request.POST,
-                                             instance=self.object.profile)
+                                             instance=self.object)
         else:
             profile_form = self.profile_form()
         context = super(RegisterView, self).get_context_data(**kwargs)
@@ -59,6 +63,11 @@ class RegisterView(CreateView, LoginUserMixin):
 class UserLoginView(LoginView):
     """View для входа пользователя"""
     template_name = 'app_users/login.html'
+
+    def post(self, request, *args, **kwargs):
+        result = super(UserLoginView, self).post(request, *args, **kwargs)
+        logger.info(f'Login user | {self.request.user.username}')
+        return result
 
 
 class UserLogoutView(LogoutView):
@@ -78,9 +87,10 @@ class AccountView(LoginRequiredMixin, DetailView):
         return obj
 
 
-class ProfileView(UpdateView, LoginRequiredMixin, GetProfileFormMixin,
+class ProfileView(LoginRequiredMixin, UpdateView, GetProfileFormMixin,
                   LoginUserMixin):
     """View для страницы редактирования профиля"""
+    login_url = '/users/login/'
     model = User
     template_name = 'app_users/profile.html'
     form_class = UserProfileForm
@@ -111,6 +121,7 @@ class ProfileView(UpdateView, LoginRequiredMixin, GetProfileFormMixin,
 
             messages.success(self.request,
                              _('Edit profile successful'))
+            logger.info(f'Profile Edit | {self.object.username}')
             return self.form_valid(form)
         messages.error(request, _('Please correct the error'))
         return self.form_invalid(form)

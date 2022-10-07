@@ -11,8 +11,7 @@ from utils.context_managers import redis_connection
 from app_categories.services.navi_categories_list import \
     NaviCategoriesList
 
-err_logger = logging.getLogger('error')
-logger = logging.getLogger('info')
+logger = logging.getLogger(__name__)
 
 
 class MainPageView(TemplateView):
@@ -30,7 +29,7 @@ class MainPageView(TemplateView):
                         NAME_ATRS_CACHE.get(self.request.get_host())[1],
                         0, 7)
         except RedisError as err:
-            err_logger.error(f'Error connection to Redis | {err}')
+            logger.error(f'Error connection to Redis | {err}')
             logger.warning('not cache popular product')
             sections.SECTIONS['popular_products'].popular_product_range = []
 

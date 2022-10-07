@@ -16,8 +16,7 @@ from app_products.services.handler_url_params import InitialDictFromURLMixin
 from app_products.services.sorted_item import AddSortedItemToContextMixin
 from utils.context_managers import redis_connection
 
-err_logger = logging.getLogger('error')
-logger = logging.getLogger('info')
+logger = logging.getLogger(__name__)
 
 
 class ProductListView(ListView, AddSortedItemToContextMixin,
@@ -112,7 +111,7 @@ class PopularProductListView(ListView):
                     NAME_ATRS_CACHE.get(self.request.get_host())[1], 0, -1
                 )
         except RedisError as err:
-            err_logger.error(f'Error connection to Redis | {err}')
+            logger.error(f'Error connection to Redis | {err}')
             logger.warning('not cache popular product')
             popular_product_range = []
 

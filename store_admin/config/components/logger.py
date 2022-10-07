@@ -22,7 +22,7 @@ LOGGING = {
             'formatter': 'simple'
         },
         'error_handler': {
-            'level': 'INFO',
+            'level': 'WARNING',
             'class': 'logging.FileHandler',
             'filename': 'log/errors.log',
             'formatter': 'simple'
@@ -34,16 +34,11 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
-        'info': {
-            'handlers': ['info_handler'],
+        'root': {
+            'handlers': ['info_handler', 'error_handler'],
             'level': 'INFO',
             'propagate': True,
-        },
-        'error': {
-            'handlers': ['error_handler'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
+        }
     }
 }
 
