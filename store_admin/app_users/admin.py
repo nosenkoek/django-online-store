@@ -3,9 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models import QuerySet
 from django.utils.translation import gettext as _
 
-from app_users.models import Profile, Feedback
-from app_users.filters import FeedbackProductFilterAdmin, \
-    FeedbackUsernameFilterAdmin
+from app_users.models import Profile
 
 admin.site.unregister(User)
 
@@ -44,25 +42,3 @@ class UserAdmin(ListDisplayUserExtendMixin, admin.ModelAdmin):
     inlines = (UserInLine,)
     search_fields = ('username', 'first_name', 'last_name')
     list_filter = ('is_staff', 'is_active')
-
-
-@admin.register(Feedback)
-class FeedbackAdmin(admin.ModelAdmin):
-    list_display = ('short_text', 'user', 'product')
-    search_fields = ('text', )
-    list_filter = (FeedbackUsernameFilterAdmin, FeedbackProductFilterAdmin)
-
-    @admin.display(description=_('text'))
-    def short_text(self, obj) -> str:
-        """Отображение текста отзыва"""
-        return obj.text[:15]
-
-    @admin.display(description=_('user'))
-    def user(self, obj) -> str:
-        """Доп. поле отображения пользователя"""
-        return obj.user_fk.username
-
-    @admin.display(description=_('product'))
-    def product(self, obj) -> str:
-        """Доп. поле отображения товара"""
-        return obj.product_fk.name

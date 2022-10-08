@@ -3,15 +3,11 @@ from django.test import TestCase
 from django.utils.translation import gettext as _
 from django.db import connection
 
-from app_products.models import Product
 from app_users.tests.settings import USERNAME, PASSWORD
-from app_users.models import Profile, Feedback
+from app_users.models import Profile
 
 
 class BaseModelTest(TestCase):
-    fixtures = \
-        ['app_users/tests/fixtures/fixtures_test_users_model.json']
-
     @classmethod
     def setUpClass(cls) -> None:
         with connection.cursor() as cursor:
@@ -25,15 +21,10 @@ class BaseModelTest(TestCase):
         user.set_password(PASSWORD)
         user.save()
 
-        product = Product.objects.first()
         cls.user = user
         cls.profile = Profile.objects.create(tel_number='9165236894',
                                              patronymic='patronymic',
                                              user_fk=user)
-
-        cls.feedback = Feedback.objects.create(text='text',
-                                               product_fk=product,
-                                               user_fk=user)
 
 
 class TestProfile(BaseModelTest):
@@ -55,21 +46,4 @@ class TestProfile(BaseModelTest):
     def test_user_label(self) -> None:
         """Проверка подписи поля пользователь"""
         field_label = self.profile._meta.get_field('user_fk').verbose_name
-        self.assertEquals(field_label, _('user'))
-
-
-class TestFeedback(BaseModelTest):
-    def test_text_label(self) -> None:
-        """Проверка подписи поля теста отзыва"""
-        field_label = self.feedback._meta.get_field('text').verbose_name
-        self.assertEquals(field_label, _('text'))
-
-    def test_product_label(self) -> None:
-        """Проверка подписи поля товара"""
-        field_label = self.feedback._meta.get_field('product_fk').verbose_name
-        self.assertEquals(field_label, _('product'))
-
-    def test_user_label(self) -> None:
-        """Проверка подписи поля пользователь"""
-        field_label = self.feedback._meta.get_field('user_fk').verbose_name
         self.assertEquals(field_label, _('user'))

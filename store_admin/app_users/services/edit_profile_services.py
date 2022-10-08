@@ -1,5 +1,9 @@
+import logging
+
 from django.forms import Form
 from django.contrib.auth import authenticate, login
+
+logger = logging.getLogger(__name__)
 
 
 class GetProfileFormMixin():
@@ -35,3 +39,4 @@ class LoginUserMixin():
         user = authenticate(username=username,
                             password=raw_password)
         login(self.request, user)
+        logger.info(f'New user | {username}')

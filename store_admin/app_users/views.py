@@ -9,52 +9,48 @@ from django.views.generic import CreateView, DetailView, UpdateView
 from django.utils.translation import gettext as _
 
 from app_users.forms import RegisterForm, ProfileRegisterForm, \
-    UserProfileForm, ProfileForm
+    UserProfileForm, ProfileForm, MyRegisterForm
 from app_users.models import Profile
 from app_users.services.edit_profile_services import GetProfileFormMixin, \
     LoginUserMixin
 
 logger = logging.getLogger(__name__)
-# TODO: может html форм вынести как джанговский шаблон,
-#  для того чтобы использовать как form.as_p()
 
 
 class RegisterView(CreateView, LoginUserMixin):
     """View для регистрации пользователя"""
     model = User
     template_name = 'app_users/register.html'
-    form_class = RegisterForm
-    profile_form = ProfileRegisterForm
+    form_class = MyRegisterForm
     success_url = '/users/register/'
 
     def post(self, request, *args, **kwargs):
         self.object = None
         form = self.get_form()
+        form.request = request
 
         if form.is_valid():
-            user = form.save(commit=False)
-            profile = Profile(user_fk=user)
-            profile_form = self.profile_form(self.request.POST,
-                                             instance=profile)
-            if profile_form.is_valid():
-                result = self.form_valid(form)
-                profile_form.save()
-                messages.success(self.request, _('Registration successful'))
+            result = self.form_valid(form)
+            messages.success(self.request, _('Registration successful'))
 
-                username = form.cleaned_data.get('username')
-                raw_password = form.cleaned_data.get('password1')
-                self.authenticate_and_login(username, raw_password)
-                logger.info(f'New user | {username}')
-                return result
+            self.authenticate_and_login(form.cleaned_data.get('username'),
+                                        form.cleaned_data.get('password1'))
+
+            return result
         messages.error(request, _('Please correct the error'))
         return self.form_invalid(form)
 
+    def form_valid(self, form):
+        result = super(RegisterView, self).form_valid(form)
+        form.profile_form_clean.save()
+        return result
+
     def get_context_data(self, **kwargs):
         if self.request.method == 'POST':
-            profile_form = self.profile_form(self.request.POST,
-                                             instance=self.object)
+            profile_form = self.form_class.profile_form(self.request.POST,
+                                                        instance=self.object)
         else:
-            profile_form = self.profile_form()
+            profile_form = self.form_class.profile_form()
         context = super(RegisterView, self).get_context_data(**kwargs)
         context.update({'profile_form': profile_form})
         return context

@@ -8,6 +8,13 @@ from django.utils.translation import gettext as _
 from app_users.models import Profile, file_size_validator
 
 
+class ProfileRegisterForm(forms.ModelForm):
+    """Форма профиля для регистрации пользователя"""
+    class Meta:
+        model = Profile
+        fields = ('tel_number', 'patronymic')
+
+
 class RegisterForm(UserCreationForm):
     """ Основная форма для регистрации пользователя"""
     class Meta:
@@ -22,11 +29,21 @@ class RegisterForm(UserCreationForm):
         return email
 
 
-class ProfileRegisterForm(forms.ModelForm):
-    """Форма профиля для регистрации пользователя"""
-    class Meta:
-        model = Profile
-        fields = ('tel_number', 'patronymic')
+class MyRegisterForm(RegisterForm):
+    profile_form = ProfileRegisterForm
+
+    def is_valid(self):
+        if not super(MyRegisterForm, self).is_valid():
+            return False
+
+        user = self.save(commit=False)
+        profile = Profile(user_fk=user)
+        profile_form = self.profile_form(self.request.POST, instance=profile)
+
+        if profile_form.is_valid():
+            self.profile_form_clean = profile_form
+            return True
+        return False
 
 
 class AddFullNameFieldMixin():
