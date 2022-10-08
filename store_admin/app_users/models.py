@@ -1,6 +1,4 @@
-from uuid import uuid4
-
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
@@ -17,10 +15,7 @@ def file_size_validator(file):
                                   .format(size_mb))
 
 
-class Profile(models.Model):
-    """Дополнительная информация о пользователях"""
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    profile_id = models.UUIDField(unique=True, default=uuid4, editable=False)
+class User(AbstractUser):
     tel_number = models.CharField(max_length=10, unique=True,
                                   verbose_name=_('telephone number'))
     patronymic = models.CharField(max_length=30, null=True, blank=True,
@@ -29,17 +24,7 @@ class Profile(models.Model):
                                validators=(file_size_validator, ),
                                verbose_name=_('avatar'))
 
-    user_fk = models.OneToOneField(User,
-                                   on_delete=models.CASCADE,
-                                   to_field='id',
-                                   db_column='user_fk_id',
-                                   verbose_name=_('user'))
-
-    class Meta:
-        managed = False
-        db_table = 'profile'
-        verbose_name = _('profile')
-        verbose_name_plural = _('profiles')
-
-    def __str__(self):
-        return self.user_fk.username
+    def get_full_name(self):
+        if self.patronymic is None:
+            return f'{self.last_name} {self.first_name}'
+        return f'{self.last_name} {self.first_name} {self.patronymic}'

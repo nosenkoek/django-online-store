@@ -41,71 +41,59 @@
               {% csrf_token %}
               <div class="row">
                 <div class="row-block">
-                  <div class="form-group">
-                    {{ profile_form.avatar.errors }}
-                    <label class="form-label" for="avatar">
-                      {{ profile_form.avatar.label_tag }}
-                    </label>
-                    {% with user.profile.avatar as avatar %}
-                      <div class="Profile-avatar {% if not avatar %} Profile-avatar_noimg {% endif %}">
-                        <div class="Profile-img">
-                          {% if avatar %}
-                            <img src="{{ avatar.url }}" alt="avatar.png"/>
-                          {% endif %}
-                        </div>
-                        <label class="Profile-fileLabel" for="avatar">
-                          {% trans 'Add avatar' %}
+                  {% for field in form %}
+                    {% if field.name in 'avatar, full_name' %}
+                      <div class="form-group">
+                        {{ field.errors }}
+                        <label class="form-label" for="{{ field.name }}">
+                          {{ field.label_tag }}
                         </label>
-                        <input class="Profile-file form-input" id="avatar" name="avatar" type="file" data-validate="onlyImgAvatar"/>
+                        {% if field.name == 'avatar' %}
+                          {% with user.avatar as avatar %}
+                            <div class="Profile-avatar {% if not avatar %} Profile-avatar_noimg {% endif %}">
+                              <div class="Profile-img">
+                                {% if avatar %}
+                                  <img src="{{ avatar.url }}" alt="avatar.png"/>
+                                {% endif %}
+                              </div>
+                              <label class="Profile-fileLabel" for="avatar">
+                                {% trans 'Add avatar' %}
+                              </label>
+                              <input class="Profile-file form-input" id="{{ field.name }}" name="{{ field.name }}" type="file" data-validate="onlyImgAvatar"/>
+                            </div>
+                          {% endwith %}
+                        {% else %}
+                          <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="text" value="{{ field.initial }}" data-validate="require"/>
+                        {% endif %}
                       </div>
-                    {% endwith %}
-                  </div>
-
-                  <div class="form-group">
-                    {{ form.full_name.errors }}
-                    <label class="form-label" for="full_name">
-                      {{ form.full_name.label_tag }}
-                    </label>
-                    <input class="form-input" id="full_name" name="full_name" type="text" value="{{ user.last_name }} {{ user.first_name }} {% if user.profile.patronymic %} {{ user.profile.patronymic }} {% endif %}" data-validate="require"/>
-                  </div>
+                    {% endif %}
+                  {% endfor %}
                 </div>
 
                 <div class="row-block">
-                  <div class="form-group">
-                    {{ profile_form.tel_number.errors }}
-                    <label class="form-label" for="tel_number">
-                      {{ profile_form.tel_number.label_tag }}
-                    </label>
-                    <div class="tel-input">
-                      <span>+7</span>
-                      <span class="form-tel-edit">
-                        <input class="form-input" id="tel_number" name="tel_number" type="text" value="{{ user.profile.tel_number }}"/>
-                      </span>
-                    </div>
-                    </div>
+                  {% for field in form %}
+                    {% if field.name in 'tel_number, email, password1, password2' %}
+                      <div class="form-group">
+                        {{ field.errors }}
+                        <label class="form-label" for="{{ field.name }}">
+                          {{ field.label_tag }}
+                        </label>
+                        {% if field.name in 'password1, password2' %}
+                          <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="password"/>
+                        {% elif field.name == 'tel_number' %}
+                           <div class="tel-input">
+                            <span>+7</span>
+                            <span class="form-tel-edit">
+                              <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="text" value="{{ field.initial }}" data-validate="require"/>
+                            </span>
+                          </div>
+                        {% else %}
+                          <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="text" value="{{ field.initial }}" data-validate="require"/>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  {% endfor %}
 
-                  <div class="form-group">
-                    {{ form.email.errors }}
-                    <label class="form-label" for="email">
-                      {{ form.email.label_tag }}
-                    </label>
-                    <input class="form-input" id="email" name="email" type="text" value="{{ user.email }}" data-validate="require"/>
-                  </div>
-
-                  <div class="form-group">
-                    {{ form.password1.errors }}
-                    <label class="form-label" for="password1">
-                      {{ form.password1.label_tag }}
-                    </label>
-                    <input class="form-input" id="password1" name="password1" type="password" placeholder="{% trans 'Here change password' %}"/>
-                  </div>
-                  <div class="form-group">
-                    {{ form.password2.errors }}
-                    <label class="form-label" for="password2">
-                      {{ form.password2.label_tag }}
-                    </label>
-                    <input class="form-input" id="password2" name="password2" type="password" placeholder="{% trans 'Again enter password' %}"/>
-                  </div>
                   <div class="form-group">
                     <div class="Profile-btn">
                       <button class="btn btn_success" type="submit">

@@ -1,18 +1,19 @@
 import logging
+from typing import Dict
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
+from django.http import HttpResponse
 from django.views.generic import CreateView, DetailView, UpdateView
-
 from django.utils.translation import gettext as _
 
-from app_users.forms import RegisterForm, ProfileRegisterForm, \
-    UserProfileForm, ProfileForm, MyRegisterForm
-from app_users.models import Profile
-from app_users.services.edit_profile_services import GetProfileFormMixin, \
-    LoginUserMixin
+from app_categories.services.navi_categories_list import NaviCategoriesList
+from app_users.forms import RegisterForm, UserProfileForm
+from app_users.models import User
+from app_users.services import LoginUserMixin, InitialDictMixin, \
+    SetPasswordMixin
 
 logger = logging.getLogger(__name__)
 
@@ -21,38 +22,24 @@ class RegisterView(CreateView, LoginUserMixin):
     """View для регистрации пользователя"""
     model = User
     template_name = 'app_users/register.html'
-    form_class = MyRegisterForm
+    form_class = RegisterForm
     success_url = '/users/register/'
 
-    def post(self, request, *args, **kwargs):
-        self.object = None
-        form = self.get_form()
-        form.request = request
-
-        if form.is_valid():
-            result = self.form_valid(form)
-            messages.success(self.request, _('Registration successful'))
-
-            self.authenticate_and_login(form.cleaned_data.get('username'),
-                                        form.cleaned_data.get('password1'))
-
-            return result
-        messages.error(request, _('Please correct the error'))
-        return self.form_invalid(form)
-
-    def form_valid(self, form):
+    def form_valid(self, form) -> HttpResponse:
         result = super(RegisterView, self).form_valid(form)
-        form.profile_form_clean.save()
+        messages.success(self.request, _('Registration successful'))
+        self.authenticate_and_login(form.cleaned_data.get('username'),
+                                    form.cleaned_data.get('password1'))
         return result
 
-    def get_context_data(self, **kwargs):
-        if self.request.method == 'POST':
-            profile_form = self.form_class.profile_form(self.request.POST,
-                                                        instance=self.object)
-        else:
-            profile_form = self.form_class.profile_form()
+    def form_invalid(self, form) -> HttpResponse:
+        result = super(RegisterView, self).form_invalid(form)
+        messages.error(self.request, _('Please correct the error'))
+        return result
+
+    def get_context_data(self, **kwargs) -> Dict[str, str]:
         context = super(RegisterView, self).get_context_data(**kwargs)
-        context.update({'profile_form': profile_form})
+        context.update(NaviCategoriesList().get_context())
         return context
 
 
@@ -65,6 +52,11 @@ class UserLoginView(LoginView):
         logger.info(f'Login user | {self.request.user.username}')
         return result
 
+    def get_context_data(self, **kwargs) -> Dict[str, str]:
+        context = super(UserLoginView, self).get_context_data(**kwargs)
+        context.update(NaviCategoriesList().get_context())
+        return context
+
 
 class UserLogoutView(LogoutView):
     """View для выхода пользователя"""
@@ -75,54 +67,48 @@ class AccountView(LoginRequiredMixin, DetailView):
     """View для страницы профиля"""
     login_url = '/users/login/'
     template_name = 'app_users/account.html'
-    model = User
+    model = settings.AUTH_USER_MODEL
     context_object_name = 'user'
 
     def get_object(self, queryset=None):
         obj = self.request.user
         return obj
 
+    def get_context_data(self, **kwargs) -> Dict[str, str]:
+        context = super(AccountView, self).get_context_data(**kwargs)
+        context.update(NaviCategoriesList().get_context())
+        return context
 
-class ProfileView(LoginRequiredMixin, UpdateView, GetProfileFormMixin,
-                  LoginUserMixin):
+
+class ProfileView(LoginRequiredMixin, UpdateView,
+                  InitialDictMixin, LoginUserMixin, SetPasswordMixin):
     """View для страницы редактирования профиля"""
     login_url = '/users/login/'
     model = User
     template_name = 'app_users/profile.html'
     form_class = UserProfileForm
-    profile_form = ProfileForm
     success_url = '/users/profile/'
     context_object_name = 'user'
+
+    def get_initial(self):
+        self.initial = self.get_initial_form(self.request.user)
+        return self.initial
 
     def get_object(self, queryset=None):
         return self.request.user
 
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
+    def form_valid(self, form) -> HttpResponse:
+        self.set_password(form)
+        result = super(ProfileView, self).form_valid(form)
+        messages.success(self.request, _('Registration successful'))
+        return result
 
-        form = self.get_form()
-        profile_form = self.get_profile_form()
+    def form_invalid(self, form) -> HttpResponse:
+        result = super(ProfileView, self).form_invalid(form)
+        messages.error(self.request, _('Please correct the error'))
+        return result
 
-        if form.is_valid() and profile_form.is_valid():
-            form.save()
-            profile = profile_form.save(commit=False)
-            profile.patronymic = form.cleaned_data.get('patronymic')
-            profile.save()
-
-            password = form.cleaned_data.get('password2')
-            if password:
-                raw_password = self.object.set_password(password)
-                username = self.object.username
-                self.authenticate_and_login(username, raw_password)
-
-            messages.success(self.request,
-                             _('Edit profile successful'))
-            logger.info(f'Profile Edit | {self.object.username}')
-            return self.form_valid(form)
-        messages.error(request, _('Please correct the error'))
-        return self.form_invalid(form)
-
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs) -> Dict[str, str]:
         context = super(ProfileView, self).get_context_data(**kwargs)
-        context.update({'profile_form': self.get_profile_form()})
+        context.update(NaviCategoriesList().get_context())
         return context

@@ -1,5 +1,6 @@
 from uuid import uuid4
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.core.validators import MinValueValidator
@@ -128,7 +129,7 @@ class Feedback(models.Model):
                                    to_field='product_id',
                                    db_column='product_fk',
                                    verbose_name=_('product'))
-    user_fk = models.ForeignKey(User,
+    user_fk = models.ForeignKey(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE,
                                 to_field='id',
                                 db_column='user_fk_id',

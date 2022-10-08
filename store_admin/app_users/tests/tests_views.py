@@ -4,11 +4,12 @@ from django.test import TestCase
 from django.urls import reverse
 from django.db import connection
 
-from app_users.models import Profile
+from app_users.models import User
 from app_users.tests.tests_models import BaseModelTest
 from app_users.tests.settings import USERNAME, PASSWORD, DATA_USER, \
     DATA_EDIT_PROFILE
 
+#TODO: переделать
 
 class RegisterTest(TestCase):
     @classmethod

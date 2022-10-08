@@ -37,7 +37,7 @@
             <div class="Account-group">
               <div class="Account-column">
                 <div class="Account-avatar">
-                  {% with user.profile.avatar as avatar %}
+                  {% with user.avatar as avatar %}
                     {% if avatar %}
                       <img src="{{ avatar.url }}" alt="card.jpg"/>
                     {% else %}
@@ -48,7 +48,7 @@
               </div>
               <div class="Account-column">
                 <div class="Account-name">
-                  {{ user.first_name }} {{ user.last_name }} {% if user.profile.patronymic %}{{ user.profile.patronymic }} {% endif %}
+                  {{ user.get_full_name }}
                 </div>
                 <a class="Account-editLink" href="{% url 'profile' %}"> {% trans 'Edit profile' %}</a>
               </div>

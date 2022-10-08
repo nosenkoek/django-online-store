@@ -4,7 +4,7 @@ from django.utils.translation import gettext as _
 from django.db import connection
 
 from app_users.tests.settings import USERNAME, PASSWORD
-from app_users.models import Profile
+from app_users.models import User
 
 
 class BaseModelTest(TestCase):
@@ -28,6 +28,7 @@ class BaseModelTest(TestCase):
 
 
 class TestProfile(BaseModelTest):
+    #todo: переделать
     def test_tel_number_label(self) -> None:
         """Проверка подписи поля номера телефона"""
         field_label = self.profile._meta.get_field('tel_number').verbose_name

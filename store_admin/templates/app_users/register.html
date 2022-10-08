@@ -36,88 +36,56 @@
               {% csrf_token %}
               <div class="row">
                 <div class="row-block">
-                  <div class="form-group">
-                    {{ form.username.errors }}
-                    <label class="form-label" for="username">
-                      {{ form.username.label_tag }}
-                    </label>
-                    <input class="form-input" id="username" name="username" type="text" value="" data-validate="require"/>
-                  </div>
-
-                  <div class="form-group">
-                    {{ form.first_name.errors }}
-                    <label class="form-label" for="first_name">
-                      {{ form.first_name.label_tag }}
-                    </label>
-                    <input class="form-input" id="first_name" name="first_name" type="text" value="" data-validate="require"/>
-                  </div>
-
-                  <div class="form-group">
-                    {{ form.last_name.errors }}
-                    <label class="form-label" for="last_name">
-                      {{ form.last_name.label_tag }}
-                    </label>
-                    <input class="form-input" id="last_name" name="last_name" type="text" value="" data-validate="require"/>
-                  </div>
-
-                  <div class="form-group">
-                    {{ profile_form.patronymic.errors }}
-                    <label class="form-patronymic" for="patronymic">
-                      {{ profile_form.patronymic.label_tag }}
-                    </label>
-                    <input class="form-input" id="patronymic" name="patronymic" type="text" value=""/>
-                  </div>
+                  {% for field in form %}
+                    {% if field.name in 'first_name, last_name, patronymic, username' %}
+                      <div class="form-group">
+                        {{ field.errors }}
+                         <label class="form-label" for="{{ field.name }}">
+                        {{ field.label_tag }}
+                        </label>
+                        <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="text" value="" {% if not field.name == 'patronymic' %}data-validate="require"{% endif %} />
+                      </div>
+                    {% endif %}
+                  {% endfor %}
                 </div>
 
                 <div class="row-block">
-                  <div class="form-group">
-                    {{ profile_form.tel_number.errors }}
-                    <label class="form-label" for="tel_number">
-                      {{ profile_form.tel_number.label_tag }}
-                    </label>
-                    <div class="tel-input">
-                      <span>+7</span>
-                      <span class="form-tel">
-                        <input class="form-input" id="tel_number" name="tel_number" type="text" placeholder="0123456789" data-validate="require"/>
-                      </span>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    {{ form.email.errors }}
-                    <label class="form-label" for="email">
-                      {{ form.email.label_tag }}
-                    </label>
-                    <input class="form-input" id="email" name="email" type="text" placeholder="send@test.com" data-validate="require"/>
-                  </div>
-
-                  <div class="form-group">
-                    {{ form.password1.errors }}
-                    <label class="form-label" for="password1">
-                      {{ form.password1.label_tag }}
-                    </label>
-                    <input class="form-input" id="password1" name="password1" type="password" data-validate="require" placeholder="{% trans 'Enter password' %}"/>
-                  </div>
-
-                  <div class="form-group">
-                    {{ form.password2.errors }}
-                    <label class="form-label" for="password2">{{ form.password2.label_tag }}
-                    </label>
-                    <input class="form-input" id="password2" name="password2" type="password" data-validate="require" placeholder="{% trans 'Enter password again' %}"/>
-                  </div>
-
+                  {% for field in form %}
+                    {% if field.name in 'tel_number, email, password1, password2'  %}
+                      <div class="form-group">
+                        {{ field.errors }}
+                        <label class="form-label" for="{{ field.name }}">
+                          {{ field.label_tag }}
+                        </label>
+                        {% if field.name == 'tel_number' %}
+                          <div class="tel-input">
+                            <span>+7</span>
+                            <span class="form-tel">
+                              <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="text" placeholder="0123456789" data-validate="require"/>
+                            </span>
+                          </div>
+                        {% else %}
+                          <input class="form-input" id="{{ field.name }}" name="{{ field.name }}"
+                                 {% if field.name in 'password1, password2' %}
+                                    type="password"
+                                 {% else %}
+                                    type="text"
+                                 {% endif %}
+                                value="" data-validate="require"/>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  {% endfor %}
                   <div class="form-group">
                     <div class="Profile-btn">
                       <button class="btn btn_success" type="submit">{% trans 'Register' %}
                       </button>
                     </div>
-
                   </div>
                 </div>
               </div>
             </form>
           </div>
-
         </div>
       </div>
     </div>
