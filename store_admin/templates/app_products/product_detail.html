@@ -98,6 +98,10 @@
               <a class="Tabs-link" href="#manufacturer">
                 <span>{% trans 'manufacturer' %}</span>
               </a>
+
+              <a class="Tabs-link" href="#feedbacks">
+                <span>{% trans 'feedbacks' %}({{ feedbacks.count }})</span>
+              </a>
             </div>
 
             <div class="Tabs-wrap">
@@ -116,7 +120,7 @@
                       </th>
                     </tr>
 
-                    {% for product_feature in product.productfeature_set.all %}
+                    {% for product_feature in product_features %}
                       <tr>
                         <td>{{ product_feature.feature_fk.name }}
                         </td>
@@ -133,6 +137,7 @@
                   </table>
                 </div>
               </div>
+
               <div class="Tabs-block" id="manufacturer">
                 <h2>
                   {{ product.manufacturer_fk.name }}
@@ -143,6 +148,71 @@
 
                 <div class="clearfix">
                 </div>
+              </div>
+
+              <div class="Tabs-block" id="feedbacks">
+                <header class="Section-header">
+                  <h3 class="Section-title">
+                     {% trans 'feedbacks' %} ({{ feedbacks.count }})
+                  </h3>
+                </header>
+
+                <div class="Comments">
+                  {% for feedback in feedbacks %}
+                    <div class="Comment">
+                    <div class="Comment-column Comment-column_pict">
+                      {% if feedback.user_fk.profile.avatar  %}
+                        <img class="Comment-avatar-db" src="{{ feedback.user_fk.profile.avatar.url }}" alt="">
+                      {% else %}
+                        <div class="Comment-avatar">
+                        </div>
+                      {% endif %}
+                    </div>
+
+                    <div class="Comment-column">
+                      <header class="Comment-header">
+                        <div>
+                          <strong class="Comment-title">
+                            {{ feedback.user_fk.first_name}}
+                            {{ feedback.user_fk.last_name}}
+                          </strong>
+                          <span class="Comment-date">
+                            {{ feedback.added }}
+                          </span>
+                        </div>
+                      </header>
+                      <div class="Comment-content">
+                        {{ feedback.text }}
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+
+                  <header class="Section-header Section-header_product">
+                      <h3 class="Section-title">
+                        {% trans 'Add Review' %}
+                      </h3>
+                  </header>
+                </div>
+
+              {% if request.user.is_authenticated %}
+                <div class="Tabs-addComment">
+                  <form class="form" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <textarea class="form-textarea" name="text" id="text" placeholder="{% trans 'Feedback text' %}"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                      <button class="btn btn_muted" type="submit">
+                        {% trans 'Submit Review' %}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              {% else %}
+                <a href="{% url 'login' %}">{% trans 'You need login' %}</a>
+              {% endif %}
               </div>
             </div>
           </div>

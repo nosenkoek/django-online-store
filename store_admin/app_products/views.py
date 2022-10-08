@@ -1,19 +1,21 @@
 import logging
 from typing import Tuple
 
-from django.db.models import Max, Prefetch, QuerySet
+from django.db.models import Max, Prefetch, QuerySet, Count
 from django.views.generic import ListView, DetailView
 from redis.exceptions import RedisError
 
 from app_categories.services.navi_categories_list import \
     NaviCategoriesList
 from app_categories.models import Category, Feature
-from app_products.filters import ProductFilter
+from app_products.filters.product_filters import ProductFilter
+from app_products.forms import FeedbackNewForm
 from app_products.models import Product, ProductFeature
 from app_products.services.decorator_count_views import \
     cache_popular_product, NAME_ATRS_CACHE
 from app_products.services.handler_url_params import InitialDictFromURLMixin
 from app_products.services.sorted_item import AddSortedItemToContextMixin
+from app_products.models import Feedback
 from utils.context_managers import redis_connection
 
 logger = logging.getLogger(__name__)
@@ -83,19 +85,32 @@ class ProductDetailView(DetailView):
     def get_queryset(self) -> QuerySet:
         queryset = super(ProductDetailView, self).get_queryset() \
             .select_related('category_fk', 'category_fk__parent',
-                            'manufacturer_fk') \
-            .prefetch_related('productfeature_set',
-                              'productfeature_set__feature_fk')
+                            'manufacturer_fk')
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         context.update(NaviCategoriesList().get_context())
+        product_features = ProductFeature.objects\
+            .filter(product_fk=self.object).select_related('feature_fk')
+        feedbacks = Feedback.objects.filter(product_fk=self.object)\
+            .select_related('user_fk', 'user_fk__profile')\
+            .annotate(count=Count('feedback_id')).order_by('added')
+        context.update({'product_features': product_features,
+                        'feedbacks': feedbacks})
         return context
 
     @cache_popular_product
     def get(self, request, *args, **kwargs):
         return super(ProductDetailView, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        form = FeedbackNewForm(request.POST)
+        if form.is_valid():
+            Feedback.objects.create(text=form.cleaned_data.get('text'),
+                                    user_fk=request.user,
+                                    product_fk=self.get_object())
+            return self.get(request, *args, **kwargs)
 
 
 class PopularProductListView(ListView):

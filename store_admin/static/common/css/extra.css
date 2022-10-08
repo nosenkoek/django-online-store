@@ -2037,6 +2037,17 @@ a.Cart-title {
   border-radius: 100px;
   background: #0063d1 url("../../common/img/icons/user_icon.svg") center center no-repeat;
 }
+
+.Comment-avatar-db {
+  width: 99px;
+  height: 99px;
+  border-radius: 100px;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
 .Comment-rating {
   position: absolute;
   right: 24px;

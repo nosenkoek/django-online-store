@@ -2,7 +2,7 @@ from django import forms
 from django.db.models import TextChoices
 from django.utils.translation import gettext_lazy as _
 
-from app_products.models import Product
+from app_products.models import Product, Feedback
 
 FeatureInlineFormset = forms.inlineformset_factory(Product,
                                                    Product.features.through,
@@ -24,3 +24,9 @@ class FeatureFormset(FeatureInlineFormset):
                 choices=self.CheckboxFeature.choices
             )
         super().add_fields(form, index)
+
+
+class FeedbackNewForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ('text', )

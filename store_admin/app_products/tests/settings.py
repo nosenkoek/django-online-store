@@ -29,3 +29,6 @@ FEATURE_NEW = {
     'name': 'feature_new',
     'slug': 'feature_new',
 }
+
+USERNAME = 'usertest'
+PASSWORD = 'test12345'
