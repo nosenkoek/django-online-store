@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.test import TestCase
 from django.utils.translation import gettext as _
 from django.db import connection
@@ -20,31 +19,21 @@ class BaseModelTest(TestCase):
         user = User.objects.create(username=USERNAME)
         user.set_password(PASSWORD)
         user.save()
-
         cls.user = user
-        cls.profile = Profile.objects.create(tel_number='9165236894',
-                                             patronymic='patronymic',
-                                             user_fk=user)
 
 
-class TestProfile(BaseModelTest):
-    #todo: переделать
+class TestUserFields(BaseModelTest):
     def test_tel_number_label(self) -> None:
         """Проверка подписи поля номера телефона"""
-        field_label = self.profile._meta.get_field('tel_number').verbose_name
+        field_label = self.user._meta.get_field('tel_number').verbose_name
         self.assertEquals(field_label, _('telephone number'))
 
     def test_patronymic_label(self) -> None:
         """Проверка подписи поля отчества"""
-        field_label = self.profile._meta.get_field('patronymic').verbose_name
+        field_label = self.user._meta.get_field('patronymic').verbose_name
         self.assertEquals(field_label, _('patronymic'))
 
     def test_avatar_label(self) -> None:
         """Проверка подписи поля аватар"""
-        field_label = self.profile._meta.get_field('avatar').verbose_name
+        field_label = self.user._meta.get_field('avatar').verbose_name
         self.assertEquals(field_label, _('avatar'))
-
-    def test_user_label(self) -> None:
-        """Проверка подписи поля пользователь"""
-        field_label = self.profile._meta.get_field('user_fk').verbose_name
-        self.assertEquals(field_label, _('user'))

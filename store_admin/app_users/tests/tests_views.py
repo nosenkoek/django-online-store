@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user
-from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 from django.db import connection
@@ -9,7 +8,6 @@ from app_users.tests.tests_models import BaseModelTest
 from app_users.tests.settings import USERNAME, PASSWORD, DATA_USER, \
     DATA_EDIT_PROFILE
 
-#TODO: переделать
 
 class RegisterTest(TestCase):
     @classmethod
@@ -41,9 +39,9 @@ class RegisterTest(TestCase):
                                     follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(User.objects.count(), 1)
-        self.assertEqual(Profile.objects.count(), 1)
 
         user_db = User.objects.first()
+        self.assertEqual(user_db.patronymic, DATA_USER.get('patronymic'))
         user = get_user(self.client)
         self.assertEqual(user, user_db)
 
@@ -138,7 +136,6 @@ class ProfileTest(BaseModelTest):
         user = get_user(self.client)
         self.assertEqual(user.first_name, 'test_new')
         self.assertEqual(user.last_name, 'test_new')
-        self.assertEqual(user.profile.patronymic, 'patronymic_new')
+        self.assertEqual(user.patronymic, 'patronymic_new')
         self.assertEqual(user.email, DATA_EDIT_PROFILE.get('email'))
-        self.assertEqual(user.profile.tel_number,
-                         DATA_EDIT_PROFILE.get('tel_number'))
+        self.assertEqual(user.tel_number, DATA_EDIT_PROFILE.get('tel_number'))
