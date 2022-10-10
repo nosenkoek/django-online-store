@@ -5,7 +5,7 @@ from app_categories.services.navi_categories_list import \
     NaviCategoriesList
 from app_products.models import Product
 from app_products.services.sorted_item import AddSortedItemToContextMixin
-from app_products.filters import ProductFilterCommon
+from app_products.filters.product_filters import ProductFilterCommon
 from app_products.services.handler_url_params import InitialDictFromURLMixin
 from app_search.services.search_result_mixin import SearchResultMixin
 

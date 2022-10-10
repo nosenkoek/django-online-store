@@ -7,11 +7,12 @@ from django.test import TestCase, override_settings
 from django.db import connection
 from django.urls import reverse
 
+from app_users.models import User
 from app_categories.models import Category
-from app_products.models import Product
+from app_products.models import Product, Feedback
 from app_products.services.decorator_count_views import NAME_ATRS_CACHE
 from app_products.tests.settings import COUNT_PRODUCT_IN_PAGE, \
-    TEMP_MEDIA_ROOT, PRICE_FROM, PRICE_TO, NUMBERS_PRODUCT
+    TEMP_MEDIA_ROOT, PRICE_FROM, PRICE_TO, NUMBERS_PRODUCT, USERNAME, PASSWORD
 from utils.context_managers import redis_connection
 
 
@@ -140,6 +141,12 @@ class ProductDetailTest(BaseTest):
     def setUp(self) -> None:
         self.product = Product.objects.last()
         self.main_url = f'/catalog/{self.product.slug}'
+        user = User.objects.create(username=USERNAME)
+        user.set_password(PASSWORD)
+        user.save()
+        self.feedback = Feedback.objects.create(text='test text',
+                                                user_fk=user,
+                                                product_fk=self.product)
 
     def test_product_url(self):
         """Проверка открытия детальной страницы товара"""
@@ -154,6 +161,17 @@ class ProductDetailTest(BaseTest):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
                                 'app_products/product_detail.html')
+
+    def test_feedback_show(self):
+        """Проверка отображения отзывов"""
+        response = self.client.get(self.main_url, follow=True)
+        queryset_feedback = Feedback.objects.filter(product_fk=self.product)
+        self.assertQuerysetEqual(response.context.get('feedbacks'),
+                                 queryset_feedback)
+
+    def test_new_feedback(self):
+        """Проверка добавления отзыва"""
+        pass
 
 
 class PopularProductTest(BaseTest):
@@ -175,4 +193,3 @@ class PopularProductTest(BaseTest):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
                                 'app_products/popular_product_list.html')
-

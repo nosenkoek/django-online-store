@@ -43,8 +43,30 @@
                 </ul>
             </div>
 
-            <div class="row-block">
-              <a class="ControlPanel-title" href="#">{% trans 'Login / Register' %} </a>
+            {% if request.user.is_authenticated %}
+              <div class="row-block">
+                <a class="ControlPanel-title" href="{% url 'account' %}">
+                  {% trans 'Account' %}
+                </a>
+              </div>
+
+              <div class="row-block">
+                <a class="ControlPanel-title" href="{% url 'logout' %}">
+                  {% trans 'Logout' %}
+                </a>
+              </div>
+            {% else %}
+              <div class="row-block">
+                <a class="ControlPanel-title" href="{% url 'login' %}">
+                  {% trans 'Login' %}
+                </a>
+              </div>
+              <div class="row-block">
+                <a class="ControlPanel-title" href="{% url 'register' %}">
+                  {% trans 'Register' %}
+                </a>
+              </div>
+            {% endif %}
             </div>
           </div>
         </nav>
@@ -75,13 +97,15 @@
               <a class="menu-link" href="{% url 'popular_product_list' %}"> {% trans 'Popular' %}</a>
             </li>
 
-            <li class="menu-item"><a class="menu-link" href="#"> {% trans 'Account' %}</a>
+            <li class="menu-item"><a class="menu-link" href="{% url 'account' %}"> {% trans 'Account' %}</a>
             </li>
           </ul>
         </div>
       </nav>
       <div class="row-block">
-        <div class="CartBlock"><a class="CartBlock-block" href="cart.html"><img class="CartBlock-img" src="{% static 'common/img/icons/cart.svg' %}" alt="cart.svg"/><span class="CartBlock-amount">0</span></a>
+        <div class="CartBlock"><a class="CartBlock-block" href="#">
+          <img class="CartBlock-img" src="{% static 'common/img/icons/cart.svg' %}" alt="cart.svg"/>
+          <span class="CartBlock-amount">0</span></a>
           <div class="CartBlock-block"><span class="CartBlock-price">0.00{% trans '$' %}</span>
           </div>
         </div>

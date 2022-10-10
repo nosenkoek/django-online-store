@@ -1,57 +1,12 @@
 from abc import ABC, abstractmethod
-from typing import Tuple, List
+from typing import List
 import django_filters
 
-from django.contrib.admin import SimpleListFilter
-from django.utils.translation import gettext_lazy as _
+
 from django.db.models import QuerySet
 
 from app_categories.models import Feature
 from app_products.models import Product
-
-
-class InputFilterAdmin(ABC, SimpleListFilter):
-    """Абстрактный класс для фильтра вида text input"""
-
-    template = 'admin_custom/input_filter.html'
-
-    def lookups(self, request, model_admin) -> Tuple[Tuple]:
-        return (('', ''),)
-
-    def choices(self, changelist):
-        all_choice = next(super().choices(changelist))
-        all_choice['query_parts'] = (
-            (name, value)
-            for name, value in changelist.get_filters_params().items()
-            if name != self.parameter_name
-        )
-        yield all_choice
-
-
-class ProductCategoryFilterAdmin(InputFilterAdmin):
-    """Фильтр для товаров по категории"""
-
-    title = _('category')
-    parameter_name = 'category'
-
-    def queryset(self, request, queryset) -> QuerySet:
-        if self.value():
-            category_name = self.value()
-            queryset = queryset.filter(category_fk__name=category_name)
-            return queryset
-
-
-class ProductManufacturerFilterAdmin(InputFilterAdmin):
-    """Фильтр для товаров по производителю"""
-
-    title = _('manufacturer')
-    parameter_name = 'manufacturer'
-
-    def queryset(self, request, queryset) -> QuerySet:
-        if self.value():
-            manufacturer_name = self.value()
-            queryset = queryset.filter(manufacturer_fk__name=manufacturer_name)
-            return queryset
 
 
 class ProductFilterFeatureBase(ABC):
@@ -67,14 +22,12 @@ class ProductFilterFeatureBase(ABC):
 
 class FilterObjCharFilterMixin():
     """Миксин для создания поля Char фильтра """
-
     def get_filter_obj(self) -> django_filters.CharFilter:
         return django_filters.CharFilter(method='filter_method')
 
 
 class FilterObjSelectFilterMixin():
     """Миксин для создания поля MultipleChoice фильтра """
-
     def get_filter_obj(self) -> django_filters.MultipleChoiceFilter:
         value_choices = (
             (product_feature.value, product_feature.value)
@@ -87,10 +40,7 @@ class FilterObjSelectFilterMixin():
 
 class ProductFilterFeatureText(ProductFilterFeatureBase,
                                FilterObjCharFilterMixin):
-    """
-    Фильтр для текстовых характеристик товаров
-    """
-
+    """Фильтр для текстовых характеристик товаров"""
     def filter_method(self, queryset: QuerySet, name: None, value: str):
         """
         Фильтрация по текущей характеристики (ICONSTAINS)
@@ -108,10 +58,7 @@ class ProductFilterFeatureText(ProductFilterFeatureBase,
 
 class ProductFilterFeatureCheckbox(ProductFilterFeatureBase,
                                    FilterObjCharFilterMixin):
-    """
-    Фильтр для характеристик товаров типа да/нет
-    """
-
+    """Фильтр для характеристик товаров типа да/нет"""
     def filter_method(self, queryset: QuerySet, name: None, value: str):
         """
         Фильтрация по текущей характеристики (да/нет)
@@ -129,10 +76,7 @@ class ProductFilterFeatureCheckbox(ProductFilterFeatureBase,
 
 class ProductFilterFeatureSelect(ProductFilterFeatureBase,
                                  FilterObjSelectFilterMixin):
-    """
-    Фильтр для характеристик товаров типа MultiChoice
-    """
-
+    """Фильтр для характеристик товаров типа MultiChoice"""
     def filter_method(self, queryset: QuerySet, name: None, value: List[str]):
         """
         Фильтрация по текущей характеристики (select)

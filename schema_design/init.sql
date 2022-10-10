@@ -16,7 +16,6 @@ DROP TABLE IF EXISTS "content".delivery;
 DROP TABLE IF EXISTS "content".payment;
 DROP TABLE IF EXISTS "content".delivery_method;
 DROP TABLE IF EXISTS "content".payment_method;
-DROP TABLE IF EXISTS "content".profile;
 
 DROP TYPE IF EXISTS type_feature_enum;
 DROP INDEX IF EXISTS product_name_trgm_idx;
@@ -96,8 +95,9 @@ CREATE TABLE "content".feedback(
     id uuid PRIMARY KEY,
     feedback_id uuid UNIQUE NOT NULL,
     text text NOT NULL,
+    added timestamp NOT NULL,
     product_fk uuid NOT NULL,
-    user_fk int NOT NULL
+    user_fk_id int NOT NULL
 );
 
 CREATE TABLE "content".product_feature(
@@ -156,15 +156,6 @@ CREATE TABLE "content".order_product(
     product_fk uuid NOT NULL
 );
 
-CREATE TABLE "content".profile (
-    id uuid PRIMARY KEY,
-	profile_id uuid UNIQUE NOT NULL,
-    tel_number varchar(10) NOT NULL,
-	patronymic varchar(30) NOT NULL,
-	avatar varchar(100),
-	user_fk int UNIQUE NOT NULL
-);
-
 
 ALTER TABLE category
     ADD CONSTRAINT parent_fk FOREIGN KEY (parent_id)
@@ -203,8 +194,8 @@ ALTER TABLE feedback
     ADD CONSTRAINT product_fk FOREIGN KEY (product_fk)
         REFERENCES product(product_id) ON DELETE CASCADE;
 ALTER TABLE feedback
-    ADD CONSTRAINT user_fk FOREIGN KEY (user_fk)
-        REFERENCES auth_user(id) ON DELETE CASCADE;
+    ADD CONSTRAINT user_fk FOREIGN KEY (user_fk_id)
+        REFERENCES app_users_user(id) ON DELETE CASCADE;
 
 ALTER TABLE delivery
     ADD CONSTRAINT delivery_method_fk FOREIGN KEY (delivery_method_fk)
@@ -222,7 +213,7 @@ ALTER TABLE "order"
         REFERENCES payment(payment_id) ON DELETE CASCADE;
 ALTER TABLE "order"
     ADD CONSTRAINT user_fk FOREIGN KEY (user_fk)
-        REFERENCES auth_user(id) ON DELETE CASCADE;
+        REFERENCES app_users_user(id) ON DELETE CASCADE;
 
 ALTER TABLE order_product
     ADD CONSTRAINT order_fk FOREIGN KEY (order_fk)
@@ -232,10 +223,6 @@ ALTER TABLE order_product
         REFERENCES product(product_id) ON DELETE CASCADE;
 ALTER TABLE order_product
     ADD CONSTRAINT order_product_uk UNIQUE (order_fk, product_fk);
-
-ALTER TABLE profile
-    ADD CONSTRAINT user_fk FOREIGN KEY (user_fk)
-        REFERENCES auth_user(id) ON DELETE CASCADE;
 
 
 CREATE EXTENSION IF NOT EXISTS pg_trgm;

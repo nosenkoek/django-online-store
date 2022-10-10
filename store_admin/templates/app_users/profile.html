@@ -1,0 +1,112 @@
+{% extends '../base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+  {% trans 'Profile' %}
+{% endblock %}
+
+{% block content %}
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">
+            {% trans 'Profile' %}
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item">
+              <a href="{% url 'main_page' %}">{% trans 'home' %}</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current">
+              <span>{% trans 'Profile' %}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="Section Section_column Section_columnLeft">
+      <div class="wrap">
+        <div class="Section-column">
+          {% include 'app_users/section_navigation.html' %}
+        </div>
+        <div class="Section-content">
+          <div class="Profile">
+            <div class="Profile-success">
+              {% include 'messages.html' %}
+            </div>
+
+            <form class="form Profile-form" enctype="multipart/form-data" method="post">
+              {% csrf_token %}
+              <div class="row">
+                <div class="row-block">
+                  {% for field in form %}
+                    {% if field.name in 'avatar, full_name' %}
+                      <div class="form-group">
+                        {{ field.errors }}
+                        <label class="form-label" for="{{ field.name }}">
+                          {{ field.label_tag }}
+                        </label>
+                        {% if field.name == 'avatar' %}
+                          {% with user.avatar as avatar %}
+                            <div class="Profile-avatar {% if not avatar %} Profile-avatar_noimg {% endif %}">
+                              <div class="Profile-img">
+                                {% if avatar %}
+                                  <img src="{{ avatar.url }}" alt="avatar.png"/>
+                                {% endif %}
+                              </div>
+                              <label class="Profile-fileLabel" for="avatar">
+                                {% trans 'Add avatar' %}
+                              </label>
+                              <input class="Profile-file form-input" id="{{ field.name }}" name="{{ field.name }}" type="file" data-validate="onlyImgAvatar"/>
+                            </div>
+                          {% endwith %}
+                        {% else %}
+                          <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="text" value="{{ field.initial }}" data-validate="require"/>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+
+                <div class="row-block">
+                  {% for field in form %}
+                    {% if field.name in 'tel_number, email, password1, password2' %}
+                      <div class="form-group">
+                        {{ field.errors }}
+                        <label class="form-label" for="{{ field.name }}">
+                          {{ field.label_tag }}
+                        </label>
+                        {% if field.name in 'password1, password2' %}
+                          <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="password"/>
+                        {% elif field.name == 'tel_number' %}
+                           <div class="tel-input">
+                            <span>+7</span>
+                            <span class="form-tel-edit">
+                              <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="text" value="{{ field.initial }}" data-validate="require"/>
+                            </span>
+                          </div>
+                        {% else %}
+                          <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="text" value="{{ field.initial }}" data-validate="require"/>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+
+                  <div class="form-group">
+                    <div class="Profile-btn">
+                      <button class="btn btn_success" type="submit">
+                        {% trans 'Save' %}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

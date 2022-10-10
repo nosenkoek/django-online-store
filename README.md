@@ -108,7 +108,8 @@ content(сами шаблоны, которые передаются во view).
 - Manufacturer,
 - Product,
 - Image,
-- ProductFeature(промежуточная таблица для связи many-to-many).
+- ProductFeature(промежуточная таблица для связи many-to-many),
+- Feedback.
 
 Сигналы:
 - add_features_product, post_save - добавление характеристик к товарам из категории
@@ -139,7 +140,13 @@ content(сами шаблоны, которые передаются во view).
   SortedItem - Dataclass для создания объектов сортировки (например: Цена, Популярность)
 AddSortedItemToContextMixin.add_sorted_item_to_context() - добавляет объекты сортировки в контекст
 
-Фильтры(filters.py):
+Фильтры для админки(filters/admin_filters.py):
+- ProductCategoryFilterAdmin,
+- ProductManufacturerFilterAdmin,
+- FeedbackProductFilterAdmin,
+- FeedbackUsernameFilterAdmin.
+
+Фильтры для отображений(filters/product_filters.py):
 используется библиотека django-filter
 - ProductFilterCommon 
 
@@ -154,10 +161,14 @@ AddSortedItemToContextMixin.add_sorted_item_to_context() - добавляет о
 
   Тег для "сборки" URL-адреса при выборе различных параметров сортировки/фильтрации/пагинации
 
-Администрирование:
-- поиск по названию товара/производителя
+Администрирование товаров:
+- поиск товаров по названию товара/производителя
 - дополнительная фильтрация товаров по категории и производителю(текст)
 - изменен виджет для ввода характеристик с типом checkbox на да/нет.
+
+Администрирование отзывов:
+- поиск отзывов по тексту,
+- фильтрация отзывов по логину(username) пользователя и товару.
 
 ### App_search
 Реализует полнотекстовый поиск по товарам с помощью elasticsearch.
@@ -178,6 +189,39 @@ AddSortedItemToContextMixin.add_sorted_item_to_context() - добавляет о
 - **url_clear_filter**
 
   Тег для расчета URL при очистке фильтра, сохраняет текст запроса поиска.
+
+### App_users
+Приложение, реализующее работу с пользователями. Вход и выход из личного кабинета, 
+регистрация новых пользователей и странницы аккаунта и изменения профиля.
+
+Модели: 
+- User(AbstractUser) 
+  пользовательская модель для добавления новых полей (аватар, телефон, отчество).
+
+Представления:
+- RegisterView (регистрация новых пользователей, 2 формы - основная и профиль)
+- UserLoginView 
+- UserLogoutView
+- AccountView (представление для отображения страницы личного кабинета)
+- ProfileView (представление для страницы редактирования профиля)
+
+Формы:
+- RegisterForm (форма для регистрации нового пользователя)
+  Поля: username, first_name, last_name, patronymic, tel_number,  email, password1, password2
+
+- UserProfileForm (форма для редактирования профиля ModelForm User)
+  Поля: full_name, tel_number, avatar, email, password1, password2
+
+
+Сервисы (services.py):
+- LoginUserMixin.authenticate_and_login(self, username: str, raw_password: str) - вход в систему пользователя
+- InitialDictMixin.get_initial_form(user: User) - возвращает словарь с данными для заполнения формы
+- SetPasswordMixin.set_password(self, form: UserProfileForm) - устанавливает новый пароль и входит в систему
+
+Администрирование:
+- поиск по username, имени и фамилии,
+- расширенный показ данных в сводной таблице.
+
 
 ## NoSql база данных. Redis
 Разворачивается в контейнере redis. На данном этапе служит для хранения 
@@ -283,11 +327,6 @@ ETL состоит из 3х основных блоков:
 # Дальнейшее развитие проекта
 На данном этапе реализована только часть предполагаемого общего функционала. 
 В дальнейшем планируется добавить:
-- приложение app_users:
-  + личный кабинет пользователей
-  + профиль для изменения параметров пользователя
-  + login/logout
-  + регистрация
 - приложение app_cart:
   + возможность добавления товаров в корзину
   + отображение корзины

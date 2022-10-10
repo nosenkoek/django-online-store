@@ -4,10 +4,12 @@ from django.contrib import admin
 from django.db.models import QuerySet
 from django.utils.translation import gettext as _
 
-from app_products.models import Product, Image, Manufacturer, ProductFeature
+from app_products.filters.admin_filter import ProductCategoryFilterAdmin, \
+    ProductManufacturerFilterAdmin, FeedbackUsernameFilterAdmin, \
+    FeedbackProductFilterAdmin
+from app_products.models import Product, Image, Manufacturer, ProductFeature, \
+    Feedback
 from app_categories.admin import TypeFeatureFieldMixin
-from app_products.filters import ProductCategoryFilterAdmin, \
-    ProductManufacturerFilterAdmin
 from app_products.forms import FeatureFormset
 
 
@@ -86,3 +88,27 @@ class ProductAdmin(ListDisplayProductExtendMixin, admin.ModelAdmin):
 @admin.register(Manufacturer)
 class ManufacturerAdmin(admin.ModelAdmin):
     search_fields = ('name',)
+
+
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ('short_text', 'user', 'product')
+    search_fields = ('text', )
+    list_filter = (FeedbackUsernameFilterAdmin, FeedbackProductFilterAdmin)
+    list_select_related = ('user_fk', 'product_fk')
+    ordering = ('-added',)
+
+    @admin.display(description=_('text'))
+    def short_text(self, obj) -> str:
+        """Отображение текста отзыва"""
+        return obj.text[:15]
+
+    @admin.display(description=_('user'))
+    def user(self, obj) -> str:
+        """Доп. поле отображения пользователя"""
+        return obj.user_fk.username
+
+    @admin.display(description=_('product'))
+    def product(self, obj) -> str:
+        """Доп. поле отображения товара"""
+        return obj.product_fk.name

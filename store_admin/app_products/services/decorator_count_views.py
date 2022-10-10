@@ -80,7 +80,7 @@ class CachePopularProduct():
                     func.expiration = datetime.utcnow() + func.cache_time
         except RedisError as err:
             err_logger.error(f'Error connection to Redis | {err}')
-            logger.warning(f'not cache popular product')
+            logger.warning('not cache popular product')
 
 
 class CachePopularProductHandler():

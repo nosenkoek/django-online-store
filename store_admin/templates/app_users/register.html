@@ -1,0 +1,93 @@
+{% extends '../base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+  {% trans 'Register' %}
+{% endblock %}
+
+{% block content %}
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">{% trans 'Register' %}
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item"><a href="{% url 'main_page' %}">{% trans 'home' %}</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current"><span>{% trans 'register' %}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="Section Section_column Section_columnLeft">
+      <div class="wrap">
+        <div class="Section-content Section-register">
+          <div class="Profile">
+            <div class="Profile-success">
+              {% include 'messages.html' %}
+            </div>
+
+            <form class="form Profile-form" method="post">
+              {% csrf_token %}
+              <div class="row">
+                <div class="row-block">
+                  {% for field in form %}
+                    {% if field.name in 'first_name, last_name, patronymic, username' %}
+                      <div class="form-group">
+                        {{ field.errors }}
+                         <label class="form-label" for="{{ field.name }}">
+                        {{ field.label_tag }}
+                        </label>
+                        <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="text" value="" {% if not field.name == 'patronymic' %}data-validate="require"{% endif %} />
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+
+                <div class="row-block">
+                  {% for field in form %}
+                    {% if field.name in 'tel_number, email, password1, password2'  %}
+                      <div class="form-group">
+                        {{ field.errors }}
+                        <label class="form-label" for="{{ field.name }}">
+                          {{ field.label_tag }}
+                        </label>
+                        {% if field.name == 'tel_number' %}
+                          <div class="tel-input">
+                            <span>+7</span>
+                            <span class="form-tel">
+                              <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="text" placeholder="0123456789" data-validate="require"/>
+                            </span>
+                          </div>
+                        {% else %}
+                          <input class="form-input" id="{{ field.name }}" name="{{ field.name }}"
+                                 {% if field.name in 'password1, password2' %}
+                                    type="password"
+                                 {% else %}
+                                    type="text"
+                                 {% endif %}
+                                value="" data-validate="require"/>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                  <div class="form-group">
+                    <div class="Profile-btn">
+                      <button class="btn btn_success" type="submit">{% trans 'Register' %}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -2037,6 +2037,17 @@ a.Cart-title {
   border-radius: 100px;
   background: #0063d1 url("../../common/img/icons/user_icon.svg") center center no-repeat;
 }
+
+.Comment-avatar-db {
+  width: 99px;
+  height: 99px;
+  border-radius: 100px;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
 .Comment-rating {
   position: absolute;
   right: 24px;
@@ -3811,6 +3822,11 @@ a.Cart-title {
 .Profile-btn {
   text-align: right;
 }
+
+.Login-btn {
+  text-align: left;
+}
+
 .Profile-form {
   margin-top: 0;
 }
@@ -4243,9 +4259,15 @@ a.Cart-title {
 .Section_column .wrap {
   display: flex;
 }
+
 .Section_columnLeft .Section-content {
   padding-left: 354px;
 }
+
+.Section-register.Section-content {
+  padding-left: 0;
+}
+
 .Section_columnLeft .Section-column {
   margin-right: -304px;
 }
