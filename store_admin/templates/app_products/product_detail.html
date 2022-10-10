@@ -161,8 +161,8 @@
                   {% for feedback in feedbacks %}
                     <div class="Comment">
                     <div class="Comment-column Comment-column_pict">
-                      {% if feedback.user_fk.profile.avatar  %}
-                        <img class="Comment-avatar-db" src="{{ feedback.user_fk.profile.avatar.url }}" alt="">
+                      {% if feedback.user_fk.avatar  %}
+                        <img class="Comment-avatar-db" src="{{ feedback.user_fk.avatar.url }}" alt="">
                       {% else %}
                         <div class="Comment-avatar">
                         </div>

@@ -1,11 +1,10 @@
-from django.contrib.auth.models import User
 from django.test import TestCase
 from django.utils.translation import gettext as _
 from django.db import connection
 
 from app_products.models import Product, Manufacturer, Feedback
 from app_products.tests.settings import USERNAME, PASSWORD
-from app_users.models import Profile
+from app_users.models import User
 
 
 class BaseModelTest(TestCase):
@@ -27,9 +26,6 @@ class BaseModelTest(TestCase):
         user.save()
 
         cls.user = user
-        cls.profile = Profile.objects.create(tel_number='9165236894',
-                                             patronymic='patronymic',
-                                             user_fk=user)
 
         cls.feedback = Feedback.objects.create(text='text',
                                                product_fk=cls.product,

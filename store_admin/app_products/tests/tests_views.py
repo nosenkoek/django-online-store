@@ -2,13 +2,12 @@ import shutil
 from math import ceil
 from datetime import datetime
 
-from django.contrib.auth import login
-from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, override_settings
 from django.db import connection
 from django.urls import reverse
 
+from app_users.models import User
 from app_categories.models import Category
 from app_products.models import Product, Feedback
 from app_products.services.decorator_count_views import NAME_ATRS_CACHE

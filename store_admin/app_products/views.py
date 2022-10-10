@@ -94,7 +94,7 @@ class ProductDetailView(DetailView):
         product_features = ProductFeature.objects\
             .filter(product_fk=self.object).select_related('feature_fk')
         feedbacks = Feedback.objects.filter(product_fk=self.object)\
-            .select_related('user_fk', 'user_fk__profile')\
+            .select_related('user_fk')\
             .annotate(count=Count('feedback_id')).order_by('added')
         context.update({'product_features': product_features,
                         'feedbacks': feedbacks})
