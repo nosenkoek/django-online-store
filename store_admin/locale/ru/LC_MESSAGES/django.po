@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-08 13:33+0300\n"
+"POT-Creation-Date: 2022-10-11 11:44+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,8 +44,8 @@ msgstr "Файл не SVG"
 #: .\app_categories\models.py:19 .\app_categories\models.py:60
 #: .\app_categories\tests\tests_models.py:23
 #: .\app_categories\tests\tests_models.py:40 .\app_products\models.py:17
-#: .\app_products\models.py:36 .\app_products\tests\tests_models.py:43
-#: .\app_products\tests\tests_models.py:82
+#: .\app_products\models.py:36 .\app_products\tests\tests_models.py:39
+#: .\app_products\tests\tests_models.py:78
 msgid "name"
 msgstr "название"
 
@@ -78,7 +78,7 @@ msgstr "вложить в категорию"
 
 #: .\app_categories\models.py:43 .\app_categories\models.py:88
 #: .\app_products\admin.py:49 .\app_products\filters\admin_filter.py:30
-#: .\app_products\models.py:55 .\app_products\tests\tests_models.py:68
+#: .\app_products\models.py:55 .\app_products\tests\tests_models.py:64
 msgid "category"
 msgstr "категория"
 
@@ -91,7 +91,7 @@ msgid "yes/no"
 msgstr "да/нет"
 
 #: .\app_categories\models.py:56 .\app_products\admin.py:101
-#: .\app_products\models.py:123 .\app_products\tests\tests_models.py:94
+#: .\app_products\models.py:123 .\app_products\tests\tests_models.py:90
 msgid "text"
 msgstr "текст"
 
@@ -116,21 +116,20 @@ msgstr "категории с характеристиками"
 
 #: .\app_products\admin.py:54 .\app_products\filters\admin_filter.py:43
 #: .\app_products\models.py:25 .\app_products\models.py:60
-#: .\app_products\tests\tests_models.py:75
+#: .\app_products\tests\tests_models.py:71
 #: .\templates\app_products\product_detail.html:99
 msgid "manufacturer"
 msgstr "производитель"
 
 #: .\app_products\admin.py:106 .\app_products\models.py:135
-#: .\app_products\tests\tests_models.py:104 .\app_users\models.py:36
-#: .\app_users\tests\tests_models.py:49
+#: .\app_products\tests\tests_models.py:100
 msgid "user"
 msgstr "пользователь"
 
 #: .\app_products\admin.py:111 .\app_products\filters\admin_filter.py:55
 #: .\app_products\models.py:67 .\app_products\models.py:83
 #: .\app_products\models.py:99 .\app_products\models.py:130
-#: .\app_products\tests\tests_models.py:99
+#: .\app_products\tests\tests_models.py:95
 msgid "product"
 msgstr "товар"
 
@@ -151,8 +150,8 @@ msgid "yes"
 msgstr "да"
 
 #: .\app_products\models.py:19 .\app_products\models.py:38
-#: .\app_products\tests\tests_models.py:48
-#: .\app_products\tests\tests_models.py:87
+#: .\app_products\tests\tests_models.py:44
+#: .\app_products\tests\tests_models.py:83
 msgid "description"
 msgstr "описание"
 
@@ -160,7 +159,7 @@ msgstr "описание"
 msgid "manufacturers"
 msgstr "производители"
 
-#: .\app_products\models.py:40 .\app_products\tests\tests_models.py:53
+#: .\app_products\models.py:40 .\app_products\tests\tests_models.py:49
 msgid "price"
 msgstr "цена"
 
@@ -172,11 +171,11 @@ msgstr "главное изображение"
 msgid "added"
 msgstr "добавлен"
 
-#: .\app_products\models.py:47 .\app_products\tests\tests_models.py:58
+#: .\app_products\models.py:47 .\app_products\tests\tests_models.py:54
 msgid "is limited"
 msgstr "ограниченный тираж"
 
-#: .\app_products\models.py:49 .\app_products\tests\tests_models.py:63
+#: .\app_products\models.py:49 .\app_products\tests\tests_models.py:59
 msgid "count_in_storage"
 msgstr "количество на складе"
 
@@ -207,78 +206,95 @@ msgstr "отзыв"
 msgid "feedbacks"
 msgstr "отзывы"
 
-#: .\app_users\admin.py:29 .\app_users\models.py:27
-#: .\app_users\tests\tests_models.py:39
-msgid "patronymic"
-msgstr "отчество"
-
-#: .\app_users\admin.py:34
-msgid "tel_number"
-msgstr "номер телефона"
-
 #: .\app_users\apps.py:8
 msgid "users"
 msgstr "пользователи"
 
-#: .\app_users\forms.py:28 .\app_users\forms.py:125
+#: .\app_users\forms.py:20 .\app_users\forms.py:72
 msgid "Profile with this Email already exists."
 msgstr "Профиль с таким Email уже создан"
 
-#: .\app_users\forms.py:73
-msgid "Enter full name. First name, last name and patronymic"
-msgstr "Введите Фамилию Имя Отчество"
-
-#: .\app_users\forms.py:91
+#: .\app_users\forms.py:37
 msgid "The two password fields didn’t match."
 msgstr "Пароль не совпадают"
 
-#: .\app_users\forms.py:101
+#: .\app_users\forms.py:64
+msgid "Enter full name. First name, last name and patronymic"
+msgstr "Введите Фамилию Имя Отчество"
+
+#: .\app_users\forms.py:84
 msgid "Full name. Last name, first name, patronymic"
 msgstr "Введите Фамилию Имя Отчество"
 
-#: .\app_users\forms.py:104
+#: .\app_users\forms.py:87
 msgid "New password"
 msgstr "Новый пароль"
 
-#: .\app_users\forms.py:111
+#: .\app_users\forms.py:94
 msgid "New password confirmation"
 msgstr "Повторите пароль"
 
-#: .\app_users\models.py:15
+#: .\app_users\models.py:13
 msgid "File size is {}Mb. Should not be more than 2Mb"
 msgstr "Размер файла {}Мб. Файл не должен превышать 2Мб"
 
-#: .\app_users\models.py:25 .\app_users\tests\tests_models.py:34
+#: .\app_users\models.py:20 .\app_users\tests\tests_models.py:29
 msgid "telephone number"
 msgstr "номер телефона"
 
-#: .\app_users\models.py:30 .\app_users\tests\tests_models.py:44
+#: .\app_users\models.py:22 .\app_users\tests\tests_models.py:34
+msgid "patronymic"
+msgstr "отчество"
+
+#: .\app_users\models.py:25 .\app_users\tests\tests_models.py:39
 msgid "avatar"
 msgstr "аватар"
 
-#: .\app_users\models.py:41
-msgid "profile"
-msgstr "профиль"
-
-#: .\app_users\models.py:42
-msgid "profiles"
-msgstr "профили"
-
-#: .\app_users\views.py:34
+#: .\app_users\views.py:30 .\app_users\views.py:103
 msgid "Registration successful"
 msgstr "Профиль сохранен"
 
-#: .\app_users\views.py:40 .\app_users\views.py:122
+#: .\app_users\views.py:37 .\app_users\views.py:108
 msgid "Please correct the error"
 msgstr "Пожалуйста, исправьте ошибки"
-
-#: .\app_users\views.py:119
-msgid "Edit profile successful"
-msgstr "Профиль сохранен"
 
 #: .\templates\admin_custom\input_filter.html:19
 msgid "Remove"
 msgstr "Удалить"
+
+#: .\templates\app_cart\cart.html:7 .\templates\app_cart\cart.html:15
+msgid "My Cart"
+msgstr "Корзина"
+
+#: .\templates\app_cart\cart.html:18 .\templates\header.html:93
+msgid "Home"
+msgstr "Главная"
+
+#: .\templates\app_cart\cart.html:20
+msgid "Cart"
+msgstr "Корзина"
+
+#: .\templates\app_cart\cart.html:48 .\templates\app_cart\cart.html:79
+#: .\templates\app_categories\sections_main_page\limit_edition.html:83
+#: .\templates\app_categories\sections_main_page\popular_product.html:25
+#: .\templates\app_categories\sections_main_page\random_categories.html:14
+#: .\templates\app_categories\subcategory_list.html:42
+#: .\templates\app_products\popular_product_list.html:36
+#: .\templates\app_products\product_detail.html:64
+#: .\templates\app_products\sections_list_products\filter.html:21
+#: .\templates\app_products\sections_list_products\products.html:37
+#: .\templates\app_search\filter.html:24 .\templates\app_search\results.html:37
+#: .\templates\header.html:109
+msgid "$"
+msgstr "₽"
+
+#: .\templates\app_cart\cart.html:78
+msgid "Total"
+msgstr "Итого"
+
+#: .\templates\app_cart\cart.html:81
+msgid "Make an order"
+msgstr "Оформить заказ"
 
 #: .\templates\app_categories\sections_main_page\limit_edition.html:12
 msgid "Shipping & Returns"
@@ -315,19 +331,6 @@ msgstr "Лучшие товары"
 #: .\templates\app_categories\sections_main_page\limit_edition.html:60
 msgid "Limited edition"
 msgstr "Ограниченные товары"
-
-#: .\templates\app_categories\sections_main_page\limit_edition.html:83
-#: .\templates\app_categories\sections_main_page\popular_product.html:25
-#: .\templates\app_categories\sections_main_page\random_categories.html:14
-#: .\templates\app_categories\subcategory_list.html:42
-#: .\templates\app_products\popular_product_list.html:36
-#: .\templates\app_products\product_detail.html:64
-#: .\templates\app_products\sections_list_products\filter.html:21
-#: .\templates\app_products\sections_list_products\products.html:37
-#: .\templates\app_search\filter.html:24 .\templates\app_search\results.html:37
-#: .\templates\header.html:109
-msgid "$"
-msgstr "₽"
 
 #: .\templates\app_categories\sections_main_page\popular_product.html:9
 msgid "Popular Products"
@@ -435,38 +438,22 @@ msgstr "войти"
 msgid "Profile"
 msgstr "Профиль"
 
-#: .\templates\app_users\profile.html:57
+#: .\templates\app_users\profile.html:60
 msgid "Add avatar"
 msgstr "Добавить аватар"
 
 #: .\templates\app_users\profile.html:100
-msgid "Here change password"
-msgstr "Здесь можно поменять пароль"
-
-#: .\templates\app_users\profile.html:107
-msgid "Again enter password"
-msgstr "Повторно введите пароль"
-
-#: .\templates\app_users\profile.html:112
 msgid "Save"
 msgstr "Сохранить"
 
 #: .\templates\app_users\register.html:7 .\templates\app_users\register.html:15
-#: .\templates\app_users\register.html:111 .\templates\header.html:66
+#: .\templates\app_users\register.html:81 .\templates\header.html:66
 msgid "Register"
 msgstr "Регистрация"
 
 #: .\templates\app_users\register.html:20
 msgid "register"
 msgstr "регистрация"
-
-#: .\templates\app_users\register.html:99
-msgid "Enter password"
-msgstr "Введите пароль"
-
-#: .\templates\app_users\register.html:106
-msgid "Enter password again"
-msgstr "Повторите пароль"
 
 #: .\templates\app_users\section_navigation.html:6
 msgid "Navigation"
@@ -521,10 +508,6 @@ msgstr "Подписаться"
 msgid "Logout"
 msgstr "Выйти"
 
-#: .\templates\header.html:93
-msgid "Home"
-msgstr "Главная"
-
 #: .\templates\header.html:97
 msgid "Popular"
 msgstr "Популярное"
@@ -540,6 +523,3 @@ msgstr "Что ищете ..."
 #: .\templates\header.html:175
 msgid "Search"
 msgstr "Поиск"
-
-#~ msgid "First name"
-#~ msgstr "Имя"

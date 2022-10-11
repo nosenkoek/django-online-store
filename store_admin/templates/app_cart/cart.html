@@ -1,0 +1,91 @@
+{% extends '../base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+  {% trans 'My Cart' %}
+{% endblock %}
+
+{% block content %}
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">{% trans 'My Cart' %}
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item"><a href="{% url 'main_page' %}">{% trans 'Home' %}</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current"><span>{% trans 'Cart' %}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="Section">
+      <div class="wrap">
+        <form class="form Cart" action="#" method="post">
+          {% for item in cart %}
+            {% with item.product as product %}
+              <div class="Cart-product">
+                <div class="Cart-block Cart-block_row">
+                  <div class="Cart-block Cart-block_pict">
+                    <a class="Cart-pict" href="{% url 'product_detail' product.slug %}">
+                      <img class="Cart-img" src="{{ product.main_image.url }}" alt="card.jpg"/>
+                    </a>
+                  </div>
+                  <div class="Cart-block Cart-block_info">
+                    <a class="Cart-title" href="{% url 'product_detail' product.slug %}">
+                      {{ product.name }}
+                    </a>
+                    <div class="Cart-desc">
+                      {{ product.description }}
+                    </div>
+                  </div>
+                  <div class="Cart-block Cart-block_price">
+                    <div class="Cart-price">
+                      {{ product.price }}{% trans '$' %}
+                    </div>
+                  </div>
+                </div>
+                <div class="Cart-block Cart-block_row">
+                  <div class="Cart-block Cart-block_seller">
+                    <!-- - var options = setOptions(items, ['value', 'selected', 'disabled']);-->
+                  </div>
+
+                  <div class="Cart-block Cart-block_amount">
+                    <div class="Cart-amount">
+                      <div class="Amount">
+                        <button class="Amount-remove" type="button">
+                        </button>
+                        <input class="Amount-input form-input" name="amount" type="text" value="{{ item.quantity }}"/>
+                        <button class="Amount-add" type="button">
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="Cart-block Cart-block_delete">
+                    <a class="Cart-delete" href="{% url 'cart_delete_product' product.product_id %}">
+                      <img src="{% static 'app_cart/img/icons/delete.svg' %}" alt="delete.svg"/>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            {% endwith %}
+          {% endfor %}
+          <div class="Cart-total">
+            <div class="Cart-block Cart-block_total">
+              <strong class="Cart-title">{% trans 'Total' %}:
+              </strong><span class="Cart-price">{{ cart.get_total_price }}{% trans '$' %}</span>
+            </div>
+            <div class="Cart-block"><a class="btn btn_success btn_lg" href="#">{% trans 'Make an order' %}</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
