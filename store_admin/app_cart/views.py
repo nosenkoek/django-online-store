@@ -13,6 +13,7 @@ class CartView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(CartView, self).get_context_data(**kwargs)
         cart = Cart(self.request)
+        # todo: придумать как убрать дублирование запросов
         context.update({'cart': cart})
         context.update(NaviCategoriesList().get_context())
         return context
@@ -34,4 +35,11 @@ class DeleteProductCartView(View):
         product_id = kwargs.get('product_id')
         cart = Cart(request)
         cart.delete(product_id)
+        return redirect('cart')
+
+
+class ClearCartView(View):
+    def get(self, request, *args, **kwargs):
+        cart = Cart(request)
+        cart.clear()
         return redirect('cart')

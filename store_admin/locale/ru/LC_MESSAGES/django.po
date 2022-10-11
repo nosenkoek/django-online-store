@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-11 11:44+0300\n"
+"POT-Creation-Date: 2022-10-11 14:14+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -274,7 +274,7 @@ msgstr "Главная"
 msgid "Cart"
 msgstr "Корзина"
 
-#: .\templates\app_cart\cart.html:48 .\templates\app_cart\cart.html:79
+#: .\templates\app_cart\cart.html:48 .\templates\app_cart\cart.html:82
 #: .\templates\app_categories\sections_main_page\limit_edition.html:83
 #: .\templates\app_categories\sections_main_page\popular_product.html:25
 #: .\templates\app_categories\sections_main_page\random_categories.html:14
@@ -288,11 +288,15 @@ msgstr "Корзина"
 msgid "$"
 msgstr "₽"
 
-#: .\templates\app_cart\cart.html:78
+#: .\templates\app_cart\cart.html:81
 msgid "Total"
 msgstr "Итого"
 
-#: .\templates\app_cart\cart.html:81
+#: .\templates\app_cart\cart.html:85
+msgid "Clear cart"
+msgstr "Очистить корзину"
+
+#: .\templates\app_cart\cart.html:86
 msgid "Make an order"
 msgstr "Оформить заказ"
 

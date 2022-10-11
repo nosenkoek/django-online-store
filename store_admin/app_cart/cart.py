@@ -4,6 +4,7 @@ from decimal import Decimal
 from uuid import UUID
 
 from django.conf import settings
+from django.db.models import Sum
 from django.http import HttpRequest
 
 from app_products.models import Product
@@ -72,6 +73,7 @@ class Cart():
 
     def __iter__(self) -> CartItem:
         for product_id, item in self.cart.items():
+            # todo: придумать как перевести на QS
             product = Product.objects.get(product_id=product_id)
             yield CartItem(product=product,
                            quantity=item.get('quantity'))
@@ -88,5 +90,7 @@ class Cart():
         Получение общей стоимости товаров.
         :return: общая стоимость
         """
-        total_price = sum([item.total_price for item in self])
-        return total_price
+        product_ids = self.cart.keys()
+        total_dict = Product.objects.filter(product_id__in=product_ids)\
+            .aggregate(total=Sum('price'))
+        return total_dict.get('total')

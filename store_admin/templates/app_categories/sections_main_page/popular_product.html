@@ -12,7 +12,7 @@
 
       <div class="Cards">
         {% for product in popular_products %}
-          <div class="Card">
+          <div class="Card" id="{{ product.slug }}">
             <a class="Card-picture" href="{% url 'product_detail' product.slug %}">
               <img src="{{ product.main_image.url }}" alt="{{ product.name | truncatechars:10 }}"/>
             </a>
@@ -27,10 +27,7 @@
                 <div class="Card-category">
                   {{ product.category_fk.parent.name }} / {{ product.category_fk.name }}
                 </div>
-                <div class="Card-hover">
-                  <a class="Card-btn" href="#"><img src="{% static 'app_products/img/icons/card/cart.svg' %}" alt="cart.svg"/></a>
-                  <a class="Card-btn" href="#"><img src="{% static 'app_products/img/icons/card/change.svg' %}" alt="change.svg"/></a>
-                </div>
+                {% include 'card_hover.html' %}
               </div>
             </div>
           </div>

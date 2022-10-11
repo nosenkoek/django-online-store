@@ -54,7 +54,7 @@ class ProductListView(ListView, AddSortedItemToContextMixin,
         queryset = Product.objects.filter(category_fk=subcategory)
 
         if not self.request.GET.get('sort'):
-            queryset = queryset.order_by('?')
+            queryset = queryset.order_by('-added')
         else:
             ordering = self.request.GET.get('sort')
             queryset = queryset.order_by(ordering)

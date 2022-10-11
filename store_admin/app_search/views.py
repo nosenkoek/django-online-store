@@ -28,7 +28,7 @@ class SearchResultListView(ListView, AddSortedItemToContextMixin,
         price_max = queryset.aggregate(price_max=Max('price')).get('price_max')
 
         if not self.request.GET.get('sort'):
-            queryset = queryset.order_by('?')
+            queryset = queryset.order_by('-added')
         else:
             ordering = self.request.GET.get('sort')
             queryset = queryset.order_by(ordering)

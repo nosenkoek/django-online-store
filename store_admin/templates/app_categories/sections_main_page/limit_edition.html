@@ -69,7 +69,7 @@
           {% for product in limit_edition %}
             <div class="Slider-item">
               <div class="Slider-content">
-              <div class="Card">
+              <div class="Card" id="{{ product.slug }}">
                 <a class="Card-picture" href="{% url 'product_detail' product.slug %}">
                   <img src="{{ product.main_image.url }}" alt="card.jpg"/>
                 </a>
@@ -85,10 +85,7 @@
                     <div class="Card-category">
                       {{ product.category_fk.parent.name }} / {{ product.category_fk.name }}
                     </div>
-                    <div class="Card-hover">
-                      <a class="Card-btn" href="#"><img src="{% static 'app_products/img/icons/card/cart.svg' %}" alt="cart.svg"/></a>
-                      <a class="Card-btn" href="#"><img src="{% static 'app_products/img/icons/card/change.svg' %}" alt="change.svg"/></a>
-                    </div>
+                    {% include 'card_hover.html' %}
                   </div>
                 </div>
               </div>
