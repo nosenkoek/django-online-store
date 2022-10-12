@@ -70,23 +70,31 @@
               {{ product.description }}
             </div>
 
-            <div class="ProductCard-cart">
+            <form class="ProductCard-cart" action="{% url 'cart_update_product' product.product_id %}?next={{ request.get_full_path }}" method="post">
+              {% csrf_token %}
               <div class="ProductCard-cartElement ProductCard-cartElement_amount">
                 <div class="Amount Amount_product">
                   <button class="Amount-remove" type="button">
                   </button>
-                  <input class="Amount-input form-input" name="amount" type="text" value="1"/>
-                  <button class="Amount-add" type="button">
+                  <input class="Amount-input form-input" name="quantity" type="text"
+                           value="{% if quantity_in_cart %} {{ quantity_in_cart }} {% else %} 1 {% endif %}"/>
+                  <input name="update" type="checkbox" checked hidden>
+                  <button class="Amount-add" type="button" >
                   </button>
                 </div>
               </div>
+
               <div class="ProductCard-cartElement">
-                <a class="btn btn_primary" href="#">
+                <button class="btn btn_primary" type="submit">
                   <img class="btn-icon" src="{% static 'app_products/img/icons/card/cart_white.svg' %}" alt="cart_white.svg"/>
-                  <span class="btn-content">{% trans 'Add To Cart' %}</span>
-                </a>
+                  {% if quantity_in_cart %}
+                    <span class="btn-content">{% trans 'Change In Cart' %}</span>
+                  {% else %}
+                    <span class="btn-content">{% trans 'Add To Cart' %}</span>
+                  {% endif %}
+                </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
 

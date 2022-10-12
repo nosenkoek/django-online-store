@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-11 14:14+0300\n"
+"POT-Creation-Date: 2022-10-12 13:58+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,12 +97,12 @@ msgstr "текст"
 
 #: .\app_categories\models.py:73 .\app_categories\models.py:94
 #: .\app_products\models.py:104
-#: .\templates\app_products\product_detail.html:117
+#: .\templates\app_products\product_detail.html:125
 msgid "feature"
 msgstr "характеристика"
 
 #: .\app_categories\models.py:74
-#: .\templates\app_products\product_detail.html:96
+#: .\templates\app_products\product_detail.html:104
 msgid "features"
 msgstr "характеристики"
 
@@ -117,7 +117,7 @@ msgstr "категории с характеристиками"
 #: .\app_products\admin.py:54 .\app_products\filters\admin_filter.py:43
 #: .\app_products\models.py:25 .\app_products\models.py:60
 #: .\app_products\tests\tests_models.py:71
-#: .\templates\app_products\product_detail.html:99
+#: .\templates\app_products\product_detail.html:107
 msgid "manufacturer"
 msgstr "производитель"
 
@@ -184,7 +184,7 @@ msgid "images"
 msgstr "изображения"
 
 #: .\app_products\models.py:106
-#: .\templates\app_products\product_detail.html:119
+#: .\templates\app_products\product_detail.html:127
 msgid "value"
 msgstr "значение"
 
@@ -201,8 +201,8 @@ msgid "feedback"
 msgstr "отзыв"
 
 #: .\app_products\models.py:141
-#: .\templates\app_products\product_detail.html:103
-#: .\templates\app_products\product_detail.html:156
+#: .\templates\app_products\product_detail.html:111
+#: .\templates\app_products\product_detail.html:164
 msgid "feedbacks"
 msgstr "отзывы"
 
@@ -274,7 +274,7 @@ msgstr "Главная"
 msgid "Cart"
 msgstr "Корзина"
 
-#: .\templates\app_cart\cart.html:48 .\templates\app_cart\cart.html:82
+#: .\templates\app_cart\cart.html:48 .\templates\app_cart\cart.html:86
 #: .\templates\app_categories\sections_main_page\limit_edition.html:83
 #: .\templates\app_categories\sections_main_page\popular_product.html:25
 #: .\templates\app_categories\sections_main_page\random_categories.html:14
@@ -288,17 +288,25 @@ msgstr "Корзина"
 msgid "$"
 msgstr "₽"
 
-#: .\templates\app_cart\cart.html:81
+#: .\templates\app_cart\cart.html:83
 msgid "Total"
 msgstr "Итого"
 
-#: .\templates\app_cart\cart.html:85
+#: .\templates\app_cart\cart.html:90
 msgid "Clear cart"
 msgstr "Очистить корзину"
 
-#: .\templates\app_cart\cart.html:86
+#: .\templates\app_cart\cart.html:91
 msgid "Make an order"
 msgstr "Оформить заказ"
+
+#: .\templates\app_cart\cart.html:96
+msgid "Cart is empty"
+msgstr "Корзина пуста"
+
+#: .\templates\app_cart\cart.html:100
+msgid "Start shopping"
+msgstr "Начать покупки"
 
 #: .\templates\app_categories\sections_main_page\limit_edition.html:12
 msgid "Shipping & Returns"
@@ -361,23 +369,27 @@ msgstr "главная"
 msgid "popular products"
 msgstr "Популярные товары"
 
-#: .\templates\app_products\product_detail.html:86
+#: .\templates\app_products\product_detail.html:91
+msgid "Change In Cart"
+msgstr ""
+
+#: .\templates\app_products\product_detail.html:93
 msgid "Add To Cart"
 msgstr "В корзину"
 
-#: .\templates\app_products\product_detail.html:193
+#: .\templates\app_products\product_detail.html:201
 msgid "Add Review"
 msgstr "Добавить отзыв"
 
-#: .\templates\app_products\product_detail.html:203
+#: .\templates\app_products\product_detail.html:211
 msgid "Feedback text"
 msgstr "Текст отзыва"
 
-#: .\templates\app_products\product_detail.html:208
+#: .\templates\app_products\product_detail.html:216
 msgid "Submit Review"
 msgstr "Опубликовать"
 
-#: .\templates\app_products\product_detail.html:214
+#: .\templates\app_products\product_detail.html:222
 msgid "You need login"
 msgstr "Вы должны авторизоваться"
 

@@ -1,10 +1,8 @@
 from dataclasses import dataclass
-from typing import Dict, Union
 from decimal import Decimal
 from uuid import UUID
 
 from django.conf import settings
-from django.db.models import Sum
 from django.http import HttpRequest
 
 from app_products.models import Product
@@ -12,6 +10,7 @@ from app_products.models import Product
 
 @dataclass
 class CartItem():
+    """Объект хранимый в корзине"""
     product: Product
     quantity: int
 
@@ -55,7 +54,21 @@ class Cart():
 
         self.save()
 
-    def delete(self, product_id: UUID) -> None:
+    def remove(self, product_id: UUID) -> None:
+        """
+        Удаление 1 товара из корзины.
+        :param product_id: id товара
+        """
+        product_id_str = str(product_id)
+
+        if product_id_str in self.cart.keys():
+            if self.cart[product_id_str]['quantity'] <= 1:
+                self.delete_all(product_id)
+            else:
+                self.cart[product_id_str]['quantity'] -= 1
+                self.save()
+
+    def delete_all(self, product_id: UUID) -> None:
         """
         Удаление товара из корзины.
         :param product_id: id товара
@@ -72,11 +85,12 @@ class Cart():
         self.save()
 
     def __iter__(self) -> CartItem:
-        for product_id, item in self.cart.items():
-            # todo: придумать как перевести на QS
-            product = Product.objects.get(product_id=product_id)
+        products = Product.objects.filter(product_id__in=self.cart.keys())
+
+        for product in products:
+            quantity = self.cart.get(str(product.product_id)).get('quantity')
             yield CartItem(product=product,
-                           quantity=item.get('quantity'))
+                           quantity=quantity)
 
     def __len__(self) -> int:
         """
@@ -90,7 +104,15 @@ class Cart():
         Получение общей стоимости товаров.
         :return: общая стоимость
         """
-        product_ids = self.cart.keys()
-        total_dict = Product.objects.filter(product_id__in=product_ids)\
-            .aggregate(total=Sum('price'))
-        return total_dict.get('total')
+        return sum([item.total_price for item in self])
+
+    def get_quantity(self, product_id: UUID) -> int:
+        """
+        Возвращает количество товаров по product_id
+        :param product_id: id товара
+        :return: количество товаров в корзине
+        """
+        data_product = self.cart.get(str(product_id))
+        if data_product:
+            return data_product.get('quantity')
+        return 0

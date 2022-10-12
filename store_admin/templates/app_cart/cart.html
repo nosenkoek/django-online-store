@@ -42,6 +42,12 @@
                     <div class="Cart-desc">
                       {{ product.description }}
                     </div>
+                    
+                    {% if not item.availability %}
+                      <div class="Cart-desc">
+                        <span class="Cart-desc">{% trans 'not enough in storage' %}</span>
+                      </div>
+                    {% endif %}
                   </div>
                   <div class="Cart-block Cart-block_price">
                     <div class="Cart-price">
@@ -57,10 +63,10 @@
                   <div class="Cart-block Cart-block_amount">
                     <div class="Cart-amount">
                       <div class="Amount">
-                        <button class="Amount-remove" type="button">
+                        <button class="Amount-remove" type="button" onclick="window.location.href='{% url 'cart_remove_product' product.product_id %}?next={% url 'cart' %}'">
                         </button>
-                        <input class="Amount-input form-input" name="amount" type="text" value="{{ item.quantity }}"/>
-                        <button class="Amount-add" type="button">
+                        <input class="Amount-input form-input" name="quantity" type="text" value="{{ item.quantity }}" checked disabled/>
+                        <button class="Amount-add" type="button"  onclick="window.location.href='{% url 'cart_add_product' product.product_id %}?next={% url 'cart' %}'">
                         </button>
                       </div>
                     </div>
@@ -76,15 +82,31 @@
               </div>
             {% endwith %}
           {% endfor %}
+
           <div class="Cart-total">
-            <div class="Cart-block Cart-block_total">
-              <strong class="Cart-title">{% trans 'Total' %}:
-              </strong><span class="Cart-price">{{ cart.get_total_price }}{% trans '$' %}</span>
-            </div>
-            <div class="Cart-block">
-              <a class="btn btn_success btn_lg" href="{% url 'cart_clear' %}">{% trans 'Clear cart' %}</a>
-              <a class="btn btn_success btn_lg" href="#">{% trans 'Make an order' %}</a>
-            </div>
+            {% if cart %}
+              <div class="Cart-block Cart-block_total">
+                <strong class="Cart-title">
+                  {% trans 'Total' %}:
+                </strong>
+                <span class="Cart-price">
+                  {{ cart.get_total_price }}{% trans '$' %}
+                </span>
+              </div>
+              <div class="Cart-block">
+                <a class="btn btn_success btn_lg" href="{% url 'cart_clear' %}">{% trans 'Clear cart' %}</a>
+                <a class="btn btn_success btn_lg" href="#">{% trans 'Make an order' %}</a>
+              </div>
+            {% else %}
+              <div class="Cart-block Cart-block_total">
+                <strong class="Cart-title">
+                  {% trans 'Cart is empty' %}
+                </strong>
+              </div>
+              <div class="Cart-block">
+                <a class="btn btn_success btn_lg" href="{% url 'main_page' %}">{% trans 'Start shopping' %}</a>
+              </div>
+            {% endif %}
           </div>
         </form>
       </div>

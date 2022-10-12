@@ -70,7 +70,8 @@ class MainPageTest(BaseTest):
 
     def test_popular_products_number(self):
         """Проверка количества отображаемых популярных товаров"""
-        products = Product.objects.order_by('?')[:NUMBERS_POPULAR_PRODUCTS]
+        products = Product.objects \
+            .order_by('-added')[:NUMBERS_POPULAR_PRODUCTS]
 
         for product in products:
             self.client.get(f'/catalog/{product.slug}', follow=True)

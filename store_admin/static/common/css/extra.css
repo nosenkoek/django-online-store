@@ -1029,6 +1029,11 @@ a.Cart-title {
   margin-top: 5px;
   color: #71747a;
 }
+
+.Cart-desc span{
+  color: red;
+}
+
 .Cart-block + .Cart-block {
   margin-left: 20px;
 }

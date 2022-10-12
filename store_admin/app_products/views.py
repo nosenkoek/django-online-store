@@ -5,6 +5,7 @@ from django.db.models import Max, Prefetch, QuerySet, Count
 from django.views.generic import ListView, DetailView
 from redis.exceptions import RedisError
 
+from app_cart.cart import Cart
 from app_categories.services.navi_categories_list import \
     NaviCategoriesList
 from app_categories.models import Category, Feature
@@ -96,7 +97,10 @@ class ProductDetailView(DetailView):
         feedbacks = Feedback.objects.filter(product_fk=self.object)\
             .select_related('user_fk')\
             .annotate(count=Count('feedback_id')).order_by('added')
+        cart = Cart(self.request)
+        quantity_in_cart = cart.get_quantity(self.object.product_id)
         context.update({'product_features': product_features,
+                        'quantity_in_cart': quantity_in_cart,
                         'feedbacks': feedbacks})
         return context
 
@@ -110,7 +114,7 @@ class ProductDetailView(DetailView):
             Feedback.objects.create(text=form.cleaned_data.get('text'),
                                     user_fk=request.user,
                                     product_fk=self.get_object())
-            return self.get(request, *args, **kwargs)
+        return self.get(request, *args, **kwargs)
 
 
 class PopularProductListView(ListView):
