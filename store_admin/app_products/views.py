@@ -6,6 +6,7 @@ from django.views.generic import ListView, DetailView
 from redis.exceptions import RedisError
 
 from app_cart.cart import Cart
+from app_cart.services import GetContextTotalPriceCartMixin
 from app_categories.services.navi_categories_list import \
     NaviCategoriesList
 from app_categories.models import Category, Feature
@@ -23,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class ProductListView(ListView, AddSortedItemToContextMixin,
-                      InitialDictFromURLMixin):
+                      InitialDictFromURLMixin, GetContextTotalPriceCartMixin):
     """View для каталога товаров"""
     model = Product
     template_name = 'app_products/product_list.html'
@@ -75,10 +76,11 @@ class ProductListView(ListView, AddSortedItemToContextMixin,
         initial_dict = self.get_initial_dict()
         context.update({'initial_dict': initial_dict})
         context.update(NaviCategoriesList().get_context())
+        context.update(self.get_context_price_cart())
         return context
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(DetailView, GetContextTotalPriceCartMixin):
     """View для детальной страницы товара"""
     model = Product
     template_name = 'app_products/product_detail.html'
@@ -102,6 +104,7 @@ class ProductDetailView(DetailView):
         context.update({'product_features': product_features,
                         'quantity_in_cart': quantity_in_cart,
                         'feedbacks': feedbacks})
+        context.update(self.get_context_price_cart())
         return context
 
     @cache_popular_product
@@ -117,7 +120,7 @@ class ProductDetailView(DetailView):
         return self.get(request, *args, **kwargs)
 
 
-class PopularProductListView(ListView):
+class PopularProductListView(ListView, GetContextTotalPriceCartMixin):
     """View для страницы популярных товаров"""
     model = Product
     context_object_name = 'popular_products'
@@ -144,4 +147,5 @@ class PopularProductListView(ListView):
         context = super(PopularProductListView, self)\
             .get_context_data(**kwargs)
         context.update(NaviCategoriesList().get_context())
+        context.update(self.get_context_price_cart())
         return context

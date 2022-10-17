@@ -4,10 +4,11 @@ from django.views.generic import TemplateView
 
 from app_cart.cart import Cart
 from app_cart.forms import CartAddProductForm
+from app_cart.services import GetContextTotalPriceCartMixin
 from app_categories.services.navi_categories_list import NaviCategoriesList
 
 
-class CartView(TemplateView):
+class CartView(TemplateView, GetContextTotalPriceCartMixin):
     """Отображение корзины """
     template_name = 'app_cart/cart.html'
 
@@ -16,6 +17,7 @@ class CartView(TemplateView):
         cart = Cart(self.request)
         context.update({'cart': cart})
         context.update(NaviCategoriesList().get_context())
+        context.update(self.get_context_price_cart())
         return context
 
 

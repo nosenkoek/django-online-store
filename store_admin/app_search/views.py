@@ -1,6 +1,7 @@
 from django.db.models import QuerySet, Max
 from django.views.generic import ListView
 
+from app_cart.services import GetContextTotalPriceCartMixin
 from app_categories.services.navi_categories_list import \
     NaviCategoriesList
 from app_products.models import Product
@@ -11,7 +12,8 @@ from app_search.services.search_result_mixin import SearchResultMixin
 
 
 class SearchResultListView(ListView, AddSortedItemToContextMixin,
-                           InitialDictFromURLMixin, SearchResultMixin):
+                           InitialDictFromURLMixin, SearchResultMixin,
+                           GetContextTotalPriceCartMixin):
     model = Product
     context_object_name = 'products'
     paginate_by = 8
@@ -46,4 +48,5 @@ class SearchResultListView(ListView, AddSortedItemToContextMixin,
         initial_dict = self.get_initial_dict()
         context.update({'initial_dict': initial_dict})
         context.update(NaviCategoriesList().get_context())
+        context.update(self.get_context_price_cart())
         return context

@@ -4,6 +4,7 @@ from django.db.models import Min, QuerySet
 from django.views.generic import ListView, TemplateView
 from redis.exceptions import RedisError
 
+from app_cart.services import GetContextTotalPriceCartMixin
 from app_categories.models import Category
 from app_categories.services.section_factory import SectionsFactory
 from app_products.services.decorator_count_views import NAME_ATRS_CACHE
@@ -14,7 +15,7 @@ from app_categories.services.navi_categories_list import \
 logger = logging.getLogger(__name__)
 
 
-class MainPageView(TemplateView):
+class MainPageView(TemplateView, GetContextTotalPriceCartMixin):
     """View для главной страницы"""
     template_name = 'app_categories/main_page.html'
 
@@ -37,6 +38,7 @@ class MainPageView(TemplateView):
             context_data.update(item.get_context_data())
 
         context_data.update(NaviCategoriesList().get_context())
+        context_data.update(self.get_context_price_cart())
         return context_data
 
 
