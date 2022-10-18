@@ -9,7 +9,7 @@ from app_categories.services.navi_categories_list import NaviCategoriesList
 
 
 class CartView(TemplateView, GetContextTotalPriceCartMixin):
-    """Отображение корзины """
+    """Отображение корзины"""
     template_name = 'app_cart/cart.html'
 
     def get_context_data(self, **kwargs):

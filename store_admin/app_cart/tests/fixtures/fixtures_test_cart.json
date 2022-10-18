@@ -1,0 +1,246 @@
+[
+{
+    "model": "app_categories.category",
+    "pk": "c568174c-110e-46b1-944e-0fe7e6b4e1b5",
+    "fields": {
+        "category_id": "a02414b4-fc4b-46e2-88b3-d45089f099b3",
+        "name": "Комплектующие ПК",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "pc-components",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 6,
+        "tree_id": 3,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "eddf229d-512b-40c4-adc3-0640a517d12e",
+    "fields": {
+        "category_id": "3ee73d93-307a-47a6-b32a-aa622aba0b24",
+        "name": "Аксессуары",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "accessories",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 4,
+        "tree_id": 4,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "6c6c17f4-4c6a-4dcc-8d57-25056456d235",
+    "fields": {
+        "category_id": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
+        "name": "Смартфоны и гаджеты",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "smartphone-gadgets",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 8,
+        "tree_id": 1,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "acaa147a-5bd4-413a-83b4-fe4823ad9726",
+    "fields": {
+        "category_id": "caf8e4b8-3909-495d-a085-6f0b0f030e32",
+        "name": "Бытовая техника",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "household-appliances",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 8,
+        "tree_id": 5,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "7929eb62-9bc0-4b0f-bb3a-26e2608b3eb4",
+    "fields": {
+        "category_id": "26458ab1-81da-4e2e-b9f7-05709502bd7c",
+        "name": "Телевизоры, аудио-видео,фото",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "tvset-audio-video-photo",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 8,
+        "tree_id": 6,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "7a726a7b-783f-48d6-b2c1-dcd07ae8a378",
+    "fields": {
+        "category_id": "cb437a18-3bcf-4468-a76e-72cb106c124e",
+        "name": "Ноутбуки и компьютеры",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "notebook-pc",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 8,
+        "tree_id": 2,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "02aadb87-d84b-45b9-8c73-6e0d15d9d75f",
+    "fields": {
+        "category_id": "1531ac7f-0bf6-4c0a-aef1-9b223ea20396",
+        "name": "Видеокарты",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "videocards",
+        "icon": "",
+        "image": "small_1.gif",
+        "is_active": true,
+        "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
+        "lft": 4,
+        "rght": 5,
+        "tree_id": 3,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "064db6bd-ef5d-480d-a8e8-a385407dc86d",
+    "fields": {
+        "category_id": "338d09c9-172a-4b1c-aaa4-b0983462dad1",
+        "name": "Планшеты",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "tablet",
+        "icon": "",
+        "image": "small_1.gif",
+        "is_active": true,
+        "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
+        "lft": 4,
+        "rght": 5,
+        "tree_id": 1,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "261fbc07-bb21-40cb-b32d-6fb255ea07b9",
+    "fields": {
+        "category_id": "67f044cd-c2a9-4106-8e1d-b364e88dd084",
+        "name": "Смарт-часы и фитнес-браслеты",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "smart-watches",
+        "icon": "",
+        "image": "small_1.gif",
+        "is_active": true,
+        "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
+        "lft": 6,
+        "rght": 7,
+        "tree_id": 1,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "26783772-940b-40b5-bf0c-b7be64cae8b5",
+    "fields": {
+        "category_id": "ac798b78-36fe-4b0c-8fff-50349ddf75c5",
+        "name": "Кухонные комбайны",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "blenders",
+        "icon": "",
+        "image": "small_1.gif",
+        "is_active": true,
+        "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
+        "lft": 6,
+        "rght": 7,
+        "tree_id": 5,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "33090696-d4d1-45ac-92ba-b42e1254d169",
+    "fields": {
+        "category_id": "14e0cf53-ce1a-41b1-858e-a13e521e2db9",
+        "name": "Моноблоки",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "monoblocks",
+        "icon": "",
+        "image": "small_1.gif",
+        "is_active": true,
+        "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
+        "lft": 6,
+        "rght": 7,
+        "tree_id": 2,
+        "level": 1
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "33a6c0d4-8b59-47df-a2bb-e583d1a142a9",
+    "fields": {
+        "category_id": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "name": "Ноутбуки",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "slug": "notebooks",
+        "icon": "",
+        "image": "small_1.gif",
+        "is_active": true,
+        "parent": "9d48a1e9-834b-49ca-be0a-4238896b3ef6",
+        "lft": 2,
+        "rght": 3,
+        "tree_id": 2,
+        "level": 1
+    }
+},
+{
+    "model": "app_products.manufacturer",
+    "pk": "33a6c0d4-8b59-47df-a2bb-e583d1a142a9",
+    "fields": {
+        "manufacturer_id": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "name": "manufacturer",
+        "description": "description",
+        "updated": "2022-08-28 11:47:30+03:00"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "d73992a9-3ab2-4a66-bdf6-3d24e9644bf3",
+    "fields": {
+        "product_id": "0e4be10f-c2c8-497e-8b0c-06b9ca02a77c",
+        "name": "product_1",
+        "slug": "product_1",
+        "description": "text",
+        "price": 100,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+}
+]
