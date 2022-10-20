@@ -17,3 +17,17 @@ class GetContextTotalPriceCartMixin():
             'count_product_cart': len(cart)
         }
         return context_data
+
+
+class CartRequestMixin():
+    """Миксин для добавления объекта корзина в атрибуты"""
+    @property
+    def cart(self) -> Cart:
+        return Cart(self.request)
+
+
+class NextURLRequestMixin():
+    """Миксин для добавления страницы перехода в атрибуты"""
+    @property
+    def next_url(self) -> str:
+        return self.request.GET['next']
