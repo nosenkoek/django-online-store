@@ -46,7 +46,7 @@ class LimitEditionList(BaseFactory):
     """Описание секции лимитированных товаров"""
     model = Product
     queryset = Product.objects.filter(is_limited=True) \
-        .order_by('?') \
+        .order_by('-added') \
         .select_related('category_fk', 'category_fk__parent') \
         .filter(category_fk__is_active=True)[:16]
     context_object_name = 'limit_edition'

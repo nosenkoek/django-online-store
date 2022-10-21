@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.utils.translation import gettext as _
 
+from app_cart.services.mixins_for_cart import GetContextTotalPriceCartMixin
 from app_categories.services.navi_categories_list import NaviCategoriesList
 from app_users.forms import RegisterForm, UserProfileForm
 from app_users.models import User
@@ -18,7 +19,7 @@ from app_users.services import LoginUserMixin, InitialDictMixin, \
 logger = logging.getLogger(__name__)
 
 
-class RegisterView(CreateView, LoginUserMixin):
+class RegisterView(CreateView, LoginUserMixin, GetContextTotalPriceCartMixin):
     """View для регистрации пользователя"""
     model = User
     template_name = 'app_users/register.html'
@@ -40,10 +41,11 @@ class RegisterView(CreateView, LoginUserMixin):
     def get_context_data(self, **kwargs) -> Dict[str, str]:
         context = super(RegisterView, self).get_context_data(**kwargs)
         context.update(NaviCategoriesList().get_context())
+        context.update(self.get_context_price_cart())
         return context
 
 
-class UserLoginView(LoginView):
+class UserLoginView(LoginView, GetContextTotalPriceCartMixin):
     """View для входа пользователя"""
     template_name = 'app_users/login.html'
 
@@ -55,6 +57,7 @@ class UserLoginView(LoginView):
     def get_context_data(self, **kwargs) -> Dict[str, str]:
         context = super(UserLoginView, self).get_context_data(**kwargs)
         context.update(NaviCategoriesList().get_context())
+        context.update(self.get_context_price_cart())
         return context
 
 
@@ -63,7 +66,8 @@ class UserLogoutView(LogoutView):
     next_page = '/'
 
 
-class AccountView(LoginRequiredMixin, DetailView):
+class AccountView(LoginRequiredMixin, DetailView,
+                  GetContextTotalPriceCartMixin):
     """View для страницы профиля"""
     login_url = '/users/login/'
     template_name = 'app_users/account.html'
@@ -77,11 +81,13 @@ class AccountView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs) -> Dict[str, str]:
         context = super(AccountView, self).get_context_data(**kwargs)
         context.update(NaviCategoriesList().get_context())
+        context.update(self.get_context_price_cart())
         return context
 
 
 class ProfileView(LoginRequiredMixin, UpdateView,
-                  InitialDictMixin, LoginUserMixin, SetPasswordMixin):
+                  InitialDictMixin, LoginUserMixin, SetPasswordMixin,
+                  GetContextTotalPriceCartMixin):
     """View для страницы редактирования профиля"""
     login_url = '/users/login/'
     model = User
@@ -111,4 +117,5 @@ class ProfileView(LoginRequiredMixin, UpdateView,
     def get_context_data(self, **kwargs) -> Dict[str, str]:
         context = super(ProfileView, self).get_context_data(**kwargs)
         context.update(NaviCategoriesList().get_context())
+        context.update(self.get_context_price_cart())
         return context

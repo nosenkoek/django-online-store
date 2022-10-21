@@ -14,8 +14,7 @@ NAME_ATRS_CACHE = {
 }
 SECONDS_CACHE = 10
 
-err_logger = logging.getLogger('error')
-logger = logging.getLogger('info')
+logger = logging.getLogger(__name__)
 
 
 class StrategyBase():
@@ -79,7 +78,7 @@ class CachePopularProduct():
                     self._strategy.cache_popular_product(redis_conn)
                     func.expiration = datetime.utcnow() + func.cache_time
         except RedisError as err:
-            err_logger.error(f'Error connection to Redis | {err}')
+            logger.error(f'Error connection to Redis | {err}')
             logger.warning('not cache popular product')
 
 

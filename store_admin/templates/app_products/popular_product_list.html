@@ -40,10 +40,7 @@
                       {{ subcategory.parent.name }}/ {{ subcategory.name }}
                     </div>
                   {% endwith %}
-                  <div class="Card-hover">
-                    <a class="Card-btn" href="#"><img src="{% static 'app_products/img/icons/card/cart.svg' %}" alt="cart.svg"/></a>
-                    <a class="Card-btn" href="#"><img src="{% static 'app_products/img/icons/card/change.svg' %}" alt="change.svg"/></a>
-                  </div>
+                  {% include 'card_hover.html' %}
                 </div>
               </div>
             </div>

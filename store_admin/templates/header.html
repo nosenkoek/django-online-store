@@ -103,10 +103,10 @@
         </div>
       </nav>
       <div class="row-block">
-        <div class="CartBlock"><a class="CartBlock-block" href="#">
+        <div class="CartBlock"><a class="CartBlock-block" href="{% url 'cart' %}">
           <img class="CartBlock-img" src="{% static 'common/img/icons/cart.svg' %}" alt="cart.svg"/>
-          <span class="CartBlock-amount">0</span></a>
-          <div class="CartBlock-block"><span class="CartBlock-price">0.00{% trans '$' %}</span>
+          <span class="CartBlock-amount">{{ count_product_cart }}</span></a>
+          <div class="CartBlock-block"><span class="CartBlock-price">{{ total_price_cart }}{% trans '$' %}</span>
           </div>
         </div>
       </div>

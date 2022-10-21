@@ -5,6 +5,8 @@ from django.db.models import Max, Prefetch, QuerySet, Count
 from django.views.generic import ListView, DetailView
 from redis.exceptions import RedisError
 
+from app_cart.cart import Cart
+from app_cart.services.mixins_for_cart import GetContextTotalPriceCartMixin
 from app_categories.services.navi_categories_list import \
     NaviCategoriesList
 from app_categories.models import Category, Feature
@@ -22,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class ProductListView(ListView, AddSortedItemToContextMixin,
-                      InitialDictFromURLMixin):
+                      InitialDictFromURLMixin, GetContextTotalPriceCartMixin):
     """View для каталога товаров"""
     model = Product
     template_name = 'app_products/product_list.html'
@@ -54,7 +56,7 @@ class ProductListView(ListView, AddSortedItemToContextMixin,
         queryset = Product.objects.filter(category_fk=subcategory)
 
         if not self.request.GET.get('sort'):
-            queryset = queryset.order_by('?')
+            queryset = queryset.order_by('-added')
         else:
             ordering = self.request.GET.get('sort')
             queryset = queryset.order_by(ordering)
@@ -74,10 +76,11 @@ class ProductListView(ListView, AddSortedItemToContextMixin,
         initial_dict = self.get_initial_dict()
         context.update({'initial_dict': initial_dict})
         context.update(NaviCategoriesList().get_context())
+        context.update(self.get_context_price_cart())
         return context
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(DetailView, GetContextTotalPriceCartMixin):
     """View для детальной страницы товара"""
     model = Product
     template_name = 'app_products/product_detail.html'
@@ -96,8 +99,12 @@ class ProductDetailView(DetailView):
         feedbacks = Feedback.objects.filter(product_fk=self.object)\
             .select_related('user_fk')\
             .annotate(count=Count('feedback_id')).order_by('added')
+        cart = Cart(self.request)
+        quantity_in_cart = cart.get_quantity(self.object.product_id)
         context.update({'product_features': product_features,
+                        'quantity_in_cart': quantity_in_cart,
                         'feedbacks': feedbacks})
+        context.update(self.get_context_price_cart())
         return context
 
     @cache_popular_product
@@ -110,10 +117,10 @@ class ProductDetailView(DetailView):
             Feedback.objects.create(text=form.cleaned_data.get('text'),
                                     user_fk=request.user,
                                     product_fk=self.get_object())
-            return self.get(request, *args, **kwargs)
+        return self.get(request, *args, **kwargs)
 
 
-class PopularProductListView(ListView):
+class PopularProductListView(ListView, GetContextTotalPriceCartMixin):
     """View для страницы популярных товаров"""
     model = Product
     context_object_name = 'popular_products'
@@ -140,4 +147,5 @@ class PopularProductListView(ListView):
         context = super(PopularProductListView, self)\
             .get_context_data(**kwargs)
         context.update(NaviCategoriesList().get_context())
+        context.update(self.get_context_price_cart())
         return context

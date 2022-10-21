@@ -1,0 +1,10 @@
+{% load static %}
+
+{% block card-hover %}
+  <div class="Card-hover">
+    <a class="Card-btn" href="{% url 'cart_add_product' product.product_id %}?next={{ request.get_full_path }}#{{ product.slug }}">
+      <img src="{% static 'app_products/img/icons/card/cart.svg' %}" alt="cart.svg"/>
+    </a>
+    <a class="Card-btn" href="#"><img src="{% static 'app_products/img/icons/card/change.svg' %}" alt="change.svg"/></a>
+  </div>
+{% endblock %}

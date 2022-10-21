@@ -29,7 +29,8 @@ include(
     'components/internationalization.py',
     'components/debug_toolbar_panels.py',
     'components/logger.py',
-    'components/caches.py'
+    'components/caches.py',
+    'components/sessions.py'
 )
 
 STATIC_URL = '/static/'
@@ -53,3 +54,5 @@ MEDIA_URL = '/media/'
 LOGIN_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'app_users.User'
+
+
