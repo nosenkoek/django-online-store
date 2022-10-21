@@ -13,5 +13,6 @@ urlpatterns = i18n_patterns(
     path('', include('app_categories.urls')),
     path('catalog/', include('app_products.urls')),
     path('users/', include('app_users.urls')),
-    path('cart/', include('app_cart.urls'))
+    path('cart/', include('app_cart.urls')),
+    path('order/', include('app_order.urls'))
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
