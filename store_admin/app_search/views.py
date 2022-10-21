@@ -1,7 +1,7 @@
 from django.db.models import QuerySet, Max
 from django.views.generic import ListView
 
-from app_cart.services import GetContextTotalPriceCartMixin
+from app_cart.services.mixins_for_cart import GetContextTotalPriceCartMixin
 from app_categories.services.navi_categories_list import \
     NaviCategoriesList
 from app_products.models import Product

@@ -6,7 +6,7 @@ from django.views.generic import ListView, DetailView
 from redis.exceptions import RedisError
 
 from app_cart.cart import Cart
-from app_cart.services import GetContextTotalPriceCartMixin
+from app_cart.services.mixins_for_cart import GetContextTotalPriceCartMixin
 from app_categories.services.navi_categories_list import \
     NaviCategoriesList
 from app_categories.models import Category, Feature

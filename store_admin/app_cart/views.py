@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 
 from app_cart.cart import Cart
 from app_cart.forms import CartAddProductForm
-from app_cart.services import GetContextTotalPriceCartMixin, \
+from app_cart.services.mixins_for_cart import GetContextTotalPriceCartMixin, \
     CartRequestMixin, NextURLRequestMixin
 from app_categories.services.navi_categories_list import NaviCategoriesList
 

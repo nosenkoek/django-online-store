@@ -4,7 +4,7 @@ from django.db.models import Min, QuerySet
 from django.views.generic import ListView, TemplateView
 from redis.exceptions import RedisError
 
-from app_cart.services import GetContextTotalPriceCartMixin
+from app_cart.services.mixins_for_cart import GetContextTotalPriceCartMixin
 from app_categories.models import Category
 from app_categories.services.section_factory import SectionsFactory
 from app_products.services.decorator_count_views import NAME_ATRS_CACHE

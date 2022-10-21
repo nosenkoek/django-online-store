@@ -29,7 +29,8 @@ include(
     'components/internationalization.py',
     'components/debug_toolbar_panels.py',
     'components/logger.py',
-    'components/caches.py'
+    'components/caches.py',
+    'components/sessions.py'
 )
 
 STATIC_URL = '/static/'
@@ -54,5 +55,4 @@ LOGIN_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'app_users.User'
 
-CART_SESSION_ID = 'cart'
-SESSION_COOKIE_AGE = 4 * 24 * 60 * 60
+

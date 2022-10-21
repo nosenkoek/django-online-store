@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.utils.translation import gettext as _
 
-from app_cart.services import GetContextTotalPriceCartMixin
+from app_cart.services.mixins_for_cart import GetContextTotalPriceCartMixin
 from app_categories.services.navi_categories_list import NaviCategoriesList
 from app_users.forms import RegisterForm, UserProfileForm
 from app_users.models import User
