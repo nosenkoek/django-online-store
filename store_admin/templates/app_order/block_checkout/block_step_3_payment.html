@@ -1,0 +1,16 @@
+{% load i18n %}
+
+<div class="Order-block" id="step3">
+  <header class="Section-header Section-header_sm">
+    <h2 class="Section-title">
+      {% trans 'Step 3. Payment method' %}
+    </h2>
+  </header>
+
+  <div class="form-group">
+    {{ form.payment_method_fk }}
+  </div>
+  <div class="Order-footer">
+    <a class="btn btn_success Order-next" href="#step4">{% trans 'Next' %}</a>
+  </div>
+</div>

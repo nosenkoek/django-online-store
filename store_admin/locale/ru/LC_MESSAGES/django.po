@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-23 13:35+0300\n"
+"POT-Creation-Date: 2022-10-23 17:27+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,8 +43,9 @@ msgstr "Файл не SVG"
 
 #: .\app_categories\models.py:19 .\app_categories\models.py:60
 #: .\app_categories\tests\tests_models.py:23
-#: .\app_categories\tests\tests_models.py:40 .\app_products\models.py:17
-#: .\app_products\models.py:36 .\app_products\tests\tests_models.py:39
+#: .\app_categories\tests\tests_models.py:40 .\app_order\models.py:11
+#: .\app_products\models.py:17 .\app_products\models.py:36
+#: .\app_products\tests\tests_models.py:39
 #: .\app_products\tests\tests_models.py:78
 msgid "name"
 msgstr "название"
@@ -114,17 +115,66 @@ msgstr "категория с характеристиками"
 msgid "categories with features"
 msgstr "категории с характеристиками"
 
-#: .\app_order\forms.py:15
+#: .\app_order\forms.py:56
 msgid "Last name, first name, patronymic"
 msgstr "Фамилия Имя Отчество"
 
-#: .\app_order\forms.py:19
+#: .\app_order\forms.py:60
 msgid "Enter password"
 msgstr "Введите пароль"
 
-#: .\app_order\forms.py:26
+#: .\app_order\forms.py:67
 msgid "Password confirmation"
 msgstr "Повторите пароль"
+
+#: .\app_order\models.py:13 .\app_products\models.py:40
+#: .\app_products\tests\tests_models.py:49
+msgid "price"
+msgstr "цена"
+
+#: .\app_order\models.py:15
+msgid "price_free_from"
+msgstr "бесплатно с"
+
+#: .\app_order\models.py:20 .\app_order\models.py:37
+msgid "delivery method"
+msgstr "способ доставки"
+
+#: .\app_order\models.py:21
+msgid "delivery methods"
+msgstr "способы доставки"
+
+#: .\app_order\models.py:31
+msgid "city"
+msgstr "город"
+
+#: .\app_order\models.py:32
+msgid "address"
+msgstr "адрес"
+
+#: .\app_order\models.py:42
+msgid "delivery"
+msgstr "Доставка"
+
+#: .\app_order\models.py:43
+msgid "deliveries"
+msgstr "Доставки"
+
+#: .\app_order\models.py:50 .\app_order\models.py:55
+msgid "payment method"
+msgstr "способ оплаты"
+
+#: .\app_order\models.py:56
+msgid "payment methods"
+msgstr "способы оплаты"
+
+#: .\app_order\models.py:72 .\app_order\models.py:77
+msgid "payment"
+msgstr "оплата"
+
+#: .\app_order\models.py:78
+msgid "payments"
+msgstr "оплаты"
 
 #: .\app_products\admin.py:54 .\app_products\filters\admin_filter.py:43
 #: .\app_products\models.py:25 .\app_products\models.py:60
@@ -170,10 +220,6 @@ msgstr "описание"
 #: .\app_products\models.py:26
 msgid "manufacturers"
 msgstr "производители"
-
-#: .\app_products\models.py:40 .\app_products\tests\tests_models.py:49
-msgid "price"
-msgstr "цена"
 
 #: .\app_products\models.py:43
 msgid "main image"
@@ -380,6 +426,26 @@ msgstr "от"
 msgid "home"
 msgstr "главная"
 
+#: .\templates\app_order\block_checkout\block_step_1_user.html:6
+#: .\templates\app_order\checkout.html:40
+msgid "Step 1. User parameters"
+msgstr "Шаг 1. Параметры пользователя"
+
+#: .\templates\app_order\block_checkout\block_step_1_user.html:52
+#: .\templates\app_order\block_checkout\block_step_2_delivery.html:26
+#: .\templates\app_order\block_checkout\block_step_3_payment.html:14
+msgid "Next"
+msgstr "Далее"
+
+#: .\templates\app_order\block_checkout\block_step_2_delivery.html:6
+msgid " Delivery method"
+msgstr "Способ доставки"
+
+#: .\templates\app_order\block_checkout\block_step_3_payment.html:6
+#: .\templates\app_order\checkout.html:46
+msgid "Step 3. Payment method"
+msgstr "Шаг 3. Способ оплаты"
+
 #: .\templates\app_order\checkout.html:7 .\templates\app_order\checkout.html:16
 #: .\templates\app_order\checkout.html:21
 msgid "Checkout"
@@ -389,18 +455,9 @@ msgstr "Оформление заказа"
 msgid "Filling progress"
 msgstr "Прогресс заполнения"
 
-#: .\templates\app_order\checkout.html:40
-#: .\templates\app_order\checkout.html:61
-msgid "Step 1. User parameters"
-msgstr "Шаг 1. Параметры пользователя"
-
 #: .\templates\app_order\checkout.html:43
 msgid "Step 2. Delivery method"
 msgstr "Шаг 2. Способ доставки"
-
-#: .\templates\app_order\checkout.html:46
-msgid "Step 3. Payment method"
-msgstr "Шаг 3. Способ оплаты"
 
 #: .\templates\app_order\checkout.html:49
 msgid "Step 4. Order confirmation"

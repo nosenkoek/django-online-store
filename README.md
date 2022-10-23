@@ -218,10 +218,17 @@ AddSortedItemToContextMixin.add_sorted_item_to_context() - добавляет о
   Поля: full_name, tel_number, avatar, email, password1, password2
 
 
-Сервисы (services.py):
+Сервисы (services):
+**services_views.py**
 - LoginUserMixin.authenticate_and_login(self, username: str, raw_password: str) - вход в систему пользователя
 - InitialDictMixin.get_initial_form(user: User) - возвращает словарь с данными для заполнения формы
 - SetPasswordMixin.set_password(self, form: UserProfileForm) - устанавливает новый пароль и входит в систему
+
+**validators_forms_mixins.py**
+- AddValidationFullNameMixin.clean_full_name() - дополнительная валидация ФИО
+- AddValidatorPasswordMixin.clean_password2() - дополнительная валидация паролей
+- AddValidatorEmailMixin.clean_email() - дополнительная валидация email
+- AddValidationAvatarMixin.clean_avatar() - дополнительная валидация аватара (на размер фото)
 
 Администрирование:
 - поиск по username, имени и фамилии,

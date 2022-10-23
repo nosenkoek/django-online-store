@@ -1,0 +1,38 @@
+[
+{
+    "model": "app_order.deliverymethod",
+    "pk": "61e5c26a-b6c1-417a-b5f0-f310fd6a059d",
+    "fields": {
+        "method_id": "dc64ae87-b0c2-4924-a544-4ae8f013ee61",
+        "name": "Экспресс доставка",
+        "price": "500",
+        "free_from": 7000
+    }
+},
+{
+    "model": "app_order.deliverymethod",
+    "pk": "c42fd769-e667-4eae-ab67-9843e01c73fd",
+    "fields": {
+        "method_id": "e4f407e5-3939-4983-9140-2c0fc220da69",
+        "name": "Обычная доставка",
+        "price": "200",
+        "free_from": 2000
+    }
+},
+{
+    "model": "app_order.paymentmethod",
+    "pk": "13741d26-2640-40df-a028-b30255abfd98",
+    "fields": {
+        "method_id": "4349ee3b-beb3-4123-ba3f-a99840d28eef",
+        "name": "Онлайн со случайного чужого счета"
+    }
+},
+{
+    "model": "app_order.paymentmethod",
+    "pk": "cf7f5d9e-2a5d-460b-948c-b4ceff6970b1",
+    "fields": {
+        "method_id": "51e989c3-7a09-4712-ba8c-9f0de9be908d",
+        "name": "Онлайн картой"
+    }
+}
+]

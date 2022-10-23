@@ -112,7 +112,7 @@ CREATE TABLE "content".product_feature(
 CREATE TABLE "content".payment_method (
 	id uuid PRIMARY KEY,
 	method_id uuid UNIQUE NOT NULL,
-	name varchar(30) NOT NULL
+	name varchar(40) NOT NULL
 );
 
 CREATE TABLE "content".delivery_method (
@@ -120,13 +120,13 @@ CREATE TABLE "content".delivery_method (
 	method_id uuid UNIQUE NOT NULL,
 	name varchar(30) NOT NULL,
 	price decimal NOT NULL,
-	free_from real
+	free_from int NOT NULL
 );
 
 CREATE TABLE "content".delivery(
     id uuid PRIMARY KEY,
     delivery_id uuid UNIQUE NOT NULL,
-    price decimal NOT NULL,  -- todo: продумать автозаполнение или проверку
+    city varchar(50) NOT NULL,
     address text NOT NULL, -- возможно использовать json
     delivery_method_fk uuid NOT NULL
 );
