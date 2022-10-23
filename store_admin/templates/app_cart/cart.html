@@ -95,7 +95,7 @@
               </div>
               <div class="Cart-block">
                 <a class="btn btn_success btn_lg" href="{% url 'cart_clear' %}">{% trans 'Clear cart' %}</a>
-                <a class="btn btn_success btn_lg" href="#">{% trans 'Make an order' %}</a>
+                <a class="btn btn_success btn_lg" href="{% url 'order' %}">{% trans 'Place order' %}</a>
               </div>
             {% else %}
               <div class="Cart-block Cart-block_total">

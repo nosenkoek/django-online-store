@@ -1,0 +1,67 @@
+{% extends '../base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+  {% trans 'Checkout' %}
+{% endblock %}
+
+{% block content %}
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">
+            {% trans 'Checkout' %}
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item"><a href="{% url 'main_page' %}">{% trans 'home' %}</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current"><span>{% trans 'Checkout' %}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="Section Section_column Section_columnRight Section_columnWide Order">
+      <div class="wrap">
+        <div class="Section-column">
+          <div class="Section-columnSection">
+            <header class="Section-header">
+              <strong class="Section-title">
+                {% trans 'Filling progress' %}
+              </strong>
+            </header>
+            <div class="Section-columnContent">
+              <ul class="menu menu_vt Order-navigate">
+                <li class="menu-item_ACTIVE menu-item">
+                  <a class="menu-link" href="#step1">{% trans 'Step 1. User parameters' %}</a>
+                </li>
+                <li class="menu-item">
+                  <a class="menu-link" href="#step2">{% trans 'Step 2. Delivery method' %}</a>
+                </li>
+                <li class="menu-item">
+                  <a class="menu-link" href="#step3">{% trans 'Step 3. Payment method' %}</a>
+                </li>
+                <li class="menu-item">
+                  <a class="menu-link" href="#step4">{% trans 'Step 4. Order confirmation' %}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="Section-content">
+          <form class="form" action="#" method="post">
+            {% include 'app_order/block_checkout/block_step_1_user.html' %}
+            {% include 'app_order/block_checkout/block_step_2_delivery.html' %}
+            {% include 'app_order/block_checkout/block_step_3_payment.html' %}
+            {% include 'app_order/block_checkout/block_step_4_confirm.html' %}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

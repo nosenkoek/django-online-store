@@ -1,0 +1,54 @@
+{% load i18n %}
+
+<div class="Order-block Order-block_OPEN" id="step1">
+  <header class="Section-header Section-header_sm">
+    <h2 class="Section-title">
+      {% trans 'Step 1. User parameters' %}
+    </h2>
+  </header>
+  <div class="row">
+    <div class="row-block">
+      {% for field in form %}
+        {% if field.name in 'full_name, tel_number, email' %}
+          <div class="form-group">
+            {{ field.errors }}
+            <label class="form-label" for="name">
+              {{ field.label_tag }}
+            </label>
+            {% if field.name == 'tel_number' %}
+              <div class="tel-input">
+                <span>+7</span>
+                <span class="form-tel-edit">
+                  <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="text" value="{% if request.user.is_authenticated %}{{ field.initial }} {% endif %}" data-validate="require"/>
+                </span>
+              </div>
+            {% else %}
+              <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="text" value="{% if request.user.is_authenticated %}{{ field.initial }} {% endif %}" data-validate="require"/>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="row-block">
+      {% if not request.user.is_authenticated %}
+        {% for field in form %}
+          {% if field.name in 'password1, password2' %}
+             <div class="form-group">
+              {{ field.errors }}
+              <label class="form-label" for="{{ field.name }}">
+                {{ field.label_tag }}
+              </label>
+              <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="password" data-validate="require"/>
+             </div>
+          {% endif %}
+        {% endfor %}
+      <div class="form-group"><a class="btn btn_muted Order-btnReg" href="{% url 'login' %}?next={{ request.get_full_path }}">Я уже зарегистрирован</a>
+      </div>
+      {% endif %}
+    </div>
+
+  </div>
+  <div class="Order-footer"><a class="btn btn_success Order-next" href="#step2">{% trans 'Next' %}</a>
+  </div>
+</div>

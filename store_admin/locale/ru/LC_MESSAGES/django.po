@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-12 13:58+0300\n"
+"POT-Creation-Date: 2022-10-23 13:35+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -114,6 +114,18 @@ msgstr "категория с характеристиками"
 msgid "categories with features"
 msgstr "категории с характеристиками"
 
+#: .\app_order\forms.py:15
+msgid "Last name, first name, patronymic"
+msgstr "Фамилия Имя Отчество"
+
+#: .\app_order\forms.py:19
+msgid "Enter password"
+msgstr "Введите пароль"
+
+#: .\app_order\forms.py:26
+msgid "Password confirmation"
+msgstr "Повторите пароль"
+
 #: .\app_products\admin.py:54 .\app_products\filters\admin_filter.py:43
 #: .\app_products\models.py:25 .\app_products\models.py:60
 #: .\app_products\tests\tests_models.py:71
@@ -210,27 +222,19 @@ msgstr "отзывы"
 msgid "users"
 msgstr "пользователи"
 
-#: .\app_users\forms.py:20 .\app_users\forms.py:72
+#: .\app_users\forms.py:24 .\app_users\services\validators_forms_mixins.py:62
 msgid "Profile with this Email already exists."
 msgstr "Профиль с таким Email уже создан"
 
-#: .\app_users\forms.py:37
-msgid "The two password fields didn’t match."
-msgstr "Пароль не совпадают"
-
-#: .\app_users\forms.py:64
-msgid "Enter full name. First name, last name and patronymic"
-msgstr "Введите Фамилию Имя Отчество"
-
-#: .\app_users\forms.py:84
+#: .\app_users\forms.py:33
 msgid "Full name. Last name, first name, patronymic"
-msgstr "Введите Фамилию Имя Отчество"
+msgstr "Фамилия Имя Отчество"
 
-#: .\app_users\forms.py:87
+#: .\app_users\forms.py:36
 msgid "New password"
 msgstr "Новый пароль"
 
-#: .\app_users\forms.py:94
+#: .\app_users\forms.py:43
 msgid "New password confirmation"
 msgstr "Повторите пароль"
 
@@ -250,11 +254,19 @@ msgstr "отчество"
 msgid "avatar"
 msgstr "аватар"
 
-#: .\app_users\views.py:30 .\app_users\views.py:103
+#: .\app_users\services\validators_forms_mixins.py:32
+msgid "Enter full name. First name, last name and patronymic"
+msgstr "Введите Фамилию Имя Отчество"
+
+#: .\app_users\services\validators_forms_mixins.py:50
+msgid "The two password fields didn’t match."
+msgstr "Пароль не совпадают"
+
+#: .\app_users\views.py:31 .\app_users\views.py:109
 msgid "Registration successful"
 msgstr "Профиль сохранен"
 
-#: .\app_users\views.py:37 .\app_users\views.py:108
+#: .\app_users\views.py:38 .\app_users\views.py:114
 msgid "Please correct the error"
 msgstr "Пожалуйста, исправьте ошибки"
 
@@ -274,7 +286,11 @@ msgstr "Главная"
 msgid "Cart"
 msgstr "Корзина"
 
-#: .\templates\app_cart\cart.html:48 .\templates\app_cart\cart.html:86
+#: .\templates\app_cart\cart.html:48
+msgid "not enough in storage"
+msgstr "нет на складе"
+
+#: .\templates\app_cart\cart.html:54 .\templates\app_cart\cart.html:93
 #: .\templates\app_categories\sections_main_page\limit_edition.html:83
 #: .\templates\app_categories\sections_main_page\popular_product.html:25
 #: .\templates\app_categories\sections_main_page\random_categories.html:14
@@ -288,23 +304,23 @@ msgstr "Корзина"
 msgid "$"
 msgstr "₽"
 
-#: .\templates\app_cart\cart.html:83
+#: .\templates\app_cart\cart.html:90
 msgid "Total"
 msgstr "Итого"
 
-#: .\templates\app_cart\cart.html:90
+#: .\templates\app_cart\cart.html:97
 msgid "Clear cart"
 msgstr "Очистить корзину"
 
-#: .\templates\app_cart\cart.html:91
-msgid "Make an order"
+#: .\templates\app_cart\cart.html:98
+msgid "Place order"
 msgstr "Оформить заказ"
 
-#: .\templates\app_cart\cart.html:96
+#: .\templates\app_cart\cart.html:103
 msgid "Cart is empty"
 msgstr "Корзина пуста"
 
-#: .\templates\app_cart\cart.html:100
+#: .\templates\app_cart\cart.html:107
 msgid "Start shopping"
 msgstr "Начать покупки"
 
@@ -354,6 +370,7 @@ msgid "from"
 msgstr "от"
 
 #: .\templates\app_categories\subcategory_list.html:19
+#: .\templates\app_order\checkout.html:19
 #: .\templates\app_products\popular_product_list.html:17
 #: .\templates\app_products\product_detail.html:20
 #: .\templates\app_products\product_list.html:18
@@ -363,6 +380,32 @@ msgstr "от"
 msgid "home"
 msgstr "главная"
 
+#: .\templates\app_order\checkout.html:7 .\templates\app_order\checkout.html:16
+#: .\templates\app_order\checkout.html:21
+msgid "Checkout"
+msgstr "Оформление заказа"
+
+#: .\templates\app_order\checkout.html:34
+msgid "Filling progress"
+msgstr "Прогресс заполнения"
+
+#: .\templates\app_order\checkout.html:40
+#: .\templates\app_order\checkout.html:61
+msgid "Step 1. User parameters"
+msgstr "Шаг 1. Параметры пользователя"
+
+#: .\templates\app_order\checkout.html:43
+msgid "Step 2. Delivery method"
+msgstr "Шаг 2. Способ доставки"
+
+#: .\templates\app_order\checkout.html:46
+msgid "Step 3. Payment method"
+msgstr "Шаг 3. Способ оплаты"
+
+#: .\templates\app_order\checkout.html:49
+msgid "Step 4. Order confirmation"
+msgstr "Шаг 4. Подтверждение заказа"
+
 #: .\templates\app_products\popular_product_list.html:7
 #: .\templates\app_products\popular_product_list.html:14
 #: .\templates\app_products\popular_product_list.html:19
@@ -371,7 +414,7 @@ msgstr "Популярные товары"
 
 #: .\templates\app_products\product_detail.html:91
 msgid "Change In Cart"
-msgstr ""
+msgstr "Изменить в корзине"
 
 #: .\templates\app_products\product_detail.html:93
 msgid "Add To Cart"
