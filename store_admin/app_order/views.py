@@ -2,6 +2,7 @@ from typing import Dict
 
 from django.views.generic import FormView
 
+from app_cart.cart import Cart
 from app_cart.services.mixins_for_cart import GetContextTotalPriceCartMixin
 from app_categories.services.navi_categories_list import NaviCategoriesList
 from app_order.forms import CheckoutForm
@@ -21,4 +22,6 @@ class CheckoutView(FormView, GetContextTotalPriceCartMixin, InitialDictMixin):
         context = super(CheckoutView, self).get_context_data(**kwargs)
         context.update(NaviCategoriesList().get_context())
         context.update(self.get_context_price_cart())
+        cart = Cart(self.request)
+        context.update({'cart': cart})
         return context

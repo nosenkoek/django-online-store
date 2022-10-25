@@ -19,11 +19,15 @@
               <div class="tel-input">
                 <span>+7</span>
                 <span class="form-tel-edit">
-                  <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="text" value="{% if request.user.is_authenticated %}{{ field.initial }} {% endif %}" data-validate="require"/>
+                  <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="text"
+                         value="{% if request.user.is_authenticated %}{{ field.initial }} {% endif %}"
+                         data-validate="require" {% if  request.user.is_authenticated %} readonly {% endif %}/>
                 </span>
               </div>
             {% else %}
-              <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="text" value="{% if request.user.is_authenticated %}{{ field.initial }} {% endif %}" data-validate="require"/>
+              <input class="form-input" id="{{ field.name }}" name="{{ field.name }}" type="text"
+                     value="{% if request.user.is_authenticated %}{{ field.initial }} {% endif %}"
+                     data-validate="require" {% if  request.user.is_authenticated %} readonly {% endif %}/>
             {% endif %}
           </div>
         {% endif %}

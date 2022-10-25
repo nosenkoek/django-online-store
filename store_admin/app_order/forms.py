@@ -26,6 +26,7 @@ class CombinedFormBase(forms.Form):
         flag_is_valid = True
 
         for form_class in self.form_classes:
+            # todo: вынести в миксин
             name = form_class.__name__.lower()
             form = getattr(self, name)
             if not form.is_valid():
