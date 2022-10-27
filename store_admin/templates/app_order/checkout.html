@@ -55,6 +55,7 @@
 
         <div class="Section-content">
           <form class="form" action="#" method="post">
+            {% csrf_token %}
             {% include 'app_order/block_checkout/block_step_1_user.html' %}
             {% include 'app_order/block_checkout/block_step_2_delivery.html' %}
             {% include 'app_order/block_checkout/block_step_3_payment.html' %}

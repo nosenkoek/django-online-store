@@ -13,8 +13,8 @@ from app_cart.services.mixins_for_cart import GetContextTotalPriceCartMixin
 from app_categories.services.navi_categories_list import NaviCategoriesList
 from app_users.forms import RegisterForm, UserProfileForm
 from app_users.models import User
-from app_users.services.services_views import LoginUserMixin, InitialDictMixin, \
-    SetPasswordMixin
+from app_users.services.services_views import LoginUserMixin, \
+    InitialDictMixin, SetPasswordMixin
 
 logger = logging.getLogger(__name__)
 

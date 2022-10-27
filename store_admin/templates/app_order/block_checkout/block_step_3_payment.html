@@ -8,15 +8,7 @@
   </header>
 
   <div class="form-group">
-    {% for choice in form.payment_method_fk %}
-      <div>
-        <label class="toggle">
-          <input class="radio_select" type="radio" name="{{ form.payment_method_fk.name }}" value="{{ choice.choice_label }}" checked/>
-          <span class="toggle-box"></span>
-          <span class="toggle-text">{{ choice.choice_label}}</span>
-        </label>
-      </div>
-    {% endfor %}
+    {{ form.payment_method_fk }}
   </div>
   <div class="Order-footer">
     <a class="btn btn_success Order-next" id="button_next" href="#step4">{% trans 'Next' %}</a>

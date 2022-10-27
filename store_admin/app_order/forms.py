@@ -14,9 +14,11 @@ class CombinedFormBase(forms.Form):
     form_classes = []
 
     def __init__(self, *args, **kwargs):
+        instance = kwargs.pop('instance')
         super(CombinedFormBase, self).__init__(*args, **kwargs)
         for form_class in self.form_classes:
             name = form_class.__name__.lower()
+            kwargs.update({'instance': instance})
             setattr(self, name, form_class(*args, **kwargs))
             form = getattr(self, name)
             self.fields.update(form.fields)
@@ -83,7 +85,9 @@ class CheckoutDeliveryForm(forms.ModelForm):
         fields = ('city', 'address', 'delivery_method_fk')
 
         widgets = {
-            'delivery_method_fk': forms.RadioSelect()
+            'delivery_method_fk': forms.RadioSelect(
+                attrs={'class': 'radio_select',
+                       "required": "required"})
         }
 
 
@@ -93,7 +97,9 @@ class CheckoutPaymentForm(forms.ModelForm):
         fields = ('payment_method_fk',)
 
         widgets = {
-            'payment_method_fk': forms.RadioSelect()
+            'payment_method_fk': forms.RadioSelect(
+                attrs={'class': 'radio_select',
+                       "required": "required"})
         }
 
 

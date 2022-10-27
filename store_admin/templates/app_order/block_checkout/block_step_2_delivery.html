@@ -10,20 +10,12 @@
   {% for field in form %}
     {% if field.name in 'delivery_method_fk, city, address' %}
       <div class="form-group">
-        {{ field.errors }}
+        {% if field.name == 'delivery_method_fk' %}
+          {{ field }}
+        {% else %}
+          {{ field.errors }}
           <label class="form-label" for="{{ field.name }}">{{ field.label_tag }}
           </label>
-        {% if field.name == 'delivery_method_fk' %}
-          {% for choice in form.delivery_method_fk %}
-            <div>
-              <label class="toggle">
-                <input type="radio" class="radio_select" name="{{ form.delivery_method_fk.name }}" value="{{ choice.choice_label }}" checked/>
-                <span class="toggle-box"></span>
-                <span class="toggle-text">{{ choice.choice_label}}</span>
-              </label>
-            </div>
-          {% endfor %}
-        {% else %}
           <textarea class="form-textarea" name="{{ field.name }}" id="{{ field.name }}" data-validate="require"></textarea>
         {% endif %}
       </div>

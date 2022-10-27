@@ -3,10 +3,18 @@ button.addEventListener('click', function (){
   let text_inputs=document.querySelectorAll('.form-input, .form-textarea, .radio_select:checked')
   text_inputs.forEach(function (element) {
     let field = document.querySelector(`.${element.name}`)
-    if(field !== null) {
-      field.innerHTML = element.value
+    if (field !== null) {
+      if (element.id.includes('fk')) {
+        let input = document.getElementById(`${element.id}`)
+          for (const label of input.labels) {
+            field.innerHTML = label.textContent
+          }
+      }
+      else {
+        field.innerHTML = element.value
+      }
     }
-    })
+  })
 })
 
 

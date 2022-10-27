@@ -30,11 +30,14 @@ class Delivery(models.Model):
     delivery_id = models.UUIDField(unique=True, default=uuid4, editable=False)
     city = models.CharField(max_length=50, verbose_name=_('city'))
     address = models.TextField(verbose_name=_('address'))
+
     delivery_method_fk = models.ForeignKey(DeliveryMethod,
                                            on_delete=models.CASCADE,
                                            to_field='method_id',
                                            db_column='delivery_method_fk',
-                                           verbose_name=_('delivery method'))
+                                           verbose_name=_('delivery method'),
+                                           default=DeliveryMethod.objects
+                                           .first())
 
     class Meta:
         managed = False
@@ -69,7 +72,9 @@ class Payment(models.Model):
                                           on_delete=models.CASCADE,
                                           to_field='method_id',
                                           db_column='payment_method_fk',
-                                          verbose_name=_('payment'))
+                                          verbose_name=_('payment'),
+                                          default=PaymentMethod.objects
+                                          .first())
 
     class Meta:
         managed = False
