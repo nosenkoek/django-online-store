@@ -4,6 +4,9 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
 
+from app_products.models import Product
+from app_users.models import User
+
 
 class DeliveryMethod(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
@@ -66,7 +69,7 @@ class Payment(models.Model):
     # todo: перенести в app_payment
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     payment_id = models.UUIDField(unique=True, default=uuid4, editable=False)
-    status_payment = models.BooleanField()
+    status_payment = models.BooleanField(default=False)
     error = models.TextField(blank=True, null=True)
     payment_method_fk = models.ForeignKey(PaymentMethod,
                                           on_delete=models.CASCADE,
@@ -81,3 +84,60 @@ class Payment(models.Model):
         db_table = 'payment'
         verbose_name = _('payment')
         verbose_name_plural = _('payments')
+
+
+class Order(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    order_id = models.UUIDField(unique=True, default=uuid4, editable=False)
+    created = models.DateTimeField(auto_now_add=True)
+    total_price = models.DecimalField(max_digits=7, decimal_places=2,
+                                      verbose_name=_('total price'),
+                                      validators=[MinValueValidator(0)])
+
+    delivery_fk = models.OneToOneField(Delivery,
+                                       on_delete=models.CASCADE,
+                                       to_field='delivery_id',
+                                       db_column='delivery_fk',
+                                       verbose_name=_('delivery'))
+    payment_fk = models.OneToOneField(Payment,
+                                      on_delete=models.CASCADE,
+                                      to_field='payment_id',
+                                      db_column='payment_fk',
+                                      verbose_name=_('payment'))
+    user_fk = models.ForeignKey(User,
+                                on_delete=models.CASCADE,
+                                to_field='id',
+                                db_column='user_fk',
+                                verbose_name=_('user'))
+
+    products = models.ManyToManyField(Product, through='OrderProduct')
+
+    class Meta:
+        managed = False
+        db_table = 'order'
+        verbose_name = _('order')
+        verbose_name_plural = _('orders')
+
+
+class OrderProduct(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    count = models.IntegerField(validators=[MinValueValidator(0)])
+
+    order_fk = models.ForeignKey(Order,
+                                 on_delete=models.CASCADE,
+                                 to_field='order_id',
+                                 db_column='order_fk',
+                                 verbose_name=_('order'))
+
+    product_fk = models.ForeignKey(Product,
+                                   on_delete=models.CASCADE,
+                                   to_field='product_id',
+                                   db_column='product_fk',
+                                   verbose_name=_('product'))
+
+    class Meta:
+        managed = False
+        db_table = 'order_product'
+        unique_together = (('order_fk', 'product_fk'),)
+        verbose_name = _('products in order')
+        verbose_name_plural = _('products in orders')

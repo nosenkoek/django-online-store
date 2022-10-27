@@ -2,15 +2,18 @@ from typing import Dict
 
 from django.views.generic import FormView
 
-from app_cart.cart import Cart
-from app_cart.services.mixins_for_cart import GetContextTotalPriceCartMixin
+from app_cart.services.mixins_for_cart import GetContextTotalPriceCartMixin, \
+    CartRequestMixin
 from app_categories.services.navi_categories_list import NaviCategoriesList
 from app_order.forms import CheckoutForm
+from app_order.services.for_create_order import SolveTotalPriceMixin, \
+    SaveOrderToDbMixin
 from app_users.models import User
 from app_users.services.services_views import InitialDictMixin
 
 
-class CheckoutView(FormView, GetContextTotalPriceCartMixin, InitialDictMixin):
+class CheckoutView(FormView, GetContextTotalPriceCartMixin, InitialDictMixin,
+                   CartRequestMixin, SolveTotalPriceMixin, SaveOrderToDbMixin):
     form_class = CheckoutForm
     template_name = 'app_order/checkout.html'
     success_url = '/users/account'
@@ -24,8 +27,7 @@ class CheckoutView(FormView, GetContextTotalPriceCartMixin, InitialDictMixin):
         context = super(CheckoutView, self).get_context_data(**kwargs)
         context.update(NaviCategoriesList().get_context())
         context.update(self.get_context_price_cart())
-        cart = Cart(self.request)
-        context.update({'cart': cart})
+        context.update({'cart': self.cart})
         return context
 
     def get_form_kwargs(self):
@@ -36,5 +38,6 @@ class CheckoutView(FormView, GetContextTotalPriceCartMixin, InitialDictMixin):
 
     def form_valid(self, form):
         result = super(CheckoutView, self).form_valid(form)
-        print(result)
+        self.save_order(form, self.request.user)
+        self.cart.clear()
         return result
