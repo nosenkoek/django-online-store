@@ -24,8 +24,9 @@ class DeliveryMethod(models.Model):
         verbose_name_plural = _('delivery methods')
 
     def __str__(self):
-        return f'{self.name}. Цена {self.price}₽. ' \
-               f'Бесплатно при заказе от {self.free_from}₽'
+        return _('{}. Price {}₽. Free from {}₽').format(self.name,
+                                                        self.price,
+                                                        self.free_from)
 
 
 class Delivery(models.Model):
@@ -47,6 +48,9 @@ class Delivery(models.Model):
         db_table = 'delivery'
         verbose_name = _('delivery')
         verbose_name_plural = _('deliveries')
+
+    def __str__(self):
+        return _('Delivery to {}.').format(self.city)
 
 
 class PaymentMethod(models.Model):
@@ -85,6 +89,9 @@ class Payment(models.Model):
         verbose_name = _('payment')
         verbose_name_plural = _('payments')
 
+    def __str__(self):
+        return _('Paid: {}').format(self.status_payment)
+
 
 class Order(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
@@ -98,12 +105,14 @@ class Order(models.Model):
                                        on_delete=models.CASCADE,
                                        to_field='delivery_id',
                                        db_column='delivery_fk',
-                                       verbose_name=_('delivery'))
+                                       verbose_name=_('delivery'),
+                                       editable=False)
     payment_fk = models.OneToOneField(Payment,
                                       on_delete=models.CASCADE,
                                       to_field='payment_id',
                                       db_column='payment_fk',
-                                      verbose_name=_('payment'))
+                                      verbose_name=_('payment'),
+                                      editable=False)
     user_fk = models.ForeignKey(User,
                                 on_delete=models.CASCADE,
                                 to_field='id',
@@ -117,6 +126,9 @@ class Order(models.Model):
         db_table = 'order'
         verbose_name = _('order')
         verbose_name_plural = _('orders')
+
+    def __str__(self):
+        return _('For {}').format(self.user_fk)
 
 
 class OrderProduct(models.Model):
