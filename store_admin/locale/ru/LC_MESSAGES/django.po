@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-28 23:19+0300\n"
+"POT-Creation-Date: 2022-10-29 00:34+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,9 +115,21 @@ msgstr "категория с характеристиками"
 msgid "categories with features"
 msgstr "категории с характеристиками"
 
-#: .\app_order\admin.py:35
+#: .\app_order\admin.py:67
 msgid "payment status"
 msgstr "статус оплаты"
+
+#: .\app_order\admin.py:73
+msgid "delivery city"
+msgstr "город доставки"
+
+#: .\app_order\admin.py:77
+msgid "delivery address"
+msgstr "адрес доставки"
+
+#: .\app_order\admin.py:81 .\app_order\models.py:23 .\app_order\models.py:42
+msgid "delivery method"
+msgstr "способ доставки"
 
 #: .\app_order\forms.py:61
 msgid "Last name, first name, patronymic"
@@ -139,10 +151,6 @@ msgstr "цена"
 #: .\app_order\models.py:18
 msgid "price_free_from"
 msgstr "бесплатно с"
-
-#: .\app_order\models.py:23 .\app_order\models.py:42
-msgid "delivery method"
-msgstr "способ доставки"
 
 #: .\app_order\models.py:24
 msgid "delivery methods"
@@ -180,7 +188,7 @@ msgstr "способ оплаты"
 msgid "payment methods"
 msgstr "способы оплаты"
 
-#: .\app_order\models.py:82 .\app_order\models.py:89 .\app_order\models.py:114
+#: .\app_order\models.py:82 .\app_order\models.py:89 .\app_order\models.py:115
 msgid "payment"
 msgstr "оплата"
 
@@ -189,46 +197,46 @@ msgid "payments"
 msgstr "оплаты"
 
 #: .\app_order\models.py:93
-msgid "Paid"
-msgstr "Оплачен"
+msgid "Paid: {}"
+msgstr "Оплачен: {}"
 
-#: .\app_order\models.py:93
-msgid "Unpaid"
-msgstr "Не оплачен"
+#: .\app_order\models.py:100
+msgid "created"
+msgstr "создан"
 
 #: .\app_order\models.py:102
 msgid "total price"
 msgstr "итоговая цена"
 
-#: .\app_order\models.py:119 .\app_products\admin.py:106
+#: .\app_order\models.py:121 .\app_products\admin.py:106
 #: .\app_products\models.py:135 .\app_products\tests\tests_models.py:100
 msgid "user"
 msgstr "пользователь"
 
-#: .\app_order\models.py:126 .\app_order\models.py:141
+#: .\app_order\models.py:128 .\app_order\models.py:143
 msgid "order"
 msgstr "заказ"
 
-#: .\app_order\models.py:127
+#: .\app_order\models.py:129
 msgid "orders"
 msgstr "заказы"
 
-#: .\app_order\models.py:130
-msgid "For {}"
-msgstr "Для {}"
+#: .\app_order\models.py:132
+msgid "Order for {}"
+msgstr "Заказ для {}"
 
-#: .\app_order\models.py:147 .\app_products\admin.py:111
+#: .\app_order\models.py:149 .\app_products\admin.py:111
 #: .\app_products\filters\admin_filter.py:55 .\app_products\models.py:67
 #: .\app_products\models.py:83 .\app_products\models.py:99
 #: .\app_products\models.py:130 .\app_products\tests\tests_models.py:95
 msgid "product"
 msgstr "товар"
 
-#: .\app_order\models.py:153
+#: .\app_order\models.py:155
 msgid "products in order"
 msgstr "товары в заказе"
 
-#: .\app_order\models.py:154
+#: .\app_order\models.py:156
 msgid "products in orders"
 msgstr "товары в заказах"
 

@@ -96,7 +96,8 @@ class Payment(models.Model):
 class Order(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     order_id = models.UUIDField(unique=True, default=uuid4, editable=False)
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True,
+                                   verbose_name=_('created'))
     total_price = models.DecimalField(max_digits=7, decimal_places=2,
                                       verbose_name=_('total price'),
                                       validators=[MinValueValidator(0)])
@@ -128,7 +129,7 @@ class Order(models.Model):
         verbose_name_plural = _('orders')
 
     def __str__(self):
-        return _('For {}').format(self.user_fk)
+        return _('Order for {}').format(self.user_fk)
 
 
 class OrderProduct(models.Model):

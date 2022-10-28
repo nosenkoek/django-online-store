@@ -21,6 +21,10 @@ class OrderProductInline(admin.TabularInline):
         """Возможность удалять товары"""
         return False
 
+    def has_change_permission(self, request, obj=None):
+        """Возможность менять товары"""
+        return False
+
 
 @admin.register(DeliveryMethod)
 class DeliveryMethodAdmin(admin.ModelAdmin):
