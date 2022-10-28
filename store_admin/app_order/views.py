@@ -31,13 +31,15 @@ class CheckoutView(FormView, GetContextTotalPriceCartMixin, InitialDictMixin,
         return context
 
     def get_form_kwargs(self):
-        user = User.objects.get(id=self.request.user.id)
         kwargs = super(CheckoutView, self).get_form_kwargs()
-        kwargs.update({'instance': user})
+        if self.request.user.is_authenticated:
+            user = User.objects.get(id=self.request.user.id)
+            kwargs.update({'instance': user})
         return kwargs
 
     def form_valid(self, form):
         result = super(CheckoutView, self).form_valid(form)
+        print(form.cleaned_data)
         self.save_order(form, self.request.user)
         self.cart.clear()
         return result

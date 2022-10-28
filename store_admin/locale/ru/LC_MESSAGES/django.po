@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-25 13:09+0300\n"
+"POT-Creation-Date: 2022-10-28 23:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,7 +43,7 @@ msgstr "Файл не SVG"
 
 #: .\app_categories\models.py:19 .\app_categories\models.py:60
 #: .\app_categories\tests\tests_models.py:23
-#: .\app_categories\tests\tests_models.py:40 .\app_order\models.py:11
+#: .\app_categories\tests\tests_models.py:40 .\app_order\models.py:14
 #: .\app_products\models.py:17 .\app_products\models.py:36
 #: .\app_products\tests\tests_models.py:39
 #: .\app_products\tests\tests_models.py:78
@@ -115,66 +115,122 @@ msgstr "категория с характеристиками"
 msgid "categories with features"
 msgstr "категории с характеристиками"
 
-#: .\app_order\forms.py:57
+#: .\app_order\admin.py:35
+msgid "payment status"
+msgstr "статус оплаты"
+
+#: .\app_order\forms.py:61
 msgid "Last name, first name, patronymic"
 msgstr "Фамилия Имя Отчество"
 
-#: .\app_order\forms.py:61
+#: .\app_order\forms.py:65
 msgid "Enter password"
 msgstr "Введите пароль"
 
-#: .\app_order\forms.py:68
+#: .\app_order\forms.py:72
 msgid "Password confirmation"
 msgstr "Повторите пароль"
 
-#: .\app_order\models.py:13 .\app_products\models.py:40
+#: .\app_order\models.py:16 .\app_products\models.py:40
 #: .\app_products\tests\tests_models.py:49
 msgid "price"
 msgstr "цена"
 
-#: .\app_order\models.py:15
+#: .\app_order\models.py:18
 msgid "price_free_from"
 msgstr "бесплатно с"
 
-#: .\app_order\models.py:20 .\app_order\models.py:37
+#: .\app_order\models.py:23 .\app_order\models.py:42
 msgid "delivery method"
 msgstr "способ доставки"
 
-#: .\app_order\models.py:21
+#: .\app_order\models.py:24
 msgid "delivery methods"
 msgstr "способы доставки"
 
-#: .\app_order\models.py:31
+#: .\app_order\models.py:27
+msgid "{}. Price {}₽. Free from {}₽"
+msgstr "{}. Стоимость {}₽. Бесплатно с {}₽"
+
+#: .\app_order\models.py:35
 msgid "city"
 msgstr "город"
 
-#: .\app_order\models.py:32
+#: .\app_order\models.py:36
 msgid "address"
 msgstr "адрес"
 
-#: .\app_order\models.py:42
+#: .\app_order\models.py:49 .\app_order\models.py:109
 msgid "delivery"
 msgstr "Доставка"
 
-#: .\app_order\models.py:43
+#: .\app_order\models.py:50
 msgid "deliveries"
 msgstr "Доставки"
 
-#: .\app_order\models.py:50 .\app_order\models.py:55
+#: .\app_order\models.py:53
+msgid "Delivery to {}."
+msgstr "Доставка в {}"
+
+#: .\app_order\models.py:60 .\app_order\models.py:65
 msgid "payment method"
 msgstr "способ оплаты"
 
-#: .\app_order\models.py:56
+#: .\app_order\models.py:66
 msgid "payment methods"
 msgstr "способы оплаты"
 
-#: .\app_order\models.py:72 .\app_order\models.py:77
+#: .\app_order\models.py:82 .\app_order\models.py:89 .\app_order\models.py:114
 msgid "payment"
 msgstr "оплата"
 
-#: .\app_order\models.py:78
+#: .\app_order\models.py:90
 msgid "payments"
 msgstr "оплаты"
+
+#: .\app_order\models.py:93
+msgid "Paid"
+msgstr "Оплачен"
+
+#: .\app_order\models.py:93
+msgid "Unpaid"
+msgstr "Не оплачен"
+
+#: .\app_order\models.py:102
+msgid "total price"
+msgstr "итоговая цена"
+
+#: .\app_order\models.py:119 .\app_products\admin.py:106
+#: .\app_products\models.py:135 .\app_products\tests\tests_models.py:100
+msgid "user"
+msgstr "пользователь"
+
+#: .\app_order\models.py:126 .\app_order\models.py:141
+msgid "order"
+msgstr "заказ"
+
+#: .\app_order\models.py:127
+msgid "orders"
+msgstr "заказы"
+
+#: .\app_order\models.py:130
+msgid "For {}"
+msgstr "Для {}"
+
+#: .\app_order\models.py:147 .\app_products\admin.py:111
+#: .\app_products\filters\admin_filter.py:55 .\app_products\models.py:67
+#: .\app_products\models.py:83 .\app_products\models.py:99
+#: .\app_products\models.py:130 .\app_products\tests\tests_models.py:95
+msgid "product"
+msgstr "товар"
+
+#: .\app_order\models.py:153
+msgid "products in order"
+msgstr "товары в заказе"
+
+#: .\app_order\models.py:154
+msgid "products in orders"
+msgstr "товары в заказах"
 
 #: .\app_products\admin.py:54 .\app_products\filters\admin_filter.py:43
 #: .\app_products\models.py:25 .\app_products\models.py:60
@@ -182,18 +238,6 @@ msgstr "оплаты"
 #: .\templates\app_products\product_detail.html:107
 msgid "manufacturer"
 msgstr "производитель"
-
-#: .\app_products\admin.py:106 .\app_products\models.py:135
-#: .\app_products\tests\tests_models.py:100
-msgid "user"
-msgstr "пользователь"
-
-#: .\app_products\admin.py:111 .\app_products\filters\admin_filter.py:55
-#: .\app_products\models.py:67 .\app_products\models.py:83
-#: .\app_products\models.py:99 .\app_products\models.py:130
-#: .\app_products\tests\tests_models.py:95
-msgid "product"
-msgstr "товар"
 
 #: .\app_products\apps.py:8 .\app_products\models.py:68
 msgid "products"
@@ -284,19 +328,19 @@ msgstr "Новый пароль"
 msgid "New password confirmation"
 msgstr "Повторите пароль"
 
-#: .\app_users\models.py:13
+#: .\app_users\models.py:14
 msgid "File size is {}Mb. Should not be more than 2Mb"
 msgstr "Размер файла {}Мб. Файл не должен превышать 2Мб"
 
-#: .\app_users\models.py:20 .\app_users\tests\tests_models.py:29
+#: .\app_users\models.py:22 .\app_users\tests\tests_models.py:29
 msgid "telephone number"
 msgstr "номер телефона"
 
-#: .\app_users\models.py:22 .\app_users\tests\tests_models.py:34
+#: .\app_users\models.py:24 .\app_users\tests\tests_models.py:34
 msgid "patronymic"
 msgstr "отчество"
 
-#: .\app_users\models.py:25 .\app_users\tests\tests_models.py:39
+#: .\app_users\models.py:27 .\app_users\tests\tests_models.py:39
 msgid "avatar"
 msgstr "аватар"
 
@@ -434,9 +478,9 @@ msgstr "главная"
 msgid "Step 1. User parameters"
 msgstr "Шаг 1. Параметры пользователя"
 
-#: .\templates\app_order\block_checkout\block_step_1_user.html:52
-#: .\templates\app_order\block_checkout\block_step_2_delivery.html:34
-#: .\templates\app_order\block_checkout\block_step_3_payment.html:22
+#: .\templates\app_order\block_checkout\block_step_1_user.html:56
+#: .\templates\app_order\block_checkout\block_step_2_delivery.html:26
+#: .\templates\app_order\block_checkout\block_step_3_payment.html:14
 msgid "Next"
 msgstr "Далее"
 

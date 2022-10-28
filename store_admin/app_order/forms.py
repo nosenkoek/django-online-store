@@ -14,7 +14,9 @@ class CombinedFormBase(forms.Form):
     form_classes = []
 
     def __init__(self, *args, **kwargs):
-        instance = kwargs.pop('instance')
+        instance = kwargs.pop('instance') if 'instance' in kwargs.keys() \
+            else None
+
         super(CombinedFormBase, self).__init__(*args, **kwargs)
         for form_class in self.form_classes:
             name = form_class.__name__.lower()
@@ -72,11 +74,11 @@ class CheckoutUserForm(forms.ModelForm, AddValidationFullNameMixin,
         widget=forms.PasswordInput(attrs={'autocomplete': 'password'}),
         required=False
     )
-
+    #todo: подумать, почему нет валидации телефона
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'patronymic',
-                  'email', 'tel_number', 'password1', 'password2')
+                  'email', 'tel_number', 'password1', 'password2', 'username')
 
 
 class CheckoutDeliveryForm(forms.ModelForm):

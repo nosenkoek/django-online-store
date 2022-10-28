@@ -1,11 +1,13 @@
 from decimal import Decimal
 
+from django.contrib.auth import login
 from django.db import transaction
 from django.forms import Form
 
 from app_order.models import DeliveryMethod, Delivery, Payment, Order, \
     OrderProduct
 from app_users.models import User
+from app_users.services.services_views import LoginUserMixin
 
 
 class SolveTotalPriceMixin():
@@ -26,8 +28,24 @@ class SolveTotalPriceMixin():
         return total_price
 
 
-class SaveOrderToDbMixin():
+class SaveOrderToDbMixin(LoginUserMixin):
     """Миксин для сохранения необходимых данный в БД"""
+    @staticmethod
+    def _get_or_create_user(form: Form, user: User) -> User:
+        if not user.is_authenticated:
+            username = form.cleaned_data.get('username')
+            user = User.objects.create(
+                username=username,
+                first_name=form.cleaned_data.get('first_name'),
+                last_name=form.cleaned_data.get('last_name'),
+                patronymic=form.cleaned_data.get('patronymic'),
+                email=form.cleaned_data.get('email'),
+                tel_number=form.cleaned_data.get('tel_number')
+            )
+            user.set_password(form.cleaned_data.get('password2'))
+            user.save()
+        return user
+
     @transaction.atomic
     def save_order(self, form: Form, user: User):
         """
@@ -35,6 +53,8 @@ class SaveOrderToDbMixin():
         :param user: пользователь
         :param form: провалидированная форма
         """
+        user = self._get_or_create_user(form, user)
+
         delivery = Delivery.objects.create(
             city=form.cleaned_data.get('city'),
             address=form.cleaned_data.get('address'),
@@ -55,3 +75,8 @@ class SaveOrderToDbMixin():
                                       count=item.quantity)
                          for item in self.cart]
         OrderProduct.objects.bulk_create(order_product)
+
+        if user is not self.request.user:
+            login(self.request, user)
+
+        # todo: добавить списание товаров со склада, вопрос: в какой момент?

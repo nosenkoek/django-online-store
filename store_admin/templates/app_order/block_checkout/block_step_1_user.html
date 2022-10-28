@@ -9,7 +9,7 @@
   <div class="row">
     <div class="row-block">
       {% for field in form %}
-        {% if field.name in 'full_name, tel_number, email' %}
+        {% if field.name in 'full_name, tel_number, email, username' %}
           <div class="form-group">
             {{ field.errors }}
             <label class="form-label" for="name">

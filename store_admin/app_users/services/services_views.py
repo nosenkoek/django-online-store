@@ -37,6 +37,7 @@ class InitialDictMixin():
             'avatar': user.avatar,
             'email': user.email,
             'tel_number': user.tel_number,
+            'username': user.username
         }
         return initial_dict
 
