@@ -49,26 +49,22 @@ class PaymentMethodAdmin(admin.ModelAdmin):
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
     # todo: перенести в app_payment
-    list_display = ('status_payment', 'error', 'payment_method_fk')
-    list_filter = ('status_payment', 'payment_method_fk')
+    list_display = ('payment_method_fk', 'error', 'paid')
+    list_filter = ('paid', 'payment_method_fk')
 
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('user_fk', 'total_price', 'status_payment', 'created',
+    list_display = ('number', 'user_fk', 'total_price', 'status', 'created',
                     'to_city', 'to_address', 'delivery_method')
-    readonly_fields = list_display
-    list_filter = ('payment_fk__status_payment',)
+    ordering = ('-created', )
+    readonly_fields = ('number', 'user_fk', 'total_price', 'created',
+                       'to_city', 'to_address', 'delivery_method')
+    list_filter = ('status',)
     list_select_related = ('payment_fk', 'delivery_fk', 'user_fk',
                            'delivery_fk__delivery_method_fk')
 
     inlines = (OrderProductInline,)
-
-    @admin.display(description=_('payment status'))
-    def status_payment(self, obj):
-        return obj.payment_fk.status_payment
-
-    status_payment.boolean = True
 
     @admin.display(description=_('delivery city'))
     def to_city(self, obj):

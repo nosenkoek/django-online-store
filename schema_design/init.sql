@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS "content".delivery_method;
 DROP TABLE IF EXISTS "content".payment_method;
 
 DROP TYPE IF EXISTS type_feature_enum;
+DROP TYPE IF EXISTS status_enum;
 DROP INDEX IF EXISTS product_name_trgm_idx;
 DROP INDEX IF EXISTS product_price_idx;
 DROP INDEX IF EXISTS feature_value_idx;
@@ -109,6 +110,8 @@ CREATE TABLE "content".product_feature(
 
 
 -- ORDERS
+CREATE TYPE status_enum AS ENUM ('unpaid', 'paid', 'delivering', 'delivered');
+
 CREATE TABLE "content".payment_method (
 	id uuid PRIMARY KEY,
 	method_id uuid UNIQUE NOT NULL,
@@ -134,7 +137,7 @@ CREATE TABLE "content".delivery(
 CREATE TABLE "content".payment(
     id uuid PRIMARY KEY,
     payment_id uuid UNIQUE NOT NULL,
-    status_payment bool NOT NULL,
+    paid timestamp,
     error text,
     payment_method_fk uuid NOT NULL
 );
@@ -143,6 +146,8 @@ CREATE TABLE "content".order(
     id uuid PRIMARY KEY,
     order_id uuid UNIQUE NOT NULL,
     created timestamp NOT NULL,
+    number serial UNIQUE NOT NULL,
+    status status_enum NOT NULL,
     total_price decimal NOT NULL,
     delivery_fk uuid UNIQUE NOT NULL ,
     payment_fk uuid UNIQUE NOT NULL,
@@ -216,6 +221,7 @@ ALTER TABLE "order"
 ALTER TABLE "order"
     ADD CONSTRAINT user_fk FOREIGN KEY (user_fk)
         REFERENCES app_users_user(id) ON DELETE CASCADE;
+
 
 ALTER TABLE order_product
     ADD CONSTRAINT order_fk FOREIGN KEY (order_fk)

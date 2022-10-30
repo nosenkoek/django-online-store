@@ -4,6 +4,7 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
 
+from app_order.services.increment_utils import get_next_increment
 from app_products.models import Product
 from app_users.models import User
 
@@ -73,7 +74,7 @@ class Payment(models.Model):
     # todo: перенести в app_payment
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     payment_id = models.UUIDField(unique=True, default=uuid4, editable=False)
-    status_payment = models.BooleanField(default=False)
+    paid = models.DateTimeField(blank=True, null=True)
     error = models.TextField(blank=True, null=True)
     payment_method_fk = models.ForeignKey(PaymentMethod,
                                           on_delete=models.CASCADE,
@@ -90,17 +91,31 @@ class Payment(models.Model):
         verbose_name_plural = _('payments')
 
     def __str__(self):
-        return _('Paid: {}').format(self.status_payment)
+        return _('Paid: {}').format(self.paid)
 
 
 class Order(models.Model):
+    class Status(models.TextChoices):
+        UNPAID = 'unpaid', _('unpaid')
+        PAID = 'paid', _('paid')
+        DELIVERING = 'delivering', _('delivering')
+        DELIVERED = 'delivered', _('delivered')
+
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     order_id = models.UUIDField(unique=True, default=uuid4, editable=False)
     created = models.DateTimeField(auto_now_add=True,
                                    verbose_name=_('created'))
+    number = models.IntegerField(unique=True,
+                                 default=get_next_increment,
+                                 editable=False,
+                                 verbose_name=_('number'))
     total_price = models.DecimalField(max_digits=7, decimal_places=2,
                                       verbose_name=_('total price'),
                                       validators=[MinValueValidator(0)])
+    status = models.CharField(max_length=30,
+                              choices=Status.choices,
+                              default=Status.UNPAID,
+                              verbose_name=_('status'))
 
     delivery_fk = models.OneToOneField(Delivery,
                                        on_delete=models.CASCADE,
@@ -114,6 +129,7 @@ class Order(models.Model):
                                       db_column='payment_fk',
                                       verbose_name=_('payment'),
                                       editable=False)
+
     user_fk = models.ForeignKey(User,
                                 on_delete=models.CASCADE,
                                 to_field='id',

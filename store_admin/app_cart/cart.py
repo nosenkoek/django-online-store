@@ -30,6 +30,7 @@ class Cart():
             cart = self.session[settings.CART_SESSION_ID] = {}
 
         self.cart = cart
+        self.product_model = Product
 
     def save(self):
         """ Сохранение изменений в корзине в сессии"""
@@ -42,6 +43,9 @@ class Cart():
         :param quantity: количество
         :param updated: флаг для изменения количества
         """
+        # todo: подумать над более гибким кодом, изменить
+        #  {product_id: {'quantity': 1}}
+        #  может вынести обработку сессии (возможно миксин)
         product_id = str(product_id)
 
         if product_id not in self.cart:
@@ -85,7 +89,8 @@ class Cart():
         self.save()
 
     def __iter__(self) -> CartItem:
-        products = Product.objects.filter(product_id__in=self.cart.keys())
+        products = self.product_model.objects.filter(
+            product_id__in=self.cart.keys())
 
         for product in products:
             quantity = self.cart.get(str(product.product_id)).get('quantity')

@@ -82,11 +82,11 @@
         <div class="Cart-product">
         <div class="Cart-block Cart-block_row">
           <div class="Cart-block Cart-block_pict">
-            <a class="Cart-pict" href="{% url 'product_detail' product.product_id %}">
+            <a class="Cart-pict" href="{% url 'product_detail' product.slug %}">
               <img class="Cart-img" src="{{ product.main_image.url }}" alt="card.jpg"/></a>
           </div>
           <div class="Cart-block Cart-block_info">
-            <a class="Cart-title" href="{% url 'product_detail' product.product_id %}">{{ product.name }}</a>
+            <a class="Cart-title" href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
             <div class="Cart-desc">
               {{ product.description }}
             </div>

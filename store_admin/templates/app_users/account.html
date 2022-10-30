@@ -59,36 +59,48 @@
                   <div class="Order-personal">
                     <div class="row">
                       <div class="row-block">
-                        <a class="Order-title" href="oneorder.html">
-                          Заказ&#32;<span class="Order-numberOrder">№200</span>&#32;от&#32;<span class="Order-dateOrder">21.07.2020</span>
+                        <a class="Order-title" href="{% url 'order_detail' order.number %}">
+                          {% trans 'Order' %}&#32;<span class="Order-numberOrder">№{{ order.number }}</span>&#32;от&#32;<span class="Order-dateOrder">{{ order.created }}</span>
                         </a>
                         <div class="Account-editLink">
-                          <a href="historyorder.html">История заказов</a>
+                          <a href="{% url 'order_history' %}">{% trans 'History of orders' %}</a>
                         </div>
                       </div>
                       <div class="row-block">
                         <div class="Order-info Order-info_delivery">
-                          <div class="Order-infoType">Тип доставки:
+                          <div class="Order-infoType">
+                            {% trans 'Delivery method' %}:
                           </div>
-                          <div class="Order-infoContent">Обычная доставка
+                          <div class="Order-infoContent">
+                            {{ order.delivery_fk.delivery_method_fk.name }}
                           </div>
                         </div>
                         <div class="Order-info Order-info_pay">
-                          <div class="Order-infoType">Оплата:
+                          <div class="Order-infoType">
+                            {% trans 'Payment' %}:
                           </div>
-                          <div class="Order-infoContent">Онлайн картой
+                          <div class="Order-infoContent">
+                            {{ order.payment_fk.payment_method_fk }}
                           </div>
                         </div>
                         <div class="Order-info">
-                          <div class="Order-infoType">Общая стоимость:
+                          <div class="Order-infoType">
+                            {% trans 'Total price' %}:
                           </div>
-                          <div class="Order-infoContent">200.99$
+                          <div class="Order-infoContent">
+                            <span class="Order-price">{{ order.total_price }}{% trans '$' %}</span>
                           </div>
                         </div>
                         <div class="Order-info Order-info_status">
-                          <div class="Order-infoType">Статус:
+                          <div class="Order-infoType">
+                            {% trans 'Status' %}:
                           </div>
-                          <div class="Order-infoContent">Не оплачен
+                          <div class="Order-infoContent">
+                            {% if order.payment_fk.status_payment %}
+                              {% trans 'Paid' %}
+                            {% else %}
+                              {% trans 'Unpaid' %}
+                            {% endif %}
                           </div>
                         </div>
                       </div>

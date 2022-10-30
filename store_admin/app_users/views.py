@@ -11,6 +11,7 @@ from django.utils.translation import gettext as _
 
 from app_cart.services.mixins_for_cart import GetContextTotalPriceCartMixin
 from app_categories.services.navi_categories_list import NaviCategoriesList
+from app_order.models import Order
 from app_users.forms import RegisterForm, UserProfileForm
 from app_users.models import User
 from app_users.services.services_views import LoginUserMixin, \
@@ -82,6 +83,9 @@ class AccountView(LoginRequiredMixin, DetailView,
         context = super(AccountView, self).get_context_data(**kwargs)
         context.update(NaviCategoriesList().get_context())
         context.update(self.get_context_price_cart())
+        order = Order.objects.filter(user_fk=self.get_object())\
+            .order_by('-created').first()
+        context.update({'order': order})
         return context
 
 

@@ -17,6 +17,7 @@ class AddValidationFullNameMixin():
 
         length_name = len(full_name_words)
 
+        #todo: подумтаь над фабрикой
         if length_name == 2:
             self.cleaned_data.update({
                 'last_name': full_name_words[0],

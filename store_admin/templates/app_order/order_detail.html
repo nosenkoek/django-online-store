@@ -1,0 +1,172 @@
+{% extends '../base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+  {% trans 'Order' %} №{{ order.number }}
+{% endblock %}
+
+{% block content %}
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">
+            {% trans 'Order' %} №{{ order.number }}
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item">
+              <a href="{% url 'main_page' %}">{% trans 'home' %}</a>
+            </li>
+            <li class="breadcrumbs-item">
+              <a href="{% url 'order_history' %}">{% trans 'history of orders' %}</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current">
+              <span>{% trans 'Order' %} №{{ order.number }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="Section">
+      <div class="wrap">
+        <div class="Section-content">
+          <div class="Orders">
+          </div>
+          <div class="Order">
+            <div class="Order-infoBlock">
+              <div class="Order-personal">
+                <div class="row">
+                  <div class="row-block">
+                    <div class="Order-info Order-info_date">
+                      <div class="Order-infoType">
+                        {% trans 'Date of order' %}:
+                      </div>
+                      <div class="Order-infoContent">
+                        {{ order.created }}
+                      </div>
+                    </div>
+                    <div class="Order-info">
+                      <div class="Order-infoType">
+                        {% trans 'Full name' %}:
+                      </div>
+                      <div class="Order-infoContent">
+                        {{ order.user_fk.get_full_name }}
+                      </div>
+                    </div>
+                    <div class="Order-info">
+                      <div class="Order-infoType">
+                        {% trans 'Telephone number' %}:
+                      </div>
+                      <div class="Order-infoContent">
+                        +7{{ order.user_fk.tel_number }}
+                      </div>
+                    </div>
+                    <div class="Order-info">
+                      <div class="Order-infoType">E-mail:
+                      </div>
+                      <div class="Order-infoContent">
+                        {{ order.user_fk.email }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row-block">
+                    <div class="Order-info Order-info_delivery">
+                      <div class="Order-infoType">
+                        {% trans 'Delivery method' %}:
+                      </div>
+                      <div class="Order-infoContent">
+                        {{ order.delivery_fk.delivery_method_fk.name }}
+                      </div>
+                    </div>
+                    <div class="Order-info">
+                      <div class="Order-infoType">
+                        {% trans 'City' %}:
+                      </div>
+                      <div class="Order-infoContent">
+                        {{ order.delivery_fk.city }}
+                      </div>
+                    </div>
+                    <div class="Order-info">
+                      <div class="Order-infoType">
+                        {% trans 'Address' %}:
+                      </div>
+                      <div class="Order-infoContent">
+                        {{ order.delivery_fk.address }}
+                      </div>
+                    </div>
+                    <div class="Order-info Order-info_pay">
+                      <div class="Order-infoType">
+                        {% trans 'Payment' %}:
+                      </div>
+                      <div class="Order-infoContent">
+                        {{ order.payment_fk.payment_method_fk.name }}
+                      </div>
+                    </div>
+                    <div class="Order-info Order-info_status">
+                      <div class="Order-infoType">
+                        {% trans 'Status' %}:
+                      </div>
+                      <div class="Order-infoContent">
+                        {{ order.get_status_display }}
+                      </div>
+                    </div>
+
+                    {% if order.payment_fk.error %}
+                      <div class="Order-info Order-info_error">
+                      <div class="Order-infoType">
+                        {% trans 'Payment failed' %}:
+                      </div>
+                      <div class="Order-infoContent">
+                        {{ order.payment_fk.error }}
+                      </div>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="Cart Cart_order">
+                {% for order_product in order_products %}
+                  {% with order_product.product_fk as product %}
+                    <div class="Cart-product">
+                      <div class="Cart-block Cart-block_row">
+                        <div class="Cart-block Cart-block_pict">
+                          <a class="Cart-pict" href="{% url 'product_detail' product.slug %}"><img class="Cart-img" src="{{ product.main_image.url }}" alt="card.jpg"/></a>
+                        </div>
+                        <div class="Cart-block Cart-block_info"><a class="Cart-title" href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
+                          <div class="Cart-desc">{{ product.description }}
+                          </div>
+                        </div>
+                        <div class="Cart-block Cart-block_price">
+                          <div class="Cart-price">{{ product.price }}{% trans '$' %}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="Cart-block Cart-block_row">
+                        <div class="Cart-block Cart-block_amount">
+                          {{ order_product.count }} {% trans 'pc.' %}
+                        </div>
+                      </div>
+                    </div>
+                  {% endwith %}
+                {% endfor %}
+                <div class="Cart-total">
+                  <div class="Cart-block Cart-block_total">
+                    <strong class="Cart-title">
+                      {% trans 'Total' %}:<span class="Cart-price">{{ order.total_price }} {% trans '$' %}</span>
+                    </strong>
+                  </div>
+                  {% if order.status == 'unpaid' %}
+                    <div class="Cart-block"><a class="btn btn_primary btn_lg" href="#">{% trans 'Pay' %}</a>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

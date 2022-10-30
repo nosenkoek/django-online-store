@@ -36,6 +36,9 @@ class SolveTotalPriceMixin():
         return total_price
 
 
+# todo: может в виде хэндлера?
+#  init - form, user(from request), cart
+
 class SaveOrderToDbMixin(LoginUserMixin):
     """Миксин для сохранения необходимых данный в БД"""
 
@@ -81,6 +84,7 @@ class SaveOrderToDbMixin(LoginUserMixin):
             user_fk=user
         )
 
+        #todo: вынести отдельно
         order_product, products = [], []
 
         for item in self.cart:
@@ -89,6 +93,7 @@ class SaveOrderToDbMixin(LoginUserMixin):
             order_product.append(OrderProduct(order_fk=order,
                                               product_fk=item.product,
                                               count=item.quantity))
+
         OrderProduct.objects.bulk_create(order_product)
 
         try:
@@ -98,7 +103,7 @@ class SaveOrderToDbMixin(LoginUserMixin):
                            f"for {user.username} | {err}")
             raise TransactionManagementError('Product is not availability')
 
-        if user is not self.request.user:
+        if not self.request.user.is_authenticated:
             login(self.request, user)
             logger.info(f'New user | {user.username}')
 
