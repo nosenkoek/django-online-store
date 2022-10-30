@@ -1,5 +1,8 @@
+import logging
 from typing import Dict
 
+from django.contrib import messages
+from django.db.transaction import TransactionManagementError
 from django.views.generic import FormView
 
 from app_cart.services.mixins_for_cart import GetContextTotalPriceCartMixin, \
@@ -11,9 +14,12 @@ from app_order.services.for_create_order import SolveTotalPriceMixin, \
 from app_users.models import User
 from app_users.services.services_views import InitialDictMixin
 
+logger = logging.getLogger(__name__)
+
 
 class CheckoutView(FormView, GetContextTotalPriceCartMixin, InitialDictMixin,
                    CartRequestMixin, SolveTotalPriceMixin, SaveOrderToDbMixin):
+    """Представление для оформления заказа"""
     form_class = CheckoutForm
     template_name = 'app_order/checkout.html'
     success_url = '/users/account'
@@ -39,7 +45,15 @@ class CheckoutView(FormView, GetContextTotalPriceCartMixin, InitialDictMixin,
 
     def form_valid(self, form):
         result = super(CheckoutView, self).form_valid(form)
-        print(form.cleaned_data)
-        self.save_order(form, self.request.user)
+
+        try:
+            order = self.save_order(form, self.request.user)
+        except TransactionManagementError as err:
+            logger.warning(f'Not save order | {err}')
+            messages.error(self.request, f"Order wasn't created. {err}")
+            return self.form_invalid(form)
+        else:
+            logger.info(f'Order {order.id} created')
+
         self.cart.clear()
         return result

@@ -1,17 +1,25 @@
+import logging
+
 from decimal import Decimal
 
 from django.contrib.auth import login
+from django.db.utils import IntegrityError
 from django.db import transaction
+from django.db.transaction import TransactionManagementError
 from django.forms import Form
 
 from app_order.models import DeliveryMethod, Delivery, Payment, Order, \
     OrderProduct
+from app_products.models import Product
 from app_users.models import User
 from app_users.services.services_views import LoginUserMixin
+
+logger = logging.getLogger(__name__)
 
 
 class SolveTotalPriceMixin():
     """Расчет общей суммы для оплаты с учетом доставки"""
+
     def get_total_price_for_payment(
             self, delivery_method: DeliveryMethod) -> Decimal:
         """
@@ -30,6 +38,7 @@ class SolveTotalPriceMixin():
 
 class SaveOrderToDbMixin(LoginUserMixin):
     """Миксин для сохранения необходимых данный в БД"""
+
     @staticmethod
     def _get_or_create_user(form: Form, user: User) -> User:
         if not user.is_authenticated:
@@ -47,11 +56,12 @@ class SaveOrderToDbMixin(LoginUserMixin):
         return user
 
     @transaction.atomic
-    def save_order(self, form: Form, user: User):
+    def save_order(self, form: Form, user: User) -> Order:
         """
         Сохранение заказа в БД
         :param user: пользователь
         :param form: провалидированная форма
+        :return: объект сохраненного заказа
         """
         user = self._get_or_create_user(form, user)
 
@@ -70,13 +80,26 @@ class SaveOrderToDbMixin(LoginUserMixin):
             payment_fk=payment,
             user_fk=user
         )
-        order_product = [OrderProduct(order_fk=order,
-                                      product_fk=item.product,
-                                      count=item.quantity)
-                         for item in self.cart]
+
+        order_product, products = [], []
+
+        for item in self.cart:
+            item.product.count -= item.quantity
+            products.append(item.product)
+            order_product.append(OrderProduct(order_fk=order,
+                                              product_fk=item.product,
+                                              count=item.quantity))
         OrderProduct.objects.bulk_create(order_product)
+
+        try:
+            Product.objects.bulk_update(products, ('count',))
+        except IntegrityError as err:
+            logger.warning(f"Product is not availability "
+                           f"for {user.username} | {err}")
+            raise TransactionManagementError('Product is not availability')
 
         if user is not self.request.user:
             login(self.request, user)
+            logger.info(f'New user | {user.username}')
 
-        # todo: добавить списание товаров со склада, вопрос: в какой момент?
+        return order

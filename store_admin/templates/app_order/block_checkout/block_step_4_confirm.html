@@ -82,14 +82,19 @@
         <div class="Cart-product">
         <div class="Cart-block Cart-block_row">
           <div class="Cart-block Cart-block_pict">
-            <a class="Cart-pict" href="#">
+            <a class="Cart-pict" href="{% url 'product_detail' product.product_id %}">
               <img class="Cart-img" src="{{ product.main_image.url }}" alt="card.jpg"/></a>
           </div>
           <div class="Cart-block Cart-block_info">
-            <a class="Cart-title" href="#">{{ product.name }}</a>
+            <a class="Cart-title" href="{% url 'product_detail' product.product_id %}">{{ product.name }}</a>
             <div class="Cart-desc">
               {{ product.description }}
             </div>
+            {% if not item.availability %}
+              <div class="Cart-desc">
+                <span class="Cart-desc">{% trans 'not enough in storage' %}</span>
+              </div>
+            {% endif %}
           </div>
           <div class="Cart-block Cart-block_price">
             <div class="Cart-price">
@@ -114,7 +119,7 @@
           <span class="Cart-price">{{ cart.get_total_price }}{% trans '$' %}</span>
         </div>
         <div class="Cart-block">
-          <button class="btn btn_primary btn_lg" type="submit">
+          <button class="btn btn_primary btn_lg" type="submit" >
             {% trans 'Pay' %}
           </button>
         </div>

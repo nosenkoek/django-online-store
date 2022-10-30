@@ -25,7 +25,13 @@
     </div>
     <div class="Section">
       <div class="wrap">
+        {% if not cart.check_availability %}
+          <div class="Order-info_error">
+            {% trans 'Items not available in cart. Please remove them to checkout' %}
+          </div>
+        {% endif %}
         <form class="form Cart" action="#" method="post">
+          {% csrf_token %}
           {% for item in cart %}
             {% with item.product as product %}
               <div class="Cart-product">
@@ -96,6 +102,11 @@
               <div class="Cart-block">
                 <a class="btn btn_success btn_lg" href="{% url 'cart_clear' %}">{% trans 'Clear cart' %}</a>
                 <a class="btn btn_success btn_lg" href="{% url 'order' %}">{% trans 'Place order' %}</a>
+
+{#                <button class="btn btn_success btn_lg" onclick="window.location.href='{% url 'order' %}'">#}
+{#                <button class="btn btn_success btn_lg" onclick='window.location.href="{% url 'order' %}"' {% if not cart.check_availability %} disabled {% endif %}>#}
+{#                  {% trans 'Place order' %}#}
+{#                </button>#}
               </div>
             {% else %}
               <div class="Cart-block Cart-block_total">

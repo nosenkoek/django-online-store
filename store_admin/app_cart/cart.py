@@ -116,3 +116,12 @@ class Cart():
         if data_product:
             return data_product.get('quantity')
         return 0
+
+    def check_availability(self) -> bool:
+        """
+        Проверка корзины на наличие товаров на складе.
+        """
+        for item in self:
+            if not item.availability:
+                return False
+        return True

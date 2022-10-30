@@ -171,6 +171,8 @@ ALTER TABLE category_feature
     ADD CONSTRAINT category_feature_uk UNIQUE (category_fk, feature_fk);
 
 ALTER TABLE product
+    ADD CONSTRAINT count_product CHECK ( count >= 0 );
+ALTER TABLE product
     ADD CONSTRAINT category_fk FOREIGN KEY (category_fk)
         REFERENCES category(category_id) ON DELETE CASCADE;
 ALTER TABLE product
