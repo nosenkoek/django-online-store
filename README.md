@@ -388,7 +388,11 @@ ETL состоит из 3х основных блоков:
   + просмотр детальной информации о заказе
 - приложение app_payment:
   + оплата заказа (с помощью карты или со случайного счета)
-- приложение app_compare:
-  + возможность добавления товара к сравнению
-  + страница отображения сравнения товаров
+- приложение app_api (FastAPI, ES -> docker):
+  + get product list
+  + get product list with filters (price, manufacturer, availability, category)
+  + get category
+  + get category with filters
+  + get manufacturer
+  + get manufacturer with category
   
