@@ -100,13 +100,12 @@
                 </span>
               </div>
               <div class="Cart-block">
-                <a class="btn btn_success btn_lg" href="{% url 'cart_clear' %}">{% trans 'Clear cart' %}</a>
-                <a class="btn btn_success btn_lg" href="{% url 'order' %}">{% trans 'Place order' %}</a>
-
-{#                <button class="btn btn_success btn_lg" onclick="window.location.href='{% url 'order' %}'">#}
-{#                <button class="btn btn_success btn_lg" onclick='window.location.href="{% url 'order' %}"' {% if not cart.check_availability %} disabled {% endif %}>#}
-{#                  {% trans 'Place order' %}#}
-{#                </button>#}
+                <a class="btn btn_success btn_lg" href="{% url 'cart_clear' %}">
+                  {% trans 'Clear cart' %}
+                </a>
+                <a class="btn btn_success btn_lg {% if not cart.check_availability %} disable-links {% endif %} " href="{% url 'order' %}">
+                  {% trans 'Place order' %}
+                </a>
               </div>
             {% else %}
               <div class="Cart-block Cart-block_total">
