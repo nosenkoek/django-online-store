@@ -1,18 +1,18 @@
 import logging
 
 from decimal import Decimal
+from typing import Dict
 
 from django.contrib.auth import login
 from django.db.utils import IntegrityError
 from django.db import transaction
 from django.db.transaction import TransactionManagementError
-from django.forms import Form
 
+from app_cart.cart import Cart
 from app_order.models import DeliveryMethod, Delivery, Payment, Order, \
     OrderProduct
 from app_products.models import Product
 from app_users.models import User
-from app_users.services.services_views import LoginUserMixin
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +27,7 @@ class SolveTotalPriceMixin():
         :param delivery_method: метод доставки выбранный пользователем,
         :return: общая сумма заказа.
         """
-        price_products = self.cart.get_total_price()
+        price_products = self._cart.get_total_price()
 
         if price_products >= delivery_method.free_from:
             total_price = price_products
@@ -36,64 +36,53 @@ class SolveTotalPriceMixin():
         return total_price
 
 
-# todo: может в виде хэндлера?
-#  init - form, user(from request), cart
+class OrderHandler(SolveTotalPriceMixin):
+    """
+    Обработчик заказа
+    Args:
+        cleaned_data: данные из формы,
+        request: объект запроса,
+        cart: объект заполненной корзины.
+    """
+    def __init__(self, cleaned_data: Dict[str, str], request, cart: Cart):
+        self._cleaned_data = cleaned_data
+        self._request = request
+        self._cart = cart
 
-class SaveOrderToDbMixin(LoginUserMixin):
-    """Миксин для сохранения необходимых данный в БД"""
-
-    @staticmethod
-    def _get_or_create_user(form: Form, user: User) -> User:
-        if not user.is_authenticated:
-            username = form.cleaned_data.get('username')
+    def _get_or_create_user(self) -> User:
+        """
+        Возвращает объект текущего пользователя.
+        Если он не авторизован, создает его.
+        :return: объект текущего пользователя
+        """
+        if not self._request.user.is_authenticated:
             user = User.objects.create(
-                username=username,
-                first_name=form.cleaned_data.get('first_name'),
-                last_name=form.cleaned_data.get('last_name'),
-                patronymic=form.cleaned_data.get('patronymic'),
-                email=form.cleaned_data.get('email'),
-                tel_number=form.cleaned_data.get('tel_number')
+                username=self._cleaned_data.get('username'),
+                first_name=self._cleaned_data.get('first_name'),
+                last_name=self._cleaned_data.get('last_name'),
+                patronymic=self._cleaned_data.get('patronymic'),
+                email=self._cleaned_data.get('email'),
+                tel_number=self._cleaned_data.get('tel_number')
             )
-            user.set_password(form.cleaned_data.get('password2'))
+            user.set_password(self._cleaned_data.get('password2'))
             user.save()
-        return user
+            return user
+        return self._request.user
 
-    @transaction.atomic
-    def save_order(self, form: Form, user: User) -> Order:
+    def _save_products_to_order(self, order: Order, user: User) -> None:
         """
-        Сохранение заказа в БД
-        :param user: пользователь
-        :param form: провалидированная форма
-        :return: объект сохраненного заказа
+        Сохраняет товары в заказ в БД. Списывает товары со склада.
+        :param order: объект заказа,
+        :param user: объект текущего пользователя.
         """
-        user = self._get_or_create_user(form, user)
-
-        delivery = Delivery.objects.create(
-            city=form.cleaned_data.get('city'),
-            address=form.cleaned_data.get('address'),
-            delivery_method_fk=form.cleaned_data.get('delivery_method_fk')
-        )
-        payment = Payment.objects.create(
-            payment_method_fk=form.cleaned_data.get('payment_method_fk')
-        )
-        order = Order.objects.create(
-            total_price=self.get_total_price_for_payment(
-                delivery.delivery_method_fk),
-            delivery_fk=delivery,
-            payment_fk=payment,
-            user_fk=user
-        )
-
-        #todo: вынести отдельно
         order_product, products = [], []
 
-        for item in self.cart:
+        for item in self._cart:
             item.product.count -= item.quantity
             products.append(item.product)
             order_product.append(OrderProduct(order_fk=order,
                                               product_fk=item.product,
                                               count=item.quantity))
-
         OrderProduct.objects.bulk_create(order_product)
 
         try:
@@ -103,8 +92,33 @@ class SaveOrderToDbMixin(LoginUserMixin):
                            f"for {user.username} | {err}")
             raise TransactionManagementError('Product is not availability')
 
-        if not self.request.user.is_authenticated:
-            login(self.request, user)
+        if not self._request.user.is_authenticated:
+            login(self._request, user)
             logger.info(f'New user | {user.username}')
 
+    @transaction.atomic
+    def save_order(self) -> Order:
+        """
+        Общая атомарная транзакция для сохранения заказа.
+        :return: объект заказа
+        """
+        user = self._get_or_create_user()
+
+        delivery = Delivery.objects.create(
+            city=self._cleaned_data.get('city'),
+            address=self._cleaned_data.get('address'),
+            delivery_method_fk=self._cleaned_data.get('delivery_method_fk')
+        )
+        payment = Payment.objects.create(
+            payment_method_fk=self._cleaned_data.get('payment_method_fk')
+        )
+        order = Order.objects.create(
+            total_price=self.get_total_price_for_payment(
+                delivery.delivery_method_fk),
+            delivery_fk=delivery,
+            payment_fk=payment,
+            user_fk=user
+        )
+
+        self._save_products_to_order(order, user)
         return order

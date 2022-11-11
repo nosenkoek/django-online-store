@@ -38,7 +38,7 @@
             {% for order in orders %}
               <div class="Order Order_anons">
                 <div class="Order-personal">
-                <div class="row">
+                  <div class="row">
                   <div class="row-block">
                     <a class="Order-title" href="{% url 'order_detail' order.number %}">
                       {% trans 'Order' %}&#32;<span class="Order-numberOrder">№{{ order.number }}</span>&#32;от&#32;<span class="Order-dateOrder">{{ order.created }}</span>
@@ -79,7 +79,19 @@
                     </div>
                   </div>
                 </div>
+                </div>
               </div>
+            {% empty %}
+              <div class="Order Order_anons">
+                <div class="Order-personal">
+                  <div class="row">
+                    <div class="row-block">
+                      <div class="Order-title">
+                        {% trans "You haven't placed any order" %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             {% endfor %}
           </div>

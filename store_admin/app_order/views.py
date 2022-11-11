@@ -11,16 +11,15 @@ from app_cart.services.mixins_for_cart import GetContextTotalPriceCartMixin, \
 from app_categories.services.navi_categories_list import NaviCategoriesList
 from app_order.forms import CheckoutForm
 from app_order.models import Order, OrderProduct
-from app_order.services.for_create_order import SolveTotalPriceMixin, \
-    SaveOrderToDbMixin
+from app_order.services.for_create_order import OrderHandler
 from app_users.models import User
-from app_users.services.services_views import InitialDictMixin
+from app_users.services.services_views import InitialDictMixin, LoginUserMixin
 
 logger = logging.getLogger(__name__)
 
 
 class CheckoutView(FormView, GetContextTotalPriceCartMixin, InitialDictMixin,
-                   CartRequestMixin, SolveTotalPriceMixin, SaveOrderToDbMixin):
+                   CartRequestMixin, LoginUserMixin):
     """Представление для оформления заказа"""
     form_class = CheckoutForm
     template_name = 'app_order/checkout.html'
@@ -47,9 +46,10 @@ class CheckoutView(FormView, GetContextTotalPriceCartMixin, InitialDictMixin,
 
     def form_valid(self, form):
         result = super(CheckoutView, self).form_valid(form)
-
+        order_handler = OrderHandler(cart=self.cart, request=self.request,
+                                     cleaned_data=form.cleaned_data)
         try:
-            order = self.save_order(form, self.request.user)
+            order = order_handler.save_order()
         except TransactionManagementError as err:
             logger.warning(f'Not save order | {err}')
             messages.error(self.request, f"Order wasn't created. {err}")
