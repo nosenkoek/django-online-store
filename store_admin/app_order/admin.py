@@ -3,8 +3,7 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
-from app_order.models import DeliveryMethod, PaymentMethod, Order, \
-    OrderProduct, Delivery, Payment
+from app_order.models import DeliveryMethod, Order, OrderProduct, Delivery
 
 
 class OrderProductInline(admin.TabularInline):
@@ -37,20 +36,6 @@ class DeliveryAdmin(admin.ModelAdmin):
     list_display = ('city', 'address', 'delivery_method_fk')
     search_fields = ('city',)
     list_filter = ('delivery_method_fk',)
-
-
-@admin.register(PaymentMethod)
-class PaymentMethodAdmin(admin.ModelAdmin):
-    # todo: перенести в app_payment
-    list_display = ('name',)
-    search_fields = ('name',)
-
-
-@admin.register(Payment)
-class PaymentAdmin(admin.ModelAdmin):
-    # todo: перенести в app_payment
-    list_display = ('payment_method_fk', 'error', 'paid')
-    list_filter = ('paid', 'payment_method_fk')
 
 
 @admin.register(Order)
