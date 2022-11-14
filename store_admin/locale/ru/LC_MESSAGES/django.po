@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-12 17:01+0300\n"
+"POT-Creation-Date: 2022-11-14 14:35+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,6 +129,10 @@ msgstr "адрес доставки"
 msgid "delivery method"
 msgstr "способ доставки"
 
+#: .\app_order\apps.py:8 .\app_order\models.py:146
+msgid "orders"
+msgstr "заказы"
+
 #: .\app_order\forms.py:69
 msgid "Last name, first name, patronymic"
 msgstr "Фамилия Имя Отчество"
@@ -202,7 +206,7 @@ msgstr ""
 msgid "payment"
 msgstr "оплата"
 
-#: .\app_order\models.py:92
+#: .\app_order\models.py:92 .\app_payment\apps.py:8
 msgid "payments"
 msgstr "оплаты"
 
@@ -251,10 +255,6 @@ msgstr "пользователь"
 #: .\app_order\models.py:145 .\app_order\models.py:160
 msgid "order"
 msgstr "заказ"
-
-#: .\app_order\models.py:146
-msgid "orders"
-msgstr "заказы"
 
 #: .\app_order\models.py:149
 msgid "Order for {}"

@@ -11,6 +11,7 @@ INSTALLED_APPS = [
     'app_users.apps.AppUsersConfig',
     'app_cart.apps.AppCartConfig',
     'app_order.apps.AppOrderConfig',
+    'app_payment.apps.AppPaymentConfig',
     'debug_toolbar',
     'mptt',
 ]
