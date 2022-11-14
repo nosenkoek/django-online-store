@@ -47,7 +47,7 @@ class CheckoutView(FormView, GetContextTotalPriceCartMixin, InitialDictMixin,
     def form_valid(self, form):
         result = super(CheckoutView, self).form_valid(form)
         order_handler = OrderHandler(cart=self.cart, request=self.request,
-                                     cleaned_data=form.cleaned_data)
+                                     form_combined=form)
         try:
             order = order_handler.save_order()
         except TransactionManagementError as err:

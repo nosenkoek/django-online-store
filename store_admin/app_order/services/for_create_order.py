@@ -1,7 +1,6 @@
 import logging
 
 from decimal import Decimal
-from typing import Dict
 
 from django.contrib.auth import login
 from django.db.utils import IntegrityError
@@ -9,6 +8,7 @@ from django.db import transaction
 from django.db.transaction import TransactionManagementError
 
 from app_cart.cart import Cart
+from app_order.forms import CombinedFormBase
 from app_order.models import DeliveryMethod, Delivery, Payment, Order, \
     OrderProduct
 from app_products.models import Product
@@ -44,29 +44,38 @@ class OrderHandler(SolveTotalPriceMixin):
         request: объект запроса,
         cart: объект заполненной корзины.
     """
-    def __init__(self, cleaned_data: Dict[str, str], request, cart: Cart):
-        self._cleaned_data = cleaned_data
+    def __init__(self, form_combined: CombinedFormBase, request, cart: Cart):
         self._request = request
         self._cart = cart
 
-    def _get_or_create_user(self) -> User:
+        for form_class in form_combined.form_classes:
+            form = getattr(form_combined, form_class.__name__.lower())
+            name_attr = '_'.join([form.Meta.model.__name__.lower(),
+                                  'cleaned_data'])
+            setattr(self, name_attr, form.cleaned_data)
+
+    def _create_user(self) -> User:
+        """
+        Создание пользователя при регистрации в момент создания заказа.
+        :return: объект созданного пользователя
+        """
+        cleaned_data_user = self.user_cleaned_data
+        password = cleaned_data_user.pop('password2')
+        cleaned_data_user.pop('password1')
+        cleaned_data_user.pop('full_name')
+        user = User.objects.create(**cleaned_data_user)
+        user.set_password(password)
+        user.save()
+        return user
+
+    def _get_user(self) -> User:
         """
         Возвращает объект текущего пользователя.
         Если он не авторизован, создает его.
         :return: объект текущего пользователя
         """
         if not self._request.user.is_authenticated:
-            user = User.objects.create(
-                username=self._cleaned_data.get('username'),
-                first_name=self._cleaned_data.get('first_name'),
-                last_name=self._cleaned_data.get('last_name'),
-                patronymic=self._cleaned_data.get('patronymic'),
-                email=self._cleaned_data.get('email'),
-                tel_number=self._cleaned_data.get('tel_number')
-            )
-            user.set_password(self._cleaned_data.get('password2'))
-            user.save()
-            return user
+            return self._create_user()
         return self._request.user
 
     def _save_products_to_order(self, order: Order, user: User) -> None:
@@ -102,16 +111,10 @@ class OrderHandler(SolveTotalPriceMixin):
         Общая атомарная транзакция для сохранения заказа.
         :return: объект заказа
         """
-        user = self._get_or_create_user()
+        user = self._get_user()
 
-        delivery = Delivery.objects.create(
-            city=self._cleaned_data.get('city'),
-            address=self._cleaned_data.get('address'),
-            delivery_method_fk=self._cleaned_data.get('delivery_method_fk')
-        )
-        payment = Payment.objects.create(
-            payment_method_fk=self._cleaned_data.get('payment_method_fk')
-        )
+        delivery = Delivery.objects.create(**self.delivery_cleaned_data)
+        payment = Payment.objects.create(**self.payment_cleaned_data)
         order = Order.objects.create(
             total_price=self.get_total_price_for_payment(
                 delivery.delivery_method_fk),

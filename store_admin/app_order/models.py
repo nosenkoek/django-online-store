@@ -58,7 +58,7 @@ class PaymentMethod(models.Model):
     # todo: перенести в app_payment
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     method_id = models.UUIDField(unique=True, default=uuid4, editable=False)
-    name = models.CharField(max_length=40, verbose_name=_('payment method'))
+    name = models.CharField(max_length=40, verbose_name=_('name'))
 
     class Meta:
         managed = False
@@ -74,8 +74,9 @@ class Payment(models.Model):
     # todo: перенести в app_payment
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     payment_id = models.UUIDField(unique=True, default=uuid4, editable=False)
-    paid = models.DateTimeField(blank=True, null=True)
-    error = models.TextField(blank=True, null=True)
+    paid = models.DateTimeField(blank=True, null=True,
+                                verbose_name=_('date of paid'))
+    error = models.TextField(blank=True, null=True, verbose_name=_('error'))
     payment_method_fk = models.ForeignKey(PaymentMethod,
                                           on_delete=models.CASCADE,
                                           to_field='method_id',
