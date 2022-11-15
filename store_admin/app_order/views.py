@@ -1,9 +1,11 @@
 import logging
 from typing import Dict
+from uuid import uuid4
 
 from django.contrib import messages
 from django.db.models import QuerySet
 from django.db.transaction import TransactionManagementError
+from django.urls import reverse
 from django.views.generic import FormView, ListView, DetailView
 
 from app_cart.services.mixins_for_cart import GetContextTotalPriceCartMixin, \
@@ -12,7 +14,6 @@ from app_categories.services.navi_categories_list import NaviCategoriesList
 from app_order.forms import CheckoutForm
 from app_order.models import Order, OrderProduct
 from app_order.services.for_create_order import OrderHandler
-from app_order.services.success_url_mixin import GetSuccessURLMixin
 from app_users.models import User
 from app_users.services.services_views import InitialDictMixin, LoginUserMixin
 
@@ -20,11 +21,11 @@ logger = logging.getLogger(__name__)
 
 
 class CheckoutView(FormView, GetContextTotalPriceCartMixin, InitialDictMixin,
-                   CartRequestMixin, LoginUserMixin, GetSuccessURLMixin):
+                   CartRequestMixin, LoginUserMixin):
     """Представление для оформления заказа"""
     form_class = CheckoutForm
     template_name = 'app_order/checkout.html'
-    success_url = '/users/account'
+    order_id = uuid4()
 
     def get_initial(self) -> Dict[str, str]:
         if self.request.user.is_authenticated:
@@ -48,7 +49,8 @@ class CheckoutView(FormView, GetContextTotalPriceCartMixin, InitialDictMixin,
     def form_valid(self, form):
         result = super(CheckoutView, self).form_valid(form)
         order_handler = OrderHandler(cart=self.cart, request=self.request,
-                                     form_combined=form)
+                                     form_combined=form,
+                                     order_id=self.order_id)
         try:
             order = order_handler.save_order()
         except TransactionManagementError as err:
@@ -57,9 +59,11 @@ class CheckoutView(FormView, GetContextTotalPriceCartMixin, InitialDictMixin,
             return self.form_invalid(form)
         else:
             logger.info(f'Order {order.id} created')
-
         self.cart.clear()
         return result
+
+    def get_success_url(self):
+        return reverse('pay', args=(self.order_id, ))
 
 
 class OrderHistoryListView(ListView, GetContextTotalPriceCartMixin):

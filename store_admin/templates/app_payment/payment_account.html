@@ -27,16 +27,25 @@
     <div class="Section">
       <div class="wrap">
         <form class="form Payment" action="#" method="post">
+          {% csrf_token %}
           <div class="Payment-card">
             <div class="form-group">
-              <label class="form-label">Номер счета
+              <label class="form-label">
+                {% trans 'Number of banking account' %}
               </label>
-              <input class="form-input Payment-bill" id="numero1" name="numero1" type="text" placeholder="9999 9999" data-mask="9999 9999" data-validate="require pay"/>
+              {{ form.number_account }}
             </div>
-            <div class="form-group"><a class="btn btn_success Payment-generate" href="#">Сгенирировать случайный счет</a>
+
+            <div class="form-group">
+              <a class="btn btn_success Payment-generate" href="#">
+                {% trans 'Generate random account' %}
+              </a>
             </div>
           </div>
-          <div class="Payment-pay"><a class="btn btn_primary" href="payment_progress.html">Оплатить</a>
+          <div class="Payment-pay">
+            <button class="btn btn_primary" type="submit" >
+              {% trans 'Pay' %}
+            </button>
           </div>
         </form>
       </div>

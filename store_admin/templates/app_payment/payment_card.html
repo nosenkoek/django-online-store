@@ -25,15 +25,21 @@
     </div>
     <div class="Section">
       <div class="wrap">
+
         <form class="form Payment" action="#" method="post">
+          {% csrf_token %}
           <div class="Payment-card">
             <div class="form-group">
-              <label class="form-label">Номер карты
+              <label class="form-label">
+                {% trans 'Number of card' %}
               </label>
-              <input class="form-input Payment-bill" id="numero1" name="numero1" type="text" placeholder="9999 9999" data-mask="9999 9999" data-validate="require pay"/>
+              {{ form.number_card }}
             </div>
           </div>
-          <div class="Payment-pay"><a class="btn btn_primary" href="progressPayment.html">Оплатить</a>
+          <div class="Payment-pay">
+            <button class="btn btn_primary" type="submit" >
+              {% trans 'Pay' %}
+            </button>
           </div>
         </form>
       </div>

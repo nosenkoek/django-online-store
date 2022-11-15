@@ -1,6 +1,7 @@
 import logging
 
 from decimal import Decimal
+from uuid import UUID
 
 from django.contrib.auth import login
 from django.db.utils import IntegrityError
@@ -44,9 +45,11 @@ class OrderHandler(SolveTotalPriceMixin):
         request: объект запроса,
         cart: объект заполненной корзины.
     """
-    def __init__(self, form_combined: CombinedFormBase, request, cart: Cart):
+    def __init__(self, form_combined: CombinedFormBase, request, cart: Cart,
+                 order_id: UUID):
         self._request = request
         self._cart = cart
+        self._order_id = order_id
 
         for form_class in form_combined.form_classes:
             form = getattr(form_combined, form_class.__name__.lower())
@@ -116,6 +119,7 @@ class OrderHandler(SolveTotalPriceMixin):
         delivery = Delivery.objects.create(**self.delivery_cleaned_data)
         payment = Payment.objects.create(**self.payment_cleaned_data)
         order = Order.objects.create(
+            order_id=self._order_id,
             total_price=self.get_total_price_for_payment(
                 delivery.delivery_method_fk),
             delivery_fk=delivery,
