@@ -106,10 +106,10 @@ class CheckoutPaymentForm(forms.ModelForm):
     """Форма для оформления заказа. Шаг 3. Оплата"""
     class Meta:
         model = Payment
-        fields = ('payment_method_fk',)
+        fields = ('payment_method',)
 
         widgets = {
-            'payment_method_fk': forms.RadioSelect(
+            'payment_method': forms.RadioSelect(
                 attrs={'class': 'radio_select',
                        "required": "required"})
         }

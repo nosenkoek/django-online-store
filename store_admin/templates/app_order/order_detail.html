@@ -101,7 +101,7 @@
                         {% trans 'Payment' %}:
                       </div>
                       <div class="Order-infoContent">
-                        {{ order.payment_fk.payment_method_fk.name }}
+                        {{ order.payment_fk.get_payment_method_display }}
                       </div>
                     </div>
                     <div class="Order-info Order-info_status">

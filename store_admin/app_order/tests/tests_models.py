@@ -2,8 +2,7 @@ from django.test import TestCase
 from django.utils.translation import gettext as _
 from django.db import connection
 
-from app_order.models import DeliveryMethod, Delivery, PaymentMethod, Payment, \
-    Order
+from app_order.models import DeliveryMethod, Delivery, Payment, Order
 
 
 class BaseModelTest(TestCase):
@@ -59,17 +58,6 @@ class TestDelivery(BaseModelTest):
         field_label = self.delivery._meta.get_field('delivery_method_fk')\
             .verbose_name
         self.assertEquals(field_label,  _('delivery method'))
-
-
-class TestPaymentMethod(BaseModelTest):
-    # todo: перенести в app_payment
-    def setUp(self) -> None:
-        self.payment_method = PaymentMethod.objects.first()
-
-    def test_name_label(self) -> None:
-        """Проверка подписи поля названия метода оплаты"""
-        field_label = self.payment_method._meta.get_field('name').verbose_name
-        self.assertEquals(field_label,  _('name'))
 
 
 class TestPayment(BaseModelTest):

@@ -4,7 +4,7 @@ button.addEventListener('click', function (){
   text_inputs.forEach(function (element) {
     let field = document.querySelector(`.${element.name}`)
     if (field !== null) {
-      if (element.id.includes('fk')) {
+      if (element.id.includes('method')) {
         let input = document.getElementById(`${element.id}`)
           for (const label of input.labels) {
             field.innerHTML = label.textContent

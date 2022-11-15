@@ -12,6 +12,7 @@ from app_categories.services.navi_categories_list import NaviCategoriesList
 from app_order.forms import CheckoutForm
 from app_order.models import Order, OrderProduct
 from app_order.services.for_create_order import OrderHandler
+from app_order.services.success_url_mixin import GetSuccessURLMixin
 from app_users.models import User
 from app_users.services.services_views import InitialDictMixin, LoginUserMixin
 
@@ -19,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class CheckoutView(FormView, GetContextTotalPriceCartMixin, InitialDictMixin,
-                   CartRequestMixin, LoginUserMixin):
+                   CartRequestMixin, LoginUserMixin, GetSuccessURLMixin):
     """Представление для оформления заказа"""
     form_class = CheckoutForm
     template_name = 'app_order/checkout.html'
@@ -76,7 +77,7 @@ class OrderHistoryListView(ListView, GetContextTotalPriceCartMixin):
         queryset = super(OrderHistoryListView, self).get_queryset() \
             .filter(user_fk=self.request.user).order_by('-created') \
             .select_related('delivery_fk', 'delivery_fk__delivery_method_fk',
-                            'payment_fk', 'payment_fk__payment_method_fk')
+                            'payment_fk')
         return queryset
 
 
@@ -91,8 +92,7 @@ class OrderDetailView(DetailView, GetContextTotalPriceCartMixin):
         queryset = super(OrderDetailView, self).get_queryset()
         queryset = queryset.select_related('user_fk', 'delivery_fk',
                                            'delivery_fk__delivery_method_fk',
-                                           'payment_fk',
-                                           'payment_fk__payment_method_fk')
+                                           'payment_fk')
         return queryset
 
     def get_context_data(self, **kwargs) -> Dict[str, str]:

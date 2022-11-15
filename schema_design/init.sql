@@ -15,10 +15,10 @@ DROP TABLE IF EXISTS "content".order;
 DROP TABLE IF EXISTS "content".delivery;
 DROP TABLE IF EXISTS "content".payment;
 DROP TABLE IF EXISTS "content".delivery_method;
-DROP TABLE IF EXISTS "content".payment_method;
 
 DROP TYPE IF EXISTS type_feature_enum;
 DROP TYPE IF EXISTS status_enum;
+DROP TYPE IF EXISTS method_payment_enum;
 DROP INDEX IF EXISTS product_name_trgm_idx;
 DROP INDEX IF EXISTS product_price_idx;
 DROP INDEX IF EXISTS feature_value_idx;
@@ -111,12 +111,7 @@ CREATE TABLE "content".product_feature(
 
 -- ORDERS
 CREATE TYPE status_enum AS ENUM ('unpaid', 'paid', 'delivering', 'delivered');
-
-CREATE TABLE "content".payment_method (
-	id uuid PRIMARY KEY,
-	method_id uuid UNIQUE NOT NULL,
-	name varchar(40) NOT NULL
-);
+CREATE TYPE method_payment_enum AS ENUM ('card', 'account');
 
 CREATE TABLE "content".delivery_method (
 	id uuid PRIMARY KEY,
@@ -139,7 +134,7 @@ CREATE TABLE "content".payment(
     payment_id uuid UNIQUE NOT NULL,
     paid timestamp,
     error text,
-    payment_method_fk uuid NOT NULL
+    payment_method method_payment_enum NOT NULL
 );
 
 CREATE TABLE "content".order(
@@ -208,9 +203,9 @@ ALTER TABLE delivery
     ADD CONSTRAINT delivery_method_fk FOREIGN KEY (delivery_method_fk)
         REFERENCES delivery_method(method_id) ON DELETE CASCADE;
 
-ALTER TABLE payment
-    ADD CONSTRAINT payment_method_fk FOREIGN KEY (payment_method_fk)
-        REFERENCES payment_method(method_id) ON DELETE CASCADE;
+-- ALTER TABLE payment
+--     ADD CONSTRAINT payment_method_fk FOREIGN KEY (payment_method_fk)
+--         REFERENCES payment_method(method_id) ON DELETE CASCADE;
 
 ALTER TABLE "order"
     ADD CONSTRAINT delivery_fk FOREIGN KEY (delivery_fk)

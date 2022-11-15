@@ -18,21 +18,5 @@
         "price": "200",
         "free_from": 2000
     }
-},
-{
-    "model": "app_order.paymentmethod",
-    "pk": "13741d26-2640-40df-a028-b30255abfd98",
-    "fields": {
-        "method_id": "4349ee3b-beb3-4123-ba3f-a99840d28eef",
-        "name": "Онлайн со случайного чужого счета"
-    }
-},
-{
-    "model": "app_order.paymentmethod",
-    "pk": "cf7f5d9e-2a5d-460b-948c-b4ceff6970b1",
-    "fields": {
-        "method_id": "51e989c3-7a09-4712-ba8c-9f0de9be908d",
-        "name": "Онлайн картой"
-    }
 }
 ]

@@ -105,21 +105,13 @@
     }
 },
 {
-    "model": "app_order.paymentmethod",
-    "pk": "13741d26-2640-40df-a028-b30255abfd98",
-    "fields": {
-        "method_id": "4349ee3b-beb3-4123-ba3f-a99840d28eef",
-        "name": "payment method"
-    }
-},
-{
-    "model": "app_order.payment",
+    "model": "app_payment.payment",
     "pk": "010d59ea-c0bc-49fd-bef5-e3ff5aaa45ae",
     "fields": {
         "payment_id": "fa50411c-b3f1-41c7-bd94-4b7d7d35e485",
         "paid": null,
         "error": null,
-        "payment_method_fk": "4349ee3b-beb3-4123-ba3f-a99840d28eef"
+        "payment_method": "card"
     }
 },
 {

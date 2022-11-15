@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-14 14:35+0300\n"
+"POT-Creation-Date: 2022-11-14 16:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,10 +43,10 @@ msgstr "Файл не SVG"
 
 #: .\app_categories\models.py:19 .\app_categories\models.py:60
 #: .\app_categories\tests\tests_models.py:23
-#: .\app_categories\tests\tests_models.py:40 .\app_order\models.py:15
-#: .\app_order\models.py:61 .\app_order\tests\tests_models.py:28
-#: .\app_order\tests\tests_models.py:72 .\app_products\models.py:17
-#: .\app_products\models.py:36 .\app_products\tests\tests_models.py:39
+#: .\app_categories\tests\tests_models.py:40 .\app_order\models.py:16
+#: .\app_order\tests\tests_models.py:28 .\app_order\tests\tests_models.py:72
+#: .\app_products\models.py:17 .\app_products\models.py:36
+#: .\app_products\tests\tests_models.py:39
 #: .\app_products\tests\tests_models.py:78
 msgid "name"
 msgstr "название"
@@ -116,20 +116,20 @@ msgstr "категория с характеристиками"
 msgid "categories with features"
 msgstr "категории с характеристиками"
 
-#: .\app_order\admin.py:69
+#: .\app_order\admin.py:54
 msgid "delivery city"
 msgstr "город доставки"
 
-#: .\app_order\admin.py:73
+#: .\app_order\admin.py:58
 msgid "delivery address"
 msgstr "адрес доставки"
 
-#: .\app_order\admin.py:77 .\app_order\models.py:24 .\app_order\models.py:43
+#: .\app_order\admin.py:62 .\app_order\models.py:25 .\app_order\models.py:44
 #: .\app_order\tests\tests_models.py:61
 msgid "delivery method"
 msgstr "способ доставки"
 
-#: .\app_order\apps.py:8 .\app_order\models.py:146
+#: .\app_order\apps.py:8 .\app_order\models.py:106
 msgid "orders"
 msgstr "заказы"
 
@@ -145,135 +145,134 @@ msgstr "Введите пароль"
 msgid "Password confirmation"
 msgstr "Повторите пароль"
 
-#: .\app_order\models.py:17 .\app_order\tests\tests_models.py:34
+#: .\app_order\models.py:18 .\app_order\tests\tests_models.py:34
 #: .\app_products\models.py:40 .\app_products\tests\tests_models.py:49
 msgid "price"
 msgstr "цена"
 
-#: .\app_order\models.py:19 .\app_order\tests\tests_models.py:40
+#: .\app_order\models.py:20 .\app_order\tests\tests_models.py:40
 msgid "price_free_from"
 msgstr "бесплатно с"
 
-#: .\app_order\models.py:25
+#: .\app_order\models.py:26
 msgid "delivery methods"
 msgstr "способы доставки"
 
-#: .\app_order\models.py:28
+#: .\app_order\models.py:29
 msgid "{}. Price {}₽. Free from {}₽"
 msgstr "{}. Стоимость {}₽. Бесплатно с {}₽"
 
-#: .\app_order\models.py:36 .\app_order\tests\tests_models.py:50
+#: .\app_order\models.py:37 .\app_order\tests\tests_models.py:50
 msgid "city"
 msgstr "город"
 
-#: .\app_order\models.py:37 .\app_order\tests\tests_models.py:55
+#: .\app_order\models.py:38 .\app_order\tests\tests_models.py:55
 msgid "address"
 msgstr "адрес"
 
-#: .\app_order\models.py:50 .\app_order\models.py:125
+#: .\app_order\models.py:51 .\app_order\models.py:85
 #: .\app_order\tests\tests_models.py:118
 msgid "delivery"
 msgstr "Доставка"
 
-#: .\app_order\models.py:51
+#: .\app_order\models.py:52
 msgid "deliveries"
 msgstr "Доставки"
 
-#: .\app_order\models.py:54
+#: .\app_order\models.py:55
 msgid "Delivery to {}."
 msgstr "Доставка в {}"
 
-#: .\app_order\models.py:66
-msgid "payment method"
-msgstr "способ оплаты"
-
-#: .\app_order\models.py:67
-msgid "payment methods"
-msgstr "способы оплаты"
-
-#: .\app_order\models.py:78 .\app_order\tests\tests_models.py:83
-#, fuzzy
-#| msgid "Date of order"
-msgid "date of paid"
-msgstr "Дата заказа"
-
-#: .\app_order\models.py:79 .\app_order\tests\tests_models.py:88
-msgid "error"
-msgstr ""
-
-#: .\app_order\models.py:84 .\app_order\models.py:91 .\app_order\models.py:131
-#: .\app_order\tests\tests_models.py:123
-msgid "payment"
-msgstr "оплата"
-
-#: .\app_order\models.py:92 .\app_payment\apps.py:8
-msgid "payments"
-msgstr "оплаты"
-
-#: .\app_order\models.py:95
-msgid "Paid: {}"
-msgstr "Оплачен: {}"
-
-#: .\app_order\models.py:100
+#: .\app_order\models.py:60
 msgid "unpaid"
 msgstr "не оплачен"
 
-#: .\app_order\models.py:101
+#: .\app_order\models.py:61
 msgid "paid"
 msgstr "оплачен"
 
-#: .\app_order\models.py:102
+#: .\app_order\models.py:62
 msgid "delivering"
 msgstr "доставляется"
 
-#: .\app_order\models.py:103
+#: .\app_order\models.py:63
 msgid "delivered"
 msgstr "доставлен"
 
-#: .\app_order\models.py:108 .\app_order\tests\tests_models.py:98
+#: .\app_order\models.py:68 .\app_order\tests\tests_models.py:98
 msgid "created"
 msgstr "создан"
 
-#: .\app_order\models.py:112 .\app_order\tests\tests_models.py:103
+#: .\app_order\models.py:72 .\app_order\tests\tests_models.py:103
 msgid "number"
 msgstr "номер"
 
-#: .\app_order\models.py:114 .\app_order\tests\tests_models.py:108
+#: .\app_order\models.py:74 .\app_order\tests\tests_models.py:108
 msgid "total price"
 msgstr "итоговая цена"
 
-#: .\app_order\models.py:119 .\app_order\tests\tests_models.py:113
+#: .\app_order\models.py:79 .\app_order\tests\tests_models.py:113
+#: .\app_payment\models.py:36
 msgid "status"
 msgstr "статус"
 
-#: .\app_order\models.py:138 .\app_order\tests\tests_models.py:128
+#: .\app_order\models.py:91 .\app_order\tests\tests_models.py:123
+#: .\app_payment\models.py:41
+msgid "payment"
+msgstr "оплата"
+
+#: .\app_order\models.py:98 .\app_order\tests\tests_models.py:128
 #: .\app_products\admin.py:106 .\app_products\models.py:135
 #: .\app_products\tests\tests_models.py:100
 msgid "user"
 msgstr "пользователь"
 
-#: .\app_order\models.py:145 .\app_order\models.py:160
+#: .\app_order\models.py:105 .\app_order\models.py:120
 msgid "order"
 msgstr "заказ"
 
-#: .\app_order\models.py:149
+#: .\app_order\models.py:109
 msgid "Order for {}"
 msgstr "Заказ для {}"
 
-#: .\app_order\models.py:166 .\app_products\admin.py:111
+#: .\app_order\models.py:126 .\app_products\admin.py:111
 #: .\app_products\filters\admin_filter.py:55 .\app_products\models.py:67
 #: .\app_products\models.py:83 .\app_products\models.py:99
 #: .\app_products\models.py:130 .\app_products\tests\tests_models.py:95
 msgid "product"
 msgstr "товар"
 
-#: .\app_order\models.py:172
+#: .\app_order\models.py:132
 msgid "products in order"
 msgstr "товары в заказе"
 
-#: .\app_order\models.py:173
+#: .\app_order\models.py:133
 msgid "products in orders"
 msgstr "товары в заказах"
+
+#: .\app_order\tests\tests_models.py:83 .\app_payment\models.py:31
+msgid "date of paid"
+msgstr "дата оплаты"
+
+#: .\app_order\tests\tests_models.py:88 .\app_payment\models.py:32
+msgid "error"
+msgstr "ошибка"
+
+#: .\app_payment\apps.py:8 .\app_payment\models.py:42
+msgid "payments"
+msgstr "оплаты"
+
+#: .\app_payment\models.py:25
+msgid "Card"
+msgstr "Карта"
+
+#: .\app_payment\models.py:26
+msgid "Bank account"
+msgstr "Счет"
+
+#: .\app_payment\models.py:45
+msgid "Paid: {}"
+msgstr "Оплачен: {}"
 
 #: .\app_products\admin.py:54 .\app_products\filters\admin_filter.py:43
 #: .\app_products\models.py:25 .\app_products\models.py:60
@@ -520,6 +519,9 @@ msgstr "от"
 #: .\templates\app_order\checkout.html:19
 #: .\templates\app_order\order_detail.html:20
 #: .\templates\app_order\order_history.html:20
+#: .\templates\app_payment\payment_account.html:18
+#: .\templates\app_payment\payment_card.html:18
+#: .\templates\app_payment\payment_progress.html:18
 #: .\templates\app_products\popular_product_list.html:17
 #: .\templates\app_products\product_detail.html:20
 #: .\templates\app_products\product_list.html:18
@@ -584,6 +586,11 @@ msgstr "Адрес"
 #: .\templates\app_order\block_checkout\block_step_4_confirm.html:69
 #: .\templates\app_order\order_detail.html:101
 #: .\templates\app_order\order_history.html:58
+#: .\templates\app_payment\payment_account.html:15
+#: .\templates\app_payment\payment_account.html:20
+#: .\templates\app_payment\payment_card.html:15
+#: .\templates\app_payment\payment_card.html:20
+#: .\templates\app_payment\payment_progress.html:15
 #: .\templates\app_users\account.html:81
 msgid "Payment"
 msgstr "Оплата"
@@ -652,7 +659,24 @@ msgstr "Итоговая стоимость"
 #: .\templates\app_order\order_history.html:90
 #: .\templates\app_users\account.html:111
 msgid "You haven't placed any order"
-msgstr ""
+msgstr "Вы еще не оформили ни одного заказа"
+
+#: .\templates\app_payment\payment_account.html:7
+#: .\templates\app_payment\payment_progress.html:7
+msgid "Payment by account"
+msgstr "Оплата по счету"
+
+#: .\templates\app_payment\payment_card.html:7
+msgid "Payment by card"
+msgstr "Оплата картой"
+
+#: .\templates\app_payment\payment_progress.html:20
+msgid "Payment progress"
+msgstr "Прогресс оплаты"
+
+#: .\templates\app_payment\payment_progress.html:30
+msgid "We are waiting for confirmation of payment by the payment system"
+msgstr "Ждем подтверждения оплаты платежной системой"
 
 #: .\templates\app_products\popular_product_list.html:7
 #: .\templates\app_products\popular_product_list.html:14
@@ -834,3 +858,12 @@ msgstr "Что ищете ..."
 #: .\templates\header.html:175
 msgid "Search"
 msgstr "Поиск"
+
+#~ msgid "card"
+#~ msgstr "карта"
+
+#~ msgid "payment method"
+#~ msgstr "способ оплаты"
+
+#~ msgid "payment methods"
+#~ msgstr "способы оплаты"
