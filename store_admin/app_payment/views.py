@@ -1,9 +1,8 @@
-from datetime import datetime, timedelta
 from typing import Dict
 
 from celery.result import AsyncResult
 from django.urls import reverse
-from django.views.generic import TemplateView, RedirectView, FormView
+from django.views.generic import TemplateView, FormView
 from django.http import JsonResponse
 
 from app_cart.services.mixins_for_cart import GetContextTotalPriceCartMixin
@@ -13,29 +12,24 @@ from app_payment.forms import FormPayment
 from app_payment.tasks import payment_task
 
 # TODO:
-#  1. рефакторинг + написать докстринги
-#  2. Посмотреть админку подробнее, м.б. доработать
 #  3. дописать логи при оплате
 #  4. сделать докер + расшарить папку log через nginx
-#  5. может переделать на 1 вьюху оплата картой/ по счету
 #  6. дописать тесты
 
 
-class PayView(RedirectView):
-    def get_redirect_url(self, *args, **kwargs):
-        order_id = kwargs.get('order_id')
-        order = Order.objects.select_related('payment_fk') \
-            .get(order_id=order_id)
-        if order.payment_fk.payment_method == 'card':
-            return reverse('payment_card', args=(order_id,))
-        return reverse('payment_account', args=(order_id,))
+class PaymentView(FormView, GetContextTotalPriceCartMixin):
+    """View для оплаты"""
+    template_name = 'app_payment/payment_form.html'
+    form_class = FormPayment
 
-
-class BasePaymentFormView(FormView, GetContextTotalPriceCartMixin):
     def get_context_data(self, **kwargs) -> Dict[str, str]:
         context = super().get_context_data(**kwargs)
         context.update(NaviCategoriesList().get_context())
         context.update(self.get_context_price_cart())
+        order_id = self.kwargs.get('order_id')
+        payment_method = Order.objects.get(order_id=order_id)\
+            .payment_fk.payment_method
+        context.update({'payment_method': payment_method})
         return context
 
     def form_valid(self, form):
@@ -53,17 +47,8 @@ class BasePaymentFormView(FormView, GetContextTotalPriceCartMixin):
                        args=(self.kwargs.get('order_id'),))
 
 
-class PaymentCardView(BasePaymentFormView):
-    template_name = 'app_payment/payment_card.html'
-    form_class = FormPayment
-
-
-class PaymentAccountView(BasePaymentFormView):
-    template_name = 'app_payment/payment_account.html'
-    form_class = FormPayment
-
-
 class PaymentProgressView(TemplateView, GetContextTotalPriceCartMixin):
+    """View для ожидания оплаты"""
     template_name = 'app_payment/payment_progress.html'
 
     def get_context_data(self, **kwargs) -> Dict[str, str]:

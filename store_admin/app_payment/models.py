@@ -26,4 +26,8 @@ class Payment(models.Model):
         verbose_name_plural = _('payments')
 
     def __str__(self):
-        return _('Paid: {}').format(self.paid)
+        if self.paid:
+            msg = _('Paid: {}').format(self.paid)
+        else:
+            msg = _('Unpaid').format(self.paid)
+        return msg

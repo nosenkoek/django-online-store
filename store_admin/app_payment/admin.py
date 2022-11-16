@@ -10,5 +10,5 @@ class PaymentAdmin(admin.ModelAdmin):
     list_filter = ('paid', 'payment_method')
 
     @admin.display(description=_('order number'))
-    def order_number(self, obj):
-        return obj.order.number
+    def order_number(self, obj: Payment) -> str:
+        return _('for order №{}').format(obj.order.number)

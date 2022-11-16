@@ -20,7 +20,6 @@ def validation_number_account(number: str) -> Tuple[bool, Optional[List[str]]]:
     :return: кортеж, где первое значение верное/неверное,
             второе - текст ошибки, при не подходящем номере.
     """
-    print(number)
     number = number.replace(' ', '')
     last_digit = int(number[-1])
     if last_digit in TRUE_LIST_DIGIT:

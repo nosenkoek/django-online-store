@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block title %}
-  {% trans 'Payment by card' %}
+  {% trans 'Payment' %}
 {% endblock %}
 
 {% block content %}
@@ -23,19 +23,32 @@
         </div>
       </div>
     </div>
+
     <div class="Section">
       <div class="wrap">
-
         <form class="form Payment" action="#" method="post">
           {% csrf_token %}
           <div class="Payment-card">
             <div class="form-group">
               {{ form.number.errors }}
               <label class="form-label">
-                {% trans 'Number of card' %}
+                {% if payment_method == 'account' %}
+                  {% trans 'Number of banking account' %}
+                {% elif payment_method == 'card' %}
+                  {% trans 'Number of credit card' %}
+                {% endif %}
+
               </label>
               {{ form.number }}
             </div>
+
+            {% if payment_method == 'account' %}
+              <div class="form-group">
+                <a class="btn btn_success Payment-generate" href="#">
+                  {% trans 'Generate random account' %}
+                </a>
+              </div>
+            {% endif %}
           </div>
           <div class="Payment-pay">
             <button class="btn btn_primary" type="submit" >
@@ -46,6 +59,6 @@
       </div>
     </div>
   </div>
-    <script src="{% static 'common/plg/form/jquery.form.js' %}"></script>
+  <script src="{% static 'common/plg/form/jquery.form.js' %}"></script>
   <script src="{% static 'common/plg/form/jquery.maskedinput.min.js' %}"></script>
 {% endblock %}

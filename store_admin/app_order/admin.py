@@ -41,7 +41,7 @@ class DeliveryAdmin(admin.ModelAdmin):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('number', 'user_fk', 'total_price', 'status', 'created',
-                    'to_city', 'to_address', 'delivery_method')
+                    'to_city', 'to_address', 'delivery_method', 'paid')
     ordering = ('-created', )
     readonly_fields = ('number', 'user_fk', 'total_price', 'created',
                        'to_city', 'to_address', 'delivery_method')
@@ -65,4 +65,12 @@ class OrderAdmin(admin.ModelAdmin):
             reverse('admin:app_order_delivery_change',
                     args=(obj.delivery_fk.id, )),
             obj.delivery_fk.delivery_method_fk)
+        return mark_safe(result)
+
+    @admin.display(description=_('paid'))
+    def paid(self, obj):
+        result = '<a href="{}">{}</a>'.format(
+            reverse('admin:app_payment_payment_change',
+                    args=(obj.payment_fk.id, )),
+            obj.payment_fk)
         return mark_safe(result)

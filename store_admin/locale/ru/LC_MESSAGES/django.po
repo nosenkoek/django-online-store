@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-15 14:35+0300\n"
+"POT-Creation-Date: 2022-11-16 16:43+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -128,6 +128,10 @@ msgstr "адрес доставки"
 msgid "delivery method"
 msgstr "способ доставки"
 
+#: .\app_order\admin.py:70 .\app_order\models.py:61
+msgid "paid"
+msgstr "оплачен"
+
 #: .\app_order\apps.py:8 .\app_order\models.py:106
 msgid "orders"
 msgstr "заказы"
@@ -185,10 +189,6 @@ msgstr "Доставка в {}"
 #: .\app_order\models.py:60
 msgid "unpaid"
 msgstr "не оплачен"
-
-#: .\app_order\models.py:61
-msgid "paid"
-msgstr "оплачен"
 
 #: .\app_order\models.py:62
 msgid "delivering"
@@ -257,6 +257,14 @@ msgstr "дата оплаты"
 msgid "error"
 msgstr "ошибка"
 
+#: .\app_payment\admin.py:12
+msgid "order number"
+msgstr "номер заказа"
+
+#: .\app_payment\admin.py:14
+msgid "for order №{}"
+msgstr "для заказа №{}"
+
 #: .\app_payment\apps.py:8 .\app_payment\models.py:26
 msgid "payments"
 msgstr "оплаты"
@@ -269,9 +277,25 @@ msgstr "Карта"
 msgid "Bank account"
 msgstr "Счет"
 
-#: .\app_payment\models.py:29
+#: .\app_payment\models.py:30
 msgid "Paid: {}"
 msgstr "Оплачен: {}"
+
+#: .\app_payment\models.py:32
+msgid "Unpaid"
+msgstr "Не оплачен"
+
+#: .\app_payment\services\validation_bank_account.py:8
+msgid "Error 1. Number of account is odd or ends with zero."
+msgstr "Ошибка 1. Номер счета нечетный или заканчивается на ноль"
+
+#: .\app_payment\services\validation_bank_account.py:9
+msgid "Error 2. We could not handle payment"
+msgstr "Ошибка 2. Невозможно обработать платеж"
+
+#: .\app_payment\services\validation_bank_account.py:10
+msgid "Error 3. You have account another bank"
+msgstr "Ошибка 3. У вас счет в другом банке"
 
 #: .\app_products\admin.py:54 .\app_products\filters\admin_filter.py:43
 #: .\app_products\models.py:25 .\app_products\models.py:60
@@ -435,8 +459,9 @@ msgstr "нет на складе"
 #: .\templates\app_categories\subcategory_list.html:42
 #: .\templates\app_order\block_checkout\block_step_4_confirm.html:101
 #: .\templates\app_order\block_checkout\block_step_4_confirm.html:119
-#: .\templates\app_order\order_detail.html:142
-#: .\templates\app_order\order_detail.html:157
+#: .\templates\app_order\order_detail.html:82
+#: .\templates\app_order\order_detail.html:144
+#: .\templates\app_order\order_detail.html:159
 #: .\templates\app_order\order_history.html:69
 #: .\templates\app_products\popular_product_list.html:36
 #: .\templates\app_products\product_detail.html:64
@@ -449,7 +474,7 @@ msgstr "₽"
 
 #: .\templates\app_cart\cart.html:95
 #: .\templates\app_order\block_checkout\block_step_4_confirm.html:117
-#: .\templates\app_order\order_detail.html:157
+#: .\templates\app_order\order_detail.html:159
 msgid "Total"
 msgstr "Итого"
 
@@ -518,8 +543,7 @@ msgstr "от"
 #: .\templates\app_order\checkout.html:19
 #: .\templates\app_order\order_detail.html:20
 #: .\templates\app_order\order_history.html:20
-#: .\templates\app_payment\payment_account.html:18
-#: .\templates\app_payment\payment_card.html:18
+#: .\templates\app_payment\payment_form.html:18
 #: .\templates\app_payment\payment_progress.html:18
 #: .\templates\app_products\popular_product_list.html:17
 #: .\templates\app_products\product_detail.html:20
@@ -573,36 +597,34 @@ msgid "Delivery method"
 msgstr "Способ доставки"
 
 #: .\templates\app_order\block_checkout\block_step_4_confirm.html:53
-#: .\templates\app_order\order_detail.html:85
+#: .\templates\app_order\order_detail.html:87
 msgid "City"
 msgstr "Город"
 
 #: .\templates\app_order\block_checkout\block_step_4_confirm.html:61
-#: .\templates\app_order\order_detail.html:93 .\templates\footer.html:75
+#: .\templates\app_order\order_detail.html:95 .\templates\footer.html:75
 msgid "Address"
 msgstr "Адрес"
 
 #: .\templates\app_order\block_checkout\block_step_4_confirm.html:69
-#: .\templates\app_order\order_detail.html:101
+#: .\templates\app_order\order_detail.html:103
 #: .\templates\app_order\order_history.html:58
-#: .\templates\app_payment\payment_account.html:15
-#: .\templates\app_payment\payment_account.html:20
-#: .\templates\app_payment\payment_card.html:15
-#: .\templates\app_payment\payment_card.html:20
+#: .\templates\app_payment\payment_form.html:7
+#: .\templates\app_payment\payment_form.html:15
+#: .\templates\app_payment\payment_form.html:20
 #: .\templates\app_payment\payment_progress.html:15
 #: .\templates\app_users\account.html:81
 msgid "Payment"
 msgstr "Оплата"
 
 #: .\templates\app_order\block_checkout\block_step_4_confirm.html:107
-#: .\templates\app_order\order_detail.html:148
+#: .\templates\app_order\order_detail.html:150
 msgid "pc."
 msgstr "шт."
 
 #: .\templates\app_order\block_checkout\block_step_4_confirm.html:123
-#: .\templates\app_order\order_detail.html:161
-#: .\templates\app_payment\payment_account.html:47
-#: .\templates\app_payment\payment_card.html:41
+#: .\templates\app_order\order_detail.html:163
+#: .\templates\app_payment\payment_form.html:55
 msgid "Pay"
 msgstr "Оплатить"
 
@@ -635,13 +657,13 @@ msgstr "История заказов"
 msgid "Date of order"
 msgstr "Дата заказа"
 
-#: .\templates\app_order\order_detail.html:109
+#: .\templates\app_order\order_detail.html:111
 #: .\templates\app_order\order_history.html:74
 #: .\templates\app_users\account.html:97
 msgid "Status"
 msgstr "Статус"
 
-#: .\templates\app_order\order_detail.html:119
+#: .\templates\app_order\order_detail.html:121
 msgid "Payment failed"
 msgstr "Оплата не прошла"
 
@@ -658,29 +680,21 @@ msgid "Total price"
 msgstr "Итоговая стоимость"
 
 #: .\templates\app_order\order_history.html:90
-#: .\templates\app_users\account.html:111
+#: .\templates\app_users\account.html:107
 msgid "You haven't placed any order"
 msgstr "Вы еще не оформили ни одного заказа"
 
-#: .\templates\app_payment\payment_account.html:7
-msgid "Payment by account"
-msgstr "Оплата по счету"
-
-#: .\templates\app_payment\payment_account.html:34
+#: .\templates\app_payment\payment_form.html:36
 msgid "Number of banking account"
 msgstr "Номер счета"
 
-#: .\templates\app_payment\payment_account.html:41
+#: .\templates\app_payment\payment_form.html:38
+msgid "Number of credit card"
+msgstr "Номер карты"
+
+#: .\templates\app_payment\payment_form.html:48
 msgid "Generate random account"
 msgstr "Сгенерировать случайный счет"
-
-#: .\templates\app_payment\payment_card.html:7
-msgid "Payment by card"
-msgstr "Оплата картой"
-
-#: .\templates\app_payment\payment_card.html:34
-msgid "Number of card"
-msgstr "Номер карты"
 
 #: .\templates\app_payment\payment_progress.html:7
 #: .\templates\app_payment\payment_progress.html:20
@@ -766,14 +780,6 @@ msgstr "Аккаунт"
 #: .\templates\app_users\account.html:53
 msgid "Edit profile"
 msgstr "Редактировать профиль"
-
-#: .\templates\app_users\account.html:101
-msgid "Paid"
-msgstr "Оплачен"
-
-#: .\templates\app_users\account.html:103
-msgid "Unpaid"
-msgstr "Не оплачен"
 
 #: .\templates\app_users\login.html:7 .\templates\app_users\login.html:15
 #: .\templates\app_users\login.html:35 .\templates\header.html:61
@@ -871,12 +877,3 @@ msgstr "Что ищете ..."
 #: .\templates\header.html:175
 msgid "Search"
 msgstr "Поиск"
-
-#~ msgid "card"
-#~ msgstr "карта"
-
-#~ msgid "payment method"
-#~ msgstr "способ оплаты"
-
-#~ msgid "payment methods"
-#~ msgstr "способы оплаты"
