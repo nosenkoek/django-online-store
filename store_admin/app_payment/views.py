@@ -1,3 +1,4 @@
+import logging
 from typing import Dict
 
 from celery.result import AsyncResult
@@ -12,9 +13,10 @@ from app_payment.forms import FormPayment
 from app_payment.tasks import payment_task
 
 # TODO:
-#  3. дописать логи при оплате
 #  4. сделать докер + расшарить папку log через nginx
 #  6. дописать тесты
+
+logger = logging.getLogger(__name__)
 
 
 class PaymentView(FormView, GetContextTotalPriceCartMixin):
@@ -63,11 +65,19 @@ class PaymentProgressView(TemplateView, GetContextTotalPriceCartMixin):
         if request.is_ajax():
             result = AsyncResult(order_id)
 
-            if result.ready():
-                order_number = Order.objects.get(order_id=order_id).number
+            if result and result.ready():
+                order = Order.objects.select_related('payment_fk')\
+                    .get(order_id=order_id)
+
+                if order.payment_fk.paid:
+                    logger.info(f'Paid order {order_id}')
+                else:
+                    logger.warning(f'Unpaid order {order.order_id} | '
+                                   f'{order.payment_fk.error}')
+
                 return JsonResponse({
                     'success': True,
-                    'url': reverse('order_detail', args=(order_number,)),
+                    'url': reverse('order_detail', args=(order.number,)),
                 })
             # todo: добавить timeout для остановки оплаты и ошибки
             #  (можно через counter)
