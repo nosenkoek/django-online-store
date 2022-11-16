@@ -77,7 +77,9 @@
                         {% trans 'Delivery method' %}:
                       </div>
                       <div class="Order-infoContent">
-                        {{ order.delivery_fk.delivery_method_fk.name }}
+                        {{ order.delivery_fk.delivery_method_fk.name }}:
+                        &nbsp{{ order.delivery_fk.delivery_method_fk.price }}
+                        {% trans '$' %}
                       </div>
                     </div>
                     <div class="Order-info">

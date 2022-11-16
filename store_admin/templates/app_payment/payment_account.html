@@ -30,10 +30,11 @@
           {% csrf_token %}
           <div class="Payment-card">
             <div class="form-group">
+              {{ form.number.errors }}
               <label class="form-label">
                 {% trans 'Number of banking account' %}
               </label>
-              {{ form.number_account }}
+              {{ form.number }}
             </div>
 
             <div class="form-group">
@@ -51,4 +52,6 @@
       </div>
     </div>
   </div>
+    <script src="{% static 'common/plg/form/jquery.form.js' %}"></script>
+  <script src="{% static 'common/plg/form/jquery.maskedinput.min.js' %}"></script>
 {% endblock %}

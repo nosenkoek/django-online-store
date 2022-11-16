@@ -97,11 +97,7 @@
                               {% trans 'Status' %}:
                             </div>
                             <div class="Order-infoContent">
-                              {% if order.payment_fk.status_payment %}
-                                {% trans 'Paid' %}
-                              {% else %}
-                                {% trans 'Unpaid' %}
-                              {% endif %}
+                              {{ order.get_status_display }}
                             </div>
                           </div>
                         </div>
