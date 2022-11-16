@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from typing import Dict
 
 from celery.result import AsyncResult
@@ -41,7 +42,9 @@ class BasePaymentFormView(FormView, GetContextTotalPriceCartMixin):
         result = super().form_valid(form)
         order_id = self.kwargs.get('order_id')
         number = form.cleaned_data.get('number')
-        print('number', number)
+        res = AsyncResult(order_id)
+        if res:
+            res.forget()
         payment_task.apply_async((order_id, number), task_id=order_id)
         return result
 
@@ -70,12 +73,17 @@ class PaymentProgressView(TemplateView, GetContextTotalPriceCartMixin):
         return context
 
     def get(self, request, *args, **kwargs):
+        order_id = kwargs.get('order_id')
+
         if request.is_ajax():
-            result = AsyncResult(kwargs.get('order_id'))
+            result = AsyncResult(order_id)
+
             if result.ready():
+                order_number = Order.objects.get(order_id=order_id).number
                 return JsonResponse({
                     'success': True,
-                    'url': reverse('account'),
+                    'url': reverse('order_detail', args=(order_number,)),
                 })
             # todo: добавить timeout для остановки оплаты и ошибки
+            #  (можно через counter)
         return super(PaymentProgressView, self).get(request, *args, **kwargs)
