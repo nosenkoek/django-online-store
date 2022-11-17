@@ -1,0 +1,140 @@
+[
+{
+    "model": "app_users.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$MEYHY7mUjEW3piCPXPGEJn$3A6CPD5m1pwIN52o4Km7ZU6Zs+b11/SOs+7PelyzCeo=",
+        "last_login": "2022-11-12T16:08:41.517",
+        "is_superuser": false,
+        "username": "user",
+        "first_name": "Test",
+        "last_name": "Test",
+        "email": "test@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-11-12T16:08:40.976",
+        "tel_number": "0000001232",
+        "patronymic": "test",
+        "avatar": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "7d151793-5056-45a8-b826-0fa927efe898",
+    "fields": {
+        "category_id": "d5987e9a-c6d1-48c1-a056-259b7a36c680",
+        "name": "category",
+        "updated": "2022-09-05T15:48:43.233+03:00",
+        "slug": "category",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": null,
+        "lft": 1,
+        "rght": 6,
+        "tree_id": 1,
+        "level": 0
+    }
+},
+{
+    "model": "app_categories.category",
+    "pk": "1a80be36-964d-4225-b832-51a8dad6fee4",
+    "fields": {
+        "category_id": "78e3b297-4107-44cb-aae2-8731b6038081",
+        "name": "subcategory_1",
+        "updated": "2022-09-05T15:51:25.975+03:00",
+        "slug": "subcategory_1",
+        "icon": "",
+        "image": "",
+        "is_active": true,
+        "parent": "d5987e9a-c6d1-48c1-a056-259b7a36c680",
+        "lft": 2,
+        "rght": 3,
+        "tree_id": 1,
+        "level": 1
+    }
+},
+{
+    "model": "app_products.manufacturer",
+    "pk": "33a6c0d4-8b59-47df-a2bb-e583d1a142a9",
+    "fields": {
+        "manufacturer_id": "85e113a4-f740-421d-918f-e19b58d6259b",
+        "name": "manufacturer",
+        "description": "description",
+        "updated": "2022-08-28 11:47:30+03:00"
+    }
+},
+{
+    "model": "app_products.product",
+    "pk": "d73992a9-3ab2-4a66-bdf6-3d24e9644bf3",
+    "fields": {
+        "product_id": "0e4be10f-c2c8-497e-8b0c-06b9ca02a77c",
+        "name": "product_1",
+        "slug": "product_1",
+        "description": "text",
+        "price": 100,
+        "main_image": "small_1.gif",
+        "added": "2022-08-28 11:47:30+03:00",
+        "updated": "2022-08-28 11:47:30+03:00",
+        "count": 8,
+        "is_limited": true,
+        "category_fk": "78e3b297-4107-44cb-aae2-8731b6038081",
+        "manufacturer_fk": "85e113a4-f740-421d-918f-e19b58d6259b"
+    }
+},
+{
+    "model": "app_order.deliverymethod",
+    "pk": "61e5c26a-b6c1-417a-b5f0-f310fd6a059d",
+    "fields": {
+        "method_id": "dc64ae87-b0c2-4924-a544-4ae8f013ee61",
+        "name": "delivery method",
+        "price": "500",
+        "free_from": 7000
+    }
+},
+{
+    "model": "app_order.delivery",
+    "pk": "105bf83c-ce90-4bb3-ab9c-bc1c3d1eb122",
+    "fields": {
+        "delivery_id": "2141a0fd-7ee4-4210-9375-cb7b8ddcccb5",
+        "city": "city",
+        "address": "address",
+        "delivery_method_fk": "dc64ae87-b0c2-4924-a544-4ae8f013ee61"
+    }
+},
+{
+    "model": "app_payment.payment",
+    "pk": "010d59ea-c0bc-49fd-bef5-e3ff5aaa45ae",
+    "fields": {
+        "payment_id": "fa50411c-b3f1-41c7-bd94-4b7d7d35e485",
+        "paid": null,
+        "error": null,
+        "payment_method": "card"
+    }
+},
+{
+    "model": "app_order.order",
+    "pk": "45229d03-3841-4599-8a15-2ce8004f5c17",
+    "fields": {
+        "order_id": "40a23fb9-f6a2-439f-8bf4-53e7fb855645",
+        "created": "2022-11-11T13:45:22.314",
+        "number": 6,
+        "total_price": "5669.06",
+        "status": "unpaid",
+        "delivery_fk": "2141a0fd-7ee4-4210-9375-cb7b8ddcccb5",
+        "payment_fk": "fa50411c-b3f1-41c7-bd94-4b7d7d35e485",
+        "user_fk": 1
+    }
+},
+{
+    "model": "app_order.orderproduct",
+    "pk": "1499fcb1-9112-4e5d-9658-c4bfc286fb46",
+    "fields": {
+        "count": 2,
+        "order_fk": "40a23fb9-f6a2-439f-8bf4-53e7fb855645",
+        "product_fk": "0e4be10f-c2c8-497e-8b0c-06b9ca02a77c"
+    }
+}
+]

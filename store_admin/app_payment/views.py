@@ -14,7 +14,6 @@ from app_payment.tasks import payment_task
 
 # TODO:
 #  4. сделать докер + расшарить папку log через nginx
-#  6. дописать тесты
 
 logger = logging.getLogger(__name__)
 

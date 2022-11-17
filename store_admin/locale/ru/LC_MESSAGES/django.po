@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-16 16:43+0300\n"
+"POT-Creation-Date: 2022-11-17 11:13+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -174,7 +174,7 @@ msgid "address"
 msgstr "адрес"
 
 #: .\app_order\models.py:51 .\app_order\models.py:85
-#: .\app_order\tests\tests_models.py:106
+#: .\app_order\tests\tests_models.py:90
 msgid "delivery"
 msgstr "Доставка"
 
@@ -198,29 +198,28 @@ msgstr "доставляется"
 msgid "delivered"
 msgstr "доставлен"
 
-#: .\app_order\models.py:68 .\app_order\tests\tests_models.py:86
+#: .\app_order\models.py:68 .\app_order\tests\tests_models.py:70
 msgid "created"
 msgstr "создан"
 
-#: .\app_order\models.py:72 .\app_order\tests\tests_models.py:91
+#: .\app_order\models.py:72 .\app_order\tests\tests_models.py:75
 msgid "number"
 msgstr "номер"
 
-#: .\app_order\models.py:74 .\app_order\tests\tests_models.py:96
+#: .\app_order\models.py:74 .\app_order\tests\tests_models.py:80
 msgid "total price"
 msgstr "итоговая цена"
 
-#: .\app_order\models.py:79 .\app_order\tests\tests_models.py:101
-#: .\app_payment\models.py:20
+#: .\app_order\models.py:79 .\app_order\tests\tests_models.py:85
 msgid "status"
 msgstr "статус"
 
-#: .\app_order\models.py:91 .\app_order\tests\tests_models.py:111
+#: .\app_order\models.py:91 .\app_order\tests\tests_models.py:95
 #: .\app_payment\models.py:25
 msgid "payment"
 msgstr "оплата"
 
-#: .\app_order\models.py:98 .\app_order\tests\tests_models.py:116
+#: .\app_order\models.py:98 .\app_order\tests\tests_models.py:100
 #: .\app_products\admin.py:106 .\app_products\models.py:135
 #: .\app_products\tests\tests_models.py:100
 msgid "user"
@@ -249,14 +248,6 @@ msgstr "товары в заказе"
 msgid "products in orders"
 msgstr "товары в заказах"
 
-#: .\app_order\tests\tests_models.py:71 .\app_payment\models.py:15
-msgid "date of paid"
-msgstr "дата оплаты"
-
-#: .\app_order\tests\tests_models.py:76 .\app_payment\models.py:16
-msgid "error"
-msgstr "ошибка"
-
 #: .\app_payment\admin.py:12
 msgid "order number"
 msgstr "номер заказа"
@@ -276,6 +267,18 @@ msgstr "Карта"
 #: .\app_payment\models.py:10
 msgid "Bank account"
 msgstr "Счет"
+
+#: .\app_payment\models.py:15 .\app_payment\tests\tests_models.py:26
+msgid "date of paid"
+msgstr "дата оплаты"
+
+#: .\app_payment\models.py:16 .\app_payment\tests\tests_models.py:31
+msgid "error"
+msgstr "ошибка"
+
+#: .\app_payment\models.py:20 .\app_payment\tests\tests_models.py:37
+msgid "payment method"
+msgstr "способ оплаты"
 
 #: .\app_payment\models.py:30
 msgid "Paid: {}"

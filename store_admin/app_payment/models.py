@@ -17,7 +17,7 @@ class Payment(models.Model):
     payment_method = models.CharField(max_length=30,
                                       choices=Method.choices,
                                       default=Method.CARD,
-                                      verbose_name=_('status'))
+                                      verbose_name=_('payment method'))
 
     class Meta:
         managed = False
