@@ -16,8 +16,8 @@
         <li class="{% if path == 'users/profile/' %}menu-item_ACTIVE{% endif %} menu-item">
           <a class="menu-link" href="{% url 'profile' %}">{% trans 'Profile' %}</a>
         </li>
-        <li class="{% if path == 'users/history/' %}menu-item_ACTIVE{% endif %} menu-item">
-          <a class="menu-link" href="#">{% trans 'History order' %}</a>
+        <li class="{% if path == 'order/history/' %}menu-item_ACTIVE{% endif %} menu-item">
+          <a class="menu-link" href="{% url 'order_history' %}">{% trans 'History order' %}</a>
         </li>
       </ul>
       {% endwith %}

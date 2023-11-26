@@ -25,7 +25,13 @@
     </div>
     <div class="Section">
       <div class="wrap">
+        {% if not cart.check_availability %}
+          <div class="Order-info_error">
+            {% trans 'Items not available in cart. Please remove them to checkout' %}
+          </div>
+        {% endif %}
         <form class="form Cart" action="#" method="post">
+          {% csrf_token %}
           {% for item in cart %}
             {% with item.product as product %}
               <div class="Cart-product">
@@ -72,7 +78,6 @@
                     </div>
                   </div>
 
-
                   <div class="Cart-block Cart-block_delete">
                     <a class="Cart-delete" href="{% url 'cart_delete_product' product.product_id %}">
                       <img src="{% static 'app_cart/img/icons/delete.svg' %}" alt="delete.svg"/>
@@ -94,8 +99,12 @@
                 </span>
               </div>
               <div class="Cart-block">
-                <a class="btn btn_success btn_lg" href="{% url 'cart_clear' %}">{% trans 'Clear cart' %}</a>
-                <a class="btn btn_success btn_lg" href="#">{% trans 'Make an order' %}</a>
+                <a class="btn btn_success btn_lg" href="{% url 'cart_clear' %}">
+                  {% trans 'Clear cart' %}
+                </a>
+                <a class="btn btn_success btn_lg {% if not cart.check_availability %} disable-links {% endif %} " href="{% url 'order' %}">
+                  {% trans 'Place order' %}
+                </a>
               </div>
             {% else %}
               <div class="Cart-block Cart-block_total">

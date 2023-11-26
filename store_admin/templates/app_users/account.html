@@ -58,40 +58,56 @@
                 <div class="Order Order_anons">
                   <div class="Order-personal">
                     <div class="row">
-                      <div class="row-block">
-                        <a class="Order-title" href="oneorder.html">
-                          Заказ&#32;<span class="Order-numberOrder">№200</span>&#32;от&#32;<span class="Order-dateOrder">21.07.2020</span>
-                        </a>
-                        <div class="Account-editLink">
-                          <a href="historyorder.html">История заказов</a>
-                        </div>
-                      </div>
-                      <div class="row-block">
-                        <div class="Order-info Order-info_delivery">
-                          <div class="Order-infoType">Тип доставки:
-                          </div>
-                          <div class="Order-infoContent">Обычная доставка
+                      {% if order %}
+                        <div class="row-block">
+                          <a class="Order-title" href="{% url 'order_detail' order.number %}">
+                            {% trans 'Order' %}&#32;<span class="Order-numberOrder">№{{ order.number }}</span>&#32;от&#32;<span class="Order-dateOrder">{{ order.created }}</span>
+                          </a>
+                          <div class="Account-editLink">
+                            <a href="{% url 'order_history' %}">{% trans 'History of orders' %}</a>
                           </div>
                         </div>
-                        <div class="Order-info Order-info_pay">
-                          <div class="Order-infoType">Оплата:
+                        <div class="row-block">
+                          <div class="Order-info Order-info_delivery">
+                            <div class="Order-infoType">
+                              {% trans 'Delivery method' %}:
+                            </div>
+                            <div class="Order-infoContent">
+                              {{ order.delivery_fk.delivery_method_fk.name }}
+                            </div>
                           </div>
-                          <div class="Order-infoContent">Онлайн картой
+                          <div class="Order-info Order-info_pay">
+                            <div class="Order-infoType">
+                              {% trans 'Payment' %}:
+                            </div>
+                            <div class="Order-infoContent">
+                              {{ order.payment_fk.get_payment_method_display }}
+                            </div>
+                          </div>
+                          <div class="Order-info">
+                            <div class="Order-infoType">
+                              {% trans 'Total price' %}:
+                            </div>
+                            <div class="Order-infoContent">
+                              <span class="Order-price">{{ order.total_price }}{% trans '$' %}</span>
+                            </div>
+                          </div>
+                          <div class="Order-info Order-info_status">
+                            <div class="Order-infoType">
+                              {% trans 'Status' %}:
+                            </div>
+                            <div class="Order-infoContent">
+                              {{ order.get_status_display }}
+                            </div>
                           </div>
                         </div>
-                        <div class="Order-info">
-                          <div class="Order-infoType">Общая стоимость:
-                          </div>
-                          <div class="Order-infoContent">200.99$
-                          </div>
-                        </div>
-                        <div class="Order-info Order-info_status">
-                          <div class="Order-infoType">Статус:
-                          </div>
-                          <div class="Order-infoContent">Не оплачен
+                      {% else %}
+                        <div class="row-block">
+                          <div class="Order-title">
+                            {% trans "You haven't placed any order" %}
                           </div>
                         </div>
-                      </div>
+                      {% endif %}
                     </div>
                   </div>
                 </div>

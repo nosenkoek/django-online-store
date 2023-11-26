@@ -1,0 +1,64 @@
+{% extends '../base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+  {% trans 'Payment' %}
+{% endblock %}
+
+{% block content %}
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">{% trans 'Payment' %}
+          </h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item"><a href="{% url 'main_page' %}">{% trans 'home' %}</a>
+            </li>
+            <li class="breadcrumbs-item breadcrumbs-item_current"><span>{% trans 'Payment' %}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="Section">
+      <div class="wrap">
+        <form class="form Payment" action="#" method="post">
+          {% csrf_token %}
+          <div class="Payment-card">
+            <div class="form-group">
+              {{ form.number.errors }}
+              <label class="form-label">
+                {% if payment_method == 'account' %}
+                  {% trans 'Number of banking account' %}
+                {% elif payment_method == 'card' %}
+                  {% trans 'Number of credit card' %}
+                {% endif %}
+
+              </label>
+              {{ form.number }}
+            </div>
+
+            {% if payment_method == 'account' %}
+              <div class="form-group">
+                <a class="btn btn_success Payment-generate" href="#">
+                  {% trans 'Generate random account' %}
+                </a>
+              </div>
+            {% endif %}
+          </div>
+          <div class="Payment-pay">
+            <button class="btn btn_primary" type="submit" >
+              {% trans 'Pay' %}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="{% static 'common/plg/form/jquery.form.js' %}"></script>
+  <script src="{% static 'common/plg/form/jquery.maskedinput.min.js' %}"></script>
+{% endblock %}

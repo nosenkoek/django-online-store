@@ -38,9 +38,14 @@ POSTGRES_USER =
 POSTGRES_PASSWORD =
 PORT = 5432
 ```
-- скачать данные репозитория и запустить docker:
+- скачать данные репозитория: и запустить docker:
 ```
 docker-compose up -d --build
+```
+- изменить объем выделяемой памяти для VM:
+```
+ wsl
+ sysctl -w vm.max_map_count=262144
 ```
 - при необходимости заполнить БД случайными товарами, для этого необходимо запустить скрипт 
 ```
@@ -204,7 +209,7 @@ AddSortedItemToContextMixin.add_sorted_item_to_context() - добавляет о
   пользовательская модель для добавления новых полей (аватар, телефон, отчество).
 
 Представления:
-- RegisterView (регистрация новых пользователей, 2 формы - основная и профиль)
+- RegisterView (регистрация новых пользователей)
 - UserLoginView 
 - UserLogoutView
 - AccountView (представление для отображения страницы личного кабинета)
@@ -218,10 +223,17 @@ AddSortedItemToContextMixin.add_sorted_item_to_context() - добавляет о
   Поля: full_name, tel_number, avatar, email, password1, password2
 
 
-Сервисы (services.py):
+Сервисы (services):
+**services_views.py**
 - LoginUserMixin.authenticate_and_login(self, username: str, raw_password: str) - вход в систему пользователя
 - InitialDictMixin.get_initial_form(user: User) - возвращает словарь с данными для заполнения формы
 - SetPasswordMixin.set_password(self, form: UserProfileForm) - устанавливает новый пароль и входит в систему
+
+**validators_forms_mixins.py**
+- AddValidationFullNameMixin.clean_full_name() - дополнительная валидация ФИО
+- AddValidatorPasswordMixin.clean_password2() - дополнительная валидация паролей
+- AddValidatorEmailMixin.clean_email() - дополнительная валидация email
+- AddValidationAvatarMixin.clean_avatar() - дополнительная валидация аватара (на размер фото)
 
 Администрирование:
 - поиск по username, имени и фамилии,
@@ -269,6 +281,42 @@ AddSortedItemToContextMixin.add_sorted_item_to_context() - добавляет о
 - clear() - очистка корзины,
 - get_total_price() - возвращает общую стоимость всех товаров в корзине,
 - get_quantity(product_id: UUID) - возвращает количество товаров 1 типа.
+
+### App_order
+Приложение отвечающее за заказы пользователей.
+
+Модели: 
+- DeliveryMethod (методы доставки),
+- Delivery (объект с информацией о доставке),
+- Order (объект заказа),
+- OrderProduct(промежуточная таблица для связи many-to-many).
+
+Представления:
+- CheckoutView (представление для создания заказа)
+- OrderHistoryListView (представление для отображения истории заказов в личном кабинете) 
+- OrderDetailView (представления для отображения детальной страницы заказа)
+
+Формы:
+- CheckoutForm (форма для пошагового заполнения данных для заказа)
+  Объединяет 3 формы по моделям User, Delivery, Payment. Для объединения форм создан объект 
+  CombinedFormBase(forms.Form), который добавляет все атрибуты из форм входящих в form_classes, 
+  а также совместно валидирует данные в методе is_valid() и добавляет данные в cleaned_data в методе clean().
+
+Администрирование отзывов:
+- фильтрация заказов по статусу,
+- возможность просмотра состава заказа,
+- возможность добавления/удаления/редактирования способов доставки.
+
+Сервисы (services/for_create_order.py):
+- **services/for_create_order.py**
+  + SolveTotalPriceMixin.get_total_price_for_payment(self, delivery_method: DeliveryMethod) - 
+  возвращает общую сумму заказа с учетом доставки
+  + OrderHandler(form_combined, request, cart) - объект для обработки данных заказа и сохранения в БД.
+    save_order(self) - атомарная транзакция для сохранения заказа в БД. В случае успеха производит действия:
+    сохраняет нового пользователя (если тот не был зарегистрирован), сохраняет объект доставки и платежа, 
+    сохраняет объект заказа и добавляет к нему товары (через промежуточную таблицу OrderProduct), списывает товары со склада.
+- **services/increment_utils.py**
+  + get_next_increment() - возвращает следующее значение инкремента из БД. Используется для реализации типа serial для номера заказа
 
 
 ## NoSql база данных. Redis
@@ -375,13 +423,13 @@ ETL состоит из 3х основных блоков:
 # Дальнейшее развитие проекта
 На данном этапе реализована только часть предполагаемого общего функционала. 
 В дальнейшем планируется добавить:
-- приложение app_orders:
-  + возможность оформления заказов
-  + просмотр истории заказов
-  + просмотр детальной информации о заказе
 - приложение app_payment:
   + оплата заказа (с помощью карты или со случайного счета)
-- приложение app_compare:
-  + возможность добавления товара к сравнению
-  + страница отображения сравнения товаров
+- приложение app_api (FastAPI, ES -> docker):
+  + get product list
+  + get product list with filters (price, manufacturer, availability, category)
+  + get category
+  + get category with filters
+  + get manufacturer
+  + get manufacturer with category
   

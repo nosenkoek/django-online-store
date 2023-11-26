@@ -183,12 +183,15 @@ class LoadDataBuilder(Builder):
                         price=round(random.uniform(100, 10_000), 2),
                         main_image=IMAGE_LINKS[num],
                         added=now, updated=now, count=random.randint(0, 50),
-                        is_limited=random.choice([True, False]),
+                        is_limited=False,
                         category_fk=category_id,
                         manufacturer_fk=random.choice(self.manufacturers)
                         .manufacturer_id)
                 for product_num in range(PRODUCTS_IN_CATEGORY_COUNT)
             ]
+
+            for counter in range(3):
+                products_current[counter].is_limited = True
 
             images_current = [
                 Image(id=str(uuid.uuid4()), image_id=str(uuid.uuid4()),

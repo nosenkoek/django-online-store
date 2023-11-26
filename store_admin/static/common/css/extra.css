@@ -5182,3 +5182,7 @@ a.Cart-title {
   bottom: 0rem;
   right: 0;
 }
+
+.disable-links {
+  pointer-events: none;
+}

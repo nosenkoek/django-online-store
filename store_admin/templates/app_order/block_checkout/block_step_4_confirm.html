@@ -1,0 +1,129 @@
+{% load i18n %}
+{% load static %}
+
+<div class="Order-block" id="step4">
+  <script src="{% static 'app_order/js/checkout.js' %}"></script>
+
+  <header class="Section-header Section-header_sm">
+    <h2 class="Section-title">
+      {% trans 'Step 4. Order confirmation' %}
+    </h2>
+  </header>
+  <!--+div.Order.-confirmation-->
+  <div class="Order-infoBlock">
+    <div class="Order-personal">
+      <div class="row">
+        <div class="row-block">
+          <div class="Order-info">
+            <div class="Order-infoType">
+              {% trans 'Full name' %}:
+            </div>
+            <div class="Order-infoContent">
+              <span class="full_name"></span>
+            </div>
+          </div>
+          <div class="Order-info">
+            <div class="Order-infoType">
+              {% trans 'Telephone number' %}:
+            </div>
+            <div class="Order-infoContent">
+              +7<span class="tel_number"></span>
+            </div>
+          </div>
+          <div class="Order-info">
+            <div class="Order-infoType">
+              E-mail:
+            </div>
+            <div class="Order-infoContent">
+              <span class="email"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row-block">
+          <div class="Order-info Order-info_delivery">
+            <div class="Order-infoType">
+              {% trans 'Delivery method' %}:
+            </div>
+            <div class="Order-infoContent">
+              <span class="delivery_method_fk"></span>
+            </div>
+          </div>
+          <div class="Order-info">
+            <div class="Order-infoType">
+              {% trans 'City' %}:
+            </div>
+            <div class="Order-infoContent">
+              <span class="city"></span>
+            </div>
+          </div>
+          <div class="Order-info">
+            <div class="Order-infoType">
+              {% trans 'Address' %}:
+            </div>
+            <div class="Order-infoContent">
+              <span class="address"></span>
+            </div>
+          </div>
+          <div class="Order-info Order-info_pay">
+            <div class="Order-infoType">
+              {% trans 'Payment' %}:
+            </div>
+            <div class="Order-infoContent">
+              <span class="payment_method"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="Cart Cart_order">
+      {% for item in cart %}
+        {% with item.product as product %}
+        <div class="Cart-product">
+        <div class="Cart-block Cart-block_row">
+          <div class="Cart-block Cart-block_pict">
+            <a class="Cart-pict" href="{% url 'product_detail' product.slug %}">
+              <img class="Cart-img" src="{{ product.main_image.url }}" alt="card.jpg"/></a>
+          </div>
+          <div class="Cart-block Cart-block_info">
+            <a class="Cart-title" href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
+            <div class="Cart-desc">
+              {{ product.description }}
+            </div>
+            {% if not item.availability %}
+              <div class="Cart-desc">
+                <span class="Cart-desc">{% trans 'not enough in storage' %}</span>
+              </div>
+            {% endif %}
+          </div>
+          <div class="Cart-block Cart-block_price">
+            <div class="Cart-price">
+              {{ product.price }}{% trans '$' %}
+            </div>
+          </div>
+        </div>
+        <div class="Cart-block Cart-block_row">
+          <div class="Cart-block Cart-block_amount">
+            {{ item.quantity }} {% trans 'pc.' %}
+          </div>
+        </div>
+      </div>
+        {% endwith %}
+      {% endfor %}
+
+      <div class="Cart-total">
+        <div class="Cart-block Cart-block_total">
+          <strong class="Cart-title">
+            {% trans 'Total' %}:
+          </strong>
+          <span class="Cart-price">{{ cart.get_total_price }}{% trans '$' %}</span>
+        </div>
+        <div class="Cart-block">
+          <button class="btn btn_primary btn_lg" type="submit" >
+            {% trans 'Pay' %}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

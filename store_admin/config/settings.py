@@ -30,7 +30,8 @@ include(
     'components/debug_toolbar_panels.py',
     'components/logger.py',
     'components/caches.py',
-    'components/sessions.py'
+    'components/sessions.py',
+    'components/celery.py',
 )
 
 STATIC_URL = '/static/'

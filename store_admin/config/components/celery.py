@@ -1,0 +1,12 @@
+import os.path
+
+
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_IGNORE_RESULT = False
+CELERY_TRACK_STARTED = True
+CELERYD_LOG_FILE = os.path.join(BASE_DIR, 'celery')
+CELERYD_LOG_LEVEL = "INFO"

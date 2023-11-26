@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinLengthValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
@@ -17,6 +18,7 @@ def file_size_validator(file):
 
 class User(AbstractUser):
     tel_number = models.CharField(max_length=10, unique=True,
+                                  validators=[MinLengthValidator(10)],
                                   verbose_name=_('telephone number'))
     patronymic = models.CharField(max_length=30, null=True, blank=True,
                                   verbose_name=_('patronymic'))

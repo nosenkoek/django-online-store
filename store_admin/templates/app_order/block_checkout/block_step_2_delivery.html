@@ -1,0 +1,28 @@
+{% load i18n %}
+
+<div class="Order-block" id="step2">
+  <header class="Section-header Section-header_sm">
+    <h2 class="Section-title">
+      {% trans ' Delivery method' %}
+    </h2>
+  </header>
+
+  {% for field in form %}
+    {% if field.name in 'delivery_method_fk, city, address' %}
+      <div class="form-group">
+        {% if field.name == 'delivery_method_fk' %}
+          {{ field }}
+        {% else %}
+          {{ field.errors }}
+          <label class="form-label" for="{{ field.name }}">{{ field.label_tag }}
+          </label>
+          <textarea class="form-textarea" name="{{ field.name }}" id="{{ field.name }}" data-validate="require"></textarea>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endfor %}
+
+  <div class="Order-footer">
+    <a class="btn btn_success Order-next" href="#step3">{% trans 'Next'%}</a>
+  </div>
+</div>
